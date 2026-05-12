@@ -1,0 +1,1482 @@
+<!doctype html>
+<html lang="{{ app()->getLocale() }}" dir="{{ in_array(app()->getLocale(), ['ar','he']) ? 'rtl' : 'ltr' }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ __('front.site.meta.blogs') }}</title>
+
+    @include('front.layouts.hreflang')
+      <link rel="icon" <?php  $site_name=\App\Models\General_setting::select('site_logo_icon')->first() ?> href="{{$site_name->site_logo_icon}}"  type="image/png">
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="./assets/styles/main.css" />
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
+    ></script>
+      <link rel="stylesheet" href="{{asset('node_modules/select2/dist/css/select2.min.css')}}">
+    <script defer src="./assets/scripts/main.js"></script>
+  </head>
+
+  <body> s
+    <div class="app">
+      <header class="page-header">
+        <div class="navbar">
+          <div class="container">
+            <div class="navbar_top">
+                <?php  $site_name=\App\Models\General_setting::first() ?>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there">
+                        <svg class="size-5 text-white">
+                            <use href="{{asset('assets/images/icons/sprite.svg#whatsapp')}}"></use>
+                        </svg>
+                    </a>
+                    <a href="mailto:{{$site_name->email}}">
+                        <svg class="size-5 text-white">
+                            <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-4 lg:gap-10">
+                    <div class="flex items-center gap-2">
+                        <svg class="size-5 text-white">
+                            <use href="{{asset('assets/images/icons/sprite.svg#clock')}}"></use>
+                        </svg>
+                        <span class="text-sm text-white"
+                        >{{ __('front.site.nav.cairo') }} : <span id="time">{{time()}}</span></span
+                        >
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="size-5 text-white">
+                            <use
+                                href="{{asset('assets/images/icons/sprite.svg#cloud-sun')}}"
+                            ></use>
+                        </svg>
+                        <span class="text-sm text-white">: 15 OC/ 60 OF</span>
+                    </div>
+                    @include('front.layouts.lang-switcher')
+                </div>
+            </div>
+          </div>
+
+          <nav class="navbar_nav">
+            <div class="container">
+              @include('front.layouts.nav-list')
+                  </div>
+                </div>
+              </div>
+
+              <img src="{{footer_logo()}}" class="h-8" alt="" />
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div
+                class="hs-dropdown group relative inline-flex [--auto-close:outside] [--offset:20]"
+              >
+                <button type="button">
+                  <svg class="size-4.5 text-white group-[.open]:hidden">
+                    <use href="./assets/images/icons/sprite.svg#search"></use>
+                  </svg>
+                  <svg class="hidden size-6 text-white group-[.open]:block">
+                    <use href="./assets/images/icons/sprite.svg#close"></use>
+                  </svg>
+                </button>
+
+                <div
+                  class="hs-dropdown-menu duration z-50 hidden max-w-80 p-px opacity-0 transition-opacity hs-dropdown-open:opacity-100"
+                >
+                  <div class="rounded-xl border border-primary bg-white">
+                    <div class="divide-y divide-primary">
+                      <div class="px-4 py-3">
+                        <div
+                          class="hs-dropdown relative flex h-full [--auto-close:outside] [--offset:5] [--strategy:absolute]"
+                        >
+                          <button
+                            type="button"
+                            class="hs-dropdown-toggle flex w-full items-center gap-3 text-nowrap text-start"
+                          >
+                            <svg class="size-6 shrink-0 text-primary">
+                              <use
+                                href="./assets/images/icons/sprite.svg#hotel"
+                              ></use>
+                            </svg>
+                            <p class="flex-1">High Luxury 5 Stars</p>
+                            <svg
+                              class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            >
+                              <path d="m6 9 6 6 6-6" />
+                            </svg>
+                          </button>
+
+                          <div
+                            class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden space-y-3 rounded-lg bg-white p-5 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
+                          >
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                              aria-pressed="true"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex flex-1 items-center gap-3 px-4 py-3">
+                        <svg class="size-6 shrink-0 text-primary">
+                          <use
+                            href="./assets/images/icons/sprite.svg#calender"
+                          ></use>
+                        </svg>
+                        <input
+                          id="range"
+                          type="text"
+                          class="flatpickr flatpickr-input max-w-52 flex-1 shrink bg-transparent outline-none"
+                          placeholder="Check in date - Check out date"
+                        />
+                        <svg
+                          class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="m6 9 6 6 6-6" />
+                        </svg>
+                      </div>
+                      <div class="px-4 py-3">
+                        <div
+                          class="hs-dropdown relative flex h-full w-full [--offset:5] [--strategy:absolute] [--auto-close:inside]"
+                        >
+                          <button
+                            type="button"
+                            class="hs-dropdown-toggle flex h-full w-full items-center gap-3 text-nowrap text-start"
+                          >
+                            <svg class="size-6 shrink-0 text-primary">
+                              <use
+                                href="./assets/images/icons/sprite.svg#subscription-cashflow"
+                              ></use>
+                            </svg>
+                            <p class="flex-1">Budget From - to</p>
+                            <svg
+                              class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            >
+                              <path d="m6 9 6 6 6-6" />
+                            </svg>
+                          </button>
+
+                          <div
+                            class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden rounded-lg bg-white p-6 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
+                          >
+                            <p class="mb-4 text-sm">Your Budget</p>
+                            <div id="slider-3">
+                              <div class="slider mb-3"></div>
+                              <p
+                                class="flex items-center justify-between text-sm"
+                              >
+                                <span>$<span class="slider-min"></span></span>
+                                <span>$<span class="slider-max"></span></span>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="inline-block w-full rounded-bl-xl rounded-br-xl bg-primary px-5 py-3 text-white transition-colors hover:bg-opacity-80"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button type="button">
+                <svg class="size-5.5 text-white">
+                  <use
+                    href="./assets/images/icons/sprite.svg#customer-service-2"
+                  ></use>
+                </svg>
+              </button>
+              <button type="button" data-hs-overlay="#customize-tour">
+                <svg class="size-5 text-white">
+                  <use href="./assets/images/icons/sprite.svg#settings"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero">
+          <div class="container">
+            <div class="hero_content">
+              <h1 class="txt-shadow">
+                Oasis Egypt
+              </h1>
+              <p class="txt-shadow">
+                Provide everyone with the finest vacation  accompanied by  the highest  level of safety, luxury and affordable prices
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <img
+          src="./assets/images/tags-bg.jpeg"
+          class="page-header__bg"
+          alt=""
+        />
+      </header>
+
+      <main class="relative space-y-12 lg:space-y-16">
+        <section class="pt-8">
+          <div class="relative pt-8">
+            <div class="container">
+              <ol class="breadcrumb mb-8" aria-label="Breadcrumb">
+                <li>
+                  <a href="#"> Home </a>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </li>
+                <li>
+                  <a href="#">
+                    Blogs
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="m9 18 6-6-6-6" />
+                    </svg>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    Explore By Interest
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="m9 18 6-6-6-6" />
+                    </svg>
+                  </a>
+                </li>
+                <li aria-current="page">Oasis Egypt</li>
+              </ol>
+
+              <div class="flex flex-col gap-10 lg:flex-row">
+                <div class="w-full shrink-0 lg:max-w-[420px]">
+                  <div
+                    class="hs-accordion-group mb-2 space-y-2"
+                    data-hs-accordion-always-open
+                  >
+                    <div class="hs-accordion active accordion-filter">
+                      <button
+                        class="hs-accordion-toggle accordion-btn font-medium"
+                      >
+                        <svg class="accordion-icon size-4.5">
+                          <use
+                            href="./assets/images/icons/sprite.svg#search"
+                          ></use>
+                        </svg>
+                        Search Articles
+                      </button>
+                      <div
+                        class="hs-accordion-content accordion-content-wrapper"
+                      >
+                        <div class="accordion-content">
+                          <div
+                            class="relative flex items-center overflow-hidden rounded-xl border border-primary ps-10"
+                          >
+                            <svg class="absolute start-4 size-4 text-gray/90">
+                              <use
+                                href="./assets/images/icons/sprite.svg#search"
+                              ></use>
+                            </svg>
+                            <input
+                              type="text"
+                              class="block w-full text-sm font-normal text-black outline-none placeholder:text-gray"
+                              placeholder="Search Destinations"
+                            />
+                            <button
+                              type="button"
+                              class="bg-primary px-6 py-2 text-white"
+                            >
+                              Search
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="hs-accordion active accordion-filter">
+                      <button
+                        class="hs-accordion-toggle accordion-btn font-medium"
+                      >
+                        <svg class="accordion-icon size-4.5">
+                          <use
+                            href="./assets/images/icons/sprite.svg#articles"
+                          ></use>
+                        </svg>
+                        Latest Articles
+                      </button>
+                      <div
+                        class="hs-accordion-content accordion-content-wrapper"
+                      >
+                        <div class="accordion-content">
+                          <div
+                            class="hs-dropdown relative flex-1 [--strategy:absolute]"
+                          >
+                            <button
+                              type="button"
+                              class="hs-dropdown-toggle inline-flex items-center gap-2 text-nowrap rounded-xl border border-primary p-3 text-sm xl:px-4 xl:text-base"
+                            >
+                              <svg class="size-6 text-primary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#sort"
+                                ></use>
+                              </svg>
+                              <span>Sort by: Recommended</span>
+                              <svg
+                                class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              >
+                                <path d="m6 9 6 6 6-6" />
+                              </svg>
+                            </button>
+
+                            <div
+                              class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden min-w-72 space-y-3 rounded-lg bg-white p-5 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
+                            >
+                              <button
+                                type="button"
+                                class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                                aria-pressed="true"
+                              >
+                                Our Top Picks
+                              </button>
+                              <button
+                                type="button"
+                                class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                              >
+                                Traveler Rating
+                              </button>
+                              <button
+                                type="button"
+                                class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                              >
+                                Price (Low to High)
+                              </button>
+                              <button
+                                type="button"
+                                class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                              >
+                                Price (High to Low)
+                              </button>
+                              <button
+                                type="button"
+                                class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                              >
+                                Duration (Low to High)
+                              </button>
+                              <button
+                                type="button"
+                                class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                              >
+                                Duration (High to Low)
+                              </button>
+                              <button
+                                type="button"
+                                class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                              >
+                                Most Popular First
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="max-h-[640px] space-y-4 overflow-auto p-4 pt-0 lg:p-6 lg:pt-0"
+                          data-lenis-prevent
+                        >
+                          <div class="flex gap-4.5 rounded-xl p-4 shadow-xl">
+                            <img
+                              src="./assets/images/article-mini-placeholder.jpeg"
+                              class="max-w-[125px] shrink-0 rounded"
+                              alt=""
+                            />
+
+                            <div>
+                              <p class="mb-2 line-clamp-2 font-medium">
+                                {{ __('front.site.sections.best_time_to_visit_egypt') }}
+                              </p>
+                              <p
+                                class="flex items-center gap-2 text-sm text-gray"
+                              >
+                                <svg class="size-4 text-primary">
+                                  <use
+                                    href="./assets/images/icons/sprite.svg#calendar-date"
+                                  ></use>
+                                </svg>
+                                13 March, 2024
+                              </p>
+                            </div>
+                          </div>
+                          <div class="flex gap-4.5 rounded-xl p-4 shadow-xl">
+                            <img
+                              src="./assets/images/article-mini-placeholder.jpeg"
+                              class="max-w-[125px] shrink-0 rounded"
+                              alt=""
+                            />
+
+                            <div>
+                              <p class="mb-2 line-clamp-2 font-medium">
+                                {{ __('front.site.sections.best_time_to_visit_egypt') }}
+                              </p>
+                              <p
+                                class="flex items-center gap-2 text-sm text-gray"
+                              >
+                                <svg class="size-4 text-primary">
+                                  <use
+                                    href="./assets/images/icons/sprite.svg#calendar-date"
+                                  ></use>
+                                </svg>
+                                13 March, 2024
+                              </p>
+                            </div>
+                          </div>
+                          <div class="flex gap-4.5 rounded-xl p-4 shadow-xl">
+                            <img
+                              src="./assets/images/article-mini-placeholder.jpeg"
+                              class="max-w-[125px] shrink-0 rounded"
+                              alt=""
+                            />
+
+                            <div>
+                              <p class="mb-2 line-clamp-2 font-medium">
+                                {{ __('front.site.sections.best_time_to_visit_egypt') }}
+                              </p>
+                              <p
+                                class="flex items-center gap-2 text-sm text-gray"
+                              >
+                                <svg class="size-4 text-primary">
+                                  <use
+                                    href="./assets/images/icons/sprite.svg#calendar-date"
+                                  ></use>
+                                </svg>
+                                13 March, 2024
+                              </p>
+                            </div>
+                          </div>
+                          <div class="flex gap-4.5 rounded-xl p-4 shadow-xl">
+                            <img
+                              src="./assets/images/article-mini-placeholder.jpeg"
+                              class="max-w-[125px] shrink-0 rounded"
+                              alt=""
+                            />
+
+                            <div>
+                              <p class="mb-2 line-clamp-2 font-medium">
+                                {{ __('front.site.sections.best_time_to_visit_egypt') }}
+                              </p>
+                              <p
+                                class="flex items-center gap-2 text-sm text-gray"
+                              >
+                                <svg class="size-4 text-primary">
+                                  <use
+                                    href="./assets/images/icons/sprite.svg#calendar-date"
+                                  ></use>
+                                </svg>
+                                13 March, 2024
+                              </p>
+                            </div>
+                          </div>
+                          <div class="flex gap-4.5 rounded-xl p-4 shadow-xl">
+                            <img
+                              src="./assets/images/article-mini-placeholder.jpeg"
+                              class="max-w-[125px] shrink-0 rounded"
+                              alt=""
+                            />
+
+                            <div>
+                              <p class="mb-2 line-clamp-2 font-medium">
+                                {{ __('front.site.sections.best_time_to_visit_egypt') }}
+                              </p>
+                              <p
+                                class="flex items-center gap-2 text-sm text-gray"
+                              >
+                                <svg class="size-4 text-primary">
+                                  <use
+                                    href="./assets/images/icons/sprite.svg#calendar-date"
+                                  ></use>
+                                </svg>
+                                13 March, 2024
+                              </p>
+                            </div>
+                          </div>
+                          <div class="flex gap-4.5 rounded-xl p-4 shadow-xl">
+                            <img
+                              src="./assets/images/article-mini-placeholder.jpeg"
+                              class="max-w-[125px] shrink-0 rounded"
+                              alt=""
+                            />
+
+                            <div>
+                              <p class="mb-2 line-clamp-2 font-medium">
+                                {{ __('front.site.sections.best_time_to_visit_egypt') }}
+                              </p>
+                              <p
+                                class="flex items-center gap-2 text-sm text-gray"
+                              >
+                                <svg class="size-4 text-primary">
+                                  <use
+                                    href="./assets/images/icons/sprite.svg#calendar-date"
+                                  ></use>
+                                </svg>
+                                13 March, 2024
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="hs-accordion active accordion-filter">
+                      <button
+                        class="hs-accordion-toggle accordion-btn font-medium"
+                      >
+                        <svg class="accordion-icon size-4.5">
+                          <use
+                            href="./assets/images/icons/sprite.svg#tag"
+                          ></use>
+                        </svg>
+                        Tags
+                      </button>
+                      <div
+                        class="hs-accordion-content accordion-content-wrapper"
+                      >
+                        <div class="accordion-content">
+                          <div class="tags">
+                            <button type="button">wiki</button>
+                            <button type="button">Oasis Egypt</button>
+                            <button type="button">Egypt Civilization</button>
+                            <button type="button" aria-pressed="true">
+                              Travel
+                            </button>
+                            <button type="button">History</button>
+                            <button type="button">Landmarks</button>
+                            <button type="button">Aswan</button>
+                            <button type="button" aria-pressed="true">
+                              Pyramids
+                            </button>
+                            <button type="button">wiki</button>
+                            <button type="button">Oasis Egypt</button>
+                            <button type="button">Egypt Civilization</button>
+                            <button type="button">Travel</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="hs-accordion active accordion-filter">
+                      <button
+                        class="hs-accordion-toggle accordion-btn font-medium"
+                      >
+                        <svg class="accordion-icon size-5">
+                          <use
+                            href="./assets/images/icons/sprite.svg#info"
+                          ></use>
+                        </svg>
+                        About Us
+                      </button>
+                      <div
+                        class="hs-accordion-content accordion-content-wrapper"
+                      >
+                        <div class="accordion-content">
+                          <img
+                            src="./assets/images/article-mini-placeholder.jpeg"
+                            class="mb-6 max-h-[150px] w-full rounded-xl object-cover object-center"
+                            alt=""
+                          />
+                          <p class="mb-5">
+                            Lorem ipsum dolor sit, amet consectetur adipisicing
+                            elit. Sequi quos, repudiandae quisquam ducimus rem
+                            quibusdam veritatis distinctio possimus corrupti
+                            quia?
+                          </p>
+
+                          <ul class="social-list primary justify-center">
+                            <li>
+                              <a href="#">
+                                <svg>
+                                  <use
+                                    href="./assets/images/icons/sprite.svg#facebook"
+                                  ></use>
+                                </svg>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <svg>
+                                  <use
+                                    href="./assets/images/icons/sprite.svg#linkedin"
+                                  ></use>
+                                </svg>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <svg>
+                                  <use
+                                    href="./assets/images/icons/sprite.svg#youtube"
+                                  ></use>
+                                </svg>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <svg>
+                                  <use
+                                    href="./assets/images/icons/sprite.svg#instagram"
+                                  ></use>
+                                </svg>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="hs-accordion active accordion-filter">
+                      <button
+                        class="hs-accordion-toggle accordion-btn font-medium"
+                      >
+                        <svg class="accordion-icon size-5">
+                          <use
+                            href="./assets/images/icons/sprite.svg#mail"
+                          ></use>
+                        </svg>
+                        Enter Email Address
+                      </button>
+                      <div
+                        class="hs-accordion-content accordion-content-wrapper"
+                      >
+                        <div class="accordion-content">
+                          <p class="mb-6">
+                            Subscribe for latest Updates & promotions
+                          </p>
+
+                          <div class="relative mb-4 flex-1">
+                            <label
+                              for="email"
+                              class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
+                              >Email</label
+                            >
+                            <input
+                              id="email"
+                              type="email"
+                              class="w-full rounded-xl border border-primary px-4 py-3 text-gray outline-none placeholder:text-gray"
+                              placeholder="Your Email"
+                            />
+                            <button
+                              data-hs-overlay="#send-email"
+                              class="absolute inset-y-0 end-0 rounded-br-xl rounded-tr-xl bg-primary px-5 py-2 text-white"
+                            >
+                              Go
+                            </button>
+                          </div>
+
+                          <p class="flex items-center gap-2 text-sm">
+                            <svg class="accordion-icon size-4">
+                              <use
+                                href="./assets/images/icons/sprite.svg#lock"
+                              ></use>
+                            </svg>
+                            Your information is safe with us
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex-1">
+                  <div
+                    class="mb-5 flex flex-col items-start gap-4 lg:mb-6 lg:flex-row lg:items-center lg:justify-between"
+                  >
+                    <p class="text-xl font-semibold lg:text-2xl">
+                      <span class="text-primary"
+                        ><span class="text-secondary">Search</span>
+                        Results</span
+                      >: 44 Available Tours
+                    </p>
+
+                    <div class="hs-dropdown relative [--strategy:absolute]">
+                      <button
+                        type="button"
+                        class="hs-dropdown-toggle inline-flex items-center gap-2 text-nowrap rounded-xl border border-primary p-3 text-sm xl:px-4 xl:text-base"
+                      >
+                        <svg class="size-6 text-primary">
+                          <use
+                            href="./assets/images/icons/sprite.svg#sort"
+                          ></use>
+                        </svg>
+                        <span>Sort by: Recommended</span>
+                        <svg
+                          class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="m6 9 6 6 6-6" />
+                        </svg>
+                      </button>
+
+                      <div
+                        class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden min-w-72 space-y-3 rounded-lg bg-white p-5 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
+                      >
+                        <button
+                          type="button"
+                          class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                          aria-pressed="true"
+                        >
+                          Our Top Picks
+                        </button>
+                        <button
+                          type="button"
+                          class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                        >
+                          Traveler Rating
+                        </button>
+                        <button
+                          type="button"
+                          class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                        >
+                          Price (Low to High)
+                        </button>
+                        <button
+                          type="button"
+                          class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                        >
+                          Price (High to Low)
+                        </button>
+                        <button
+                          type="button"
+                          class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                        >
+                          Duration (Low to High)
+                        </button>
+                        <button
+                          type="button"
+                          class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                        >
+                          Duration (High to Low)
+                        </button>
+                        <button
+                          type="button"
+                          class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                        >
+                          Most Popular First
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="grid gap-8 lg:grid-cols-2 lg:gap-10">
+                    <article class="tour-card">
+                      <div class="tour-card__thumbnail-wrapper">
+                        <img
+                          src="./assets/images/tour-1.jpeg"
+                          class="tour-card__thumbnail"
+                          alt=""
+                        />
+                      </div>
+
+                      <div class="tour-card__content">
+                        <h3>{{ __('front.site.sections.best_time_to_visit_egypt') }}</h3>
+
+                        <ul class="tour-card__features">
+                          <li>
+                            <svg class="icon">
+                              <use
+                                href="./assets/images/icons/sprite.svg#calendar-date"
+                              ></use>
+                            </svg>
+                            13 March, 2024
+                          </li>
+                        </ul>
+
+                        <p class="tour-card__desc">
+                          DOUDOU is about meeting others. You can get to know
+                          people online through the website...
+                        </p>
+
+                        <div class="tour-card__footer">
+                          <p>
+                            Published By
+                            <a href="#">Doudue Team</a>
+                          </p>
+
+                          <a href="#" class="tour-card__link">Read More</a>
+                        </div>
+                      </div>
+                    </article>
+                    <article class="tour-card">
+                      <div class="tour-card__thumbnail-wrapper">
+                        <img
+                          src="./assets/images/tour-1.jpeg"
+                          class="tour-card__thumbnail"
+                          alt=""
+                        />
+                      </div>
+
+                      <div class="tour-card__content">
+                        <h3>{{ __('front.site.sections.best_time_to_visit_egypt') }}</h3>
+
+                        <ul class="tour-card__features">
+                          <li>
+                            <svg class="icon">
+                              <use
+                                href="./assets/images/icons/sprite.svg#calendar-date"
+                              ></use>
+                            </svg>
+                            13 March, 2024
+                          </li>
+                        </ul>
+
+                        <p class="tour-card__desc">
+                          DOUDOU is about meeting others. You can get to know
+                          people online through the website...
+                        </p>
+
+                        <div class="tour-card__footer">
+                          <p>
+                            Published By
+                            <a href="#">Doudue Team</a>
+                          </p>
+
+                          <a href="#" class="tour-card__link">Read More</a>
+                        </div>
+                      </div>
+                    </article>
+                    <article class="tour-card">
+                      <div class="tour-card__thumbnail-wrapper">
+                        <img
+                          src="./assets/images/tour-1.jpeg"
+                          class="tour-card__thumbnail"
+                          alt=""
+                        />
+                      </div>
+
+                      <div class="tour-card__content">
+                        <h3>{{ __('front.site.sections.best_time_to_visit_egypt') }}</h3>
+
+                        <ul class="tour-card__features">
+                          <li>
+                            <svg class="icon">
+                              <use
+                                href="./assets/images/icons/sprite.svg#calendar-date"
+                              ></use>
+                            </svg>
+                            13 March, 2024
+                          </li>
+                        </ul>
+
+                        <p class="tour-card__desc">
+                          DOUDOU is about meeting others. You can get to know
+                          people online through the website...
+                        </p>
+
+                        <div class="tour-card__footer">
+                          <p>
+                            Published By
+                            <a href="#">Doudue Team</a>
+                          </p>
+
+                          <a href="#" class="tour-card__link">Read More</a>
+                        </div>
+                      </div>
+                    </article>
+                    <article class="tour-card">
+                      <div class="tour-card__thumbnail-wrapper">
+                        <img
+                          src="./assets/images/tour-1.jpeg"
+                          class="tour-card__thumbnail"
+                          alt=""
+                        />
+                      </div>
+
+                      <div class="tour-card__content">
+                        <h3>{{ __('front.site.sections.best_time_to_visit_egypt') }}</h3>
+
+                        <ul class="tour-card__features">
+                          <li>
+                            <svg class="icon">
+                              <use
+                                href="./assets/images/icons/sprite.svg#calendar-date"
+                              ></use>
+                            </svg>
+                            13 March, 2024
+                          </li>
+                        </ul>
+
+                        <p class="tour-card__desc">
+                          DOUDOU is about meeting others. You can get to know
+                          people online through the website...
+                        </p>
+
+                        <div class="tour-card__footer">
+                          <p>
+                            Published By
+                            <a href="#">Doudue Team</a>
+                          </p>
+
+                          <a href="#" class="tour-card__link">Read More</a>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination -->
+              <nav class="pagination">
+                <button type="button" class="pagination__arrow" disabled>
+                  <svg
+                    class="pagination__icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                  <span aria-hidden="true" class="sr-only">Previous</span>
+                </button>
+                <div class="pagination__numbers">
+                  <button
+                    type="button"
+                    class="pagination__number"
+                    aria-pressed="true"
+                  >
+                    1
+                  </button>
+                  <button type="button" class="pagination__number">2</button>
+                  <button type="button" class="pagination__number">3</button>
+                </div>
+                <button type="button" class="pagination__arrow">
+                  <span aria-hidden="true" class="sr-only">Next</span>
+                  <svg
+                    class="pagination__icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              </nav>
+
+              <img
+                src="./assets/images/section-divider.png"
+                class="pointer-events-none mx-auto mt-5 lg:mt-10 lg:w-4/5"
+                alt=""
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- -->
+
+        <section>
+          <div class="container">
+            <header class="section_header">
+              <h2 class="section_heading text-primary">
+                <span>Frequently</span> Asked Questions
+              </h2>
+            </header>
+
+            <div class="hs-accordion-group space-y-2">
+                <x-question-component/>
+            </div>
+
+            <div class="mt-6 text-center">
+              <a href="#" class="text-lg text-secondary underline">Show More</a>
+            </div>
+          </div>
+        </section>
+
+        <section id="partners" class="pb-20 pt-12 lg:pb-32">
+          <div class="container">
+            <header class="section_header">
+              <h2 class="section_heading text-primary">
+                <span>Doudou</span> Partners
+              </h2>
+            </header>
+
+            <div class="flex items-center gap-6">
+              <span class="rounded-full bg-white/70">
+                <button type="button" class="swiper-btn prev shrink-0">
+                  <svg>
+                    <use
+                      href="./assets/images/icons/sprite.svg#arrow-left"
+                    ></use>
+                  </svg>
+                </button>
+              </span>
+
+              <div class="swiper flex-1">
+                <div class="swiper-wrapper">
+                    <x-doudou-partner-compoenet/>
+                </div>
+              </div>
+
+              <span class="rounded-full bg-white/70">
+                <button type="button" class="swiper-btn next shrink-0">
+                  <svg>
+                    <use
+                      href="./assets/images/icons/sprite.svg#arrow-right"
+                    ></use>
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- footer -->
+      <div class="relative">
+        <img
+          src="./assets/images/section-decoration.png"
+          class="w-full"
+          alt=""
+        />
+
+        <footer class="footer">
+          <div class="container">
+            <div class="footer__grid">
+              <div class="footer__aside">
+                <img
+                  src="./assets/images/logo-footer.png"
+                  class="footer__logo"
+                  alt=""
+                />
+
+                <ul>
+                  <li>
+                    <svg>
+                      <use
+                        href="./assets/images/icons/sprite.svg#map-pin"
+                      ></use>
+                    </svg>
+                    <a href="#">Put Address Here</a>
+                  </li>
+                  <li>
+                    <svg>
+                      <use href="./assets/images/icons/sprite.svg#mail"></use>
+                    </svg>
+
+                    <a href="mailto:email">Put Email Here</a>
+                  </li>
+                  <li>
+                    <svg>
+                      <use href="./assets/images/icons/sprite.svg#phone"></use>
+                    </svg>
+
+                    <a href="tel:+tel">Put Phone Here</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="footer__sitemap">
+                <div>
+                  <h3>{{ __('front.site.footer.popular_tour_packages') }}</h3>
+
+                  <ul>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.egypt_travel_package') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.egypt_shore_excursions') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.egypt_nile_cruises_package') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.egypt_family_holiday_package') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.group_tours_to_egypt') }}</a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>{{ __('front.site.footer.main_links') }}</h3>
+
+                  <ul>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.about_us') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.contact_us') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.careers') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.blogs') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.faqs') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.privacy_policy') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.terms_conditions') }}</a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>{{ __('front.site.footer.official_pages') }}</h3>
+
+                  <ul>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.how_it_works') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.loyalty_program') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.events') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.become_partner') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.egypt_travel_guide') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.services') }}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="footer__copyright">
+              <p class="max-lg:order-2 max-lg:text-center max-lg:text-sm">
+                {{ __('front.site.footer.rights_reserved') }} &copy;
+                <span class="text-secondary">{{ __('front.site.footer.brand') }} </span>
+                2024
+              </p>
+
+              <ul class="flex items-center gap-x-3 max-lg:order-1">
+                <li>
+                  <a href="#">
+                    <img
+                      src="./assets/images/icons/facebook.png"
+                      class="size-8"
+                      alt=""
+                    />
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img
+                      src="./assets/images/icons/linkedin.png"
+                      class="size-8"
+                      alt=""
+                    />
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img
+                      src="./assets/images/icons/youtube.png"
+                      class="size-8"
+                      alt=""
+                    />
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img
+                      src="./assets/images/icons/instagram.png"
+                      class="size-8"
+                      alt=""
+                    />
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+      </div>
+        <button type="button" id="toTop" onclick="lenis.scrollTo('body')">
+            <svg>
+                <use href="./assets/images/icons/sprite.svg#back-to-top"></use>
+            </svg>
+        </button>
+
+    </div>
+
+    <!-- modals -->
+    <div
+      id="send-email"
+      class="hs-overlay fixed start-0 top-0 z-[100] hidden size-full overflow-y-auto overflow-x-hidden hs-overlay-backdrop-open:bg-black/50"
+    >
+      <div
+        class="m-3 mt-0 flex min-h-[calc(100%-3.5rem)] items-center opacity-0 transition-all ease-out hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 sm:mx-auto sm:w-full sm:max-w-[550px]"
+      >
+        <div class="flex w-full flex-col overflow-hidden rounded-3xl bg-white">
+          <div class="flex items-center justify-between bg-primary px-6 py-5" style="background: linear-gradient(90deg, #005690 0%, #0071BD 100%)">
+            <h3 class="text-lg font-semibold text-white lg:text-xl">
+              Email Received
+            </h3>
+            <button
+              type="button"
+              class="flex size-7 items-center justify-center rounded-full border-2 border-white"
+              data-hs-overlay="#send-email"
+            >
+              <span class="sr-only">Close</span>
+              <svg
+                class="size-5 shrink-0 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="px-6 py-8 text-center">
+            <img
+              src="./assets/images/icons/approve.png"
+              class="mx-auto mb-4 max-w-40"
+              alt=""
+            />
+            <p class="text-2xl text-primary lg:text-3xl mb-3">Your Email Received</p>
+            <p class="mb-7 lg:mb-10 lg:text-lg">
+              Your tour Inquire has been successfully recived. We look forward
+              to contact you very soon!
+            </p>
+
+            <ul class="social-list primary justify-center">
+              <li>
+                <a href="#">
+                  <svg>
+                    <use href="./assets/images/icons/sprite.svg#facebook"></use>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <svg>
+                    <use href="./assets/images/icons/sprite.svg#linkedin"></use>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <svg>
+                    <use href="./assets/images/icons/sprite.svg#youtube"></use>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <svg>
+                    <use
+                      href="./assets/images/icons/sprite.svg#instagram"
+                    ></use>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <img
+            src="./assets/images/icons/model-decoration.png"
+            class="w-full"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- js -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      // Partners
+      new Swiper("#partners .swiper", {
+        spaceBetween: 40,
+        grabCursor: true,
+        a11y: false,
+        freeMode: true,
+        speed: 11000,
+        loop: true,
+        slidesPerView: "auto",
+        autoplay: {
+          delay: 0.5,
+          disableOnInteraction: false,
+        },
+        breakpoints: {
+          0: {
+            spaceBetween: 30,
+          },
+          480: {
+            spaceBetween: 30,
+          },
+          767: {
+            spaceBetween: 40,
+          },
+          992: {
+            spaceBetween: 40,
+          },
+        },
+      });
+    </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="{{asset('node_modules/select2/dist/js/select2.js')}}"></script>
+
+  <script>
+      $(document).ready(function() {
+          $('#selectedHotel').select2({
+              placeholder: 'choose Hotels',
+              allowClear: true, // Adds a clear button
+
+
+          });
+
+      });
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/spotlight.js@0.7.8/dist/spotlight.bundle.min.js"></script>
+
+  </body>
+</html>

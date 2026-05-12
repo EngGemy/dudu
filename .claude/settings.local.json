@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(php *)",
+      "Bash(curl -s -o D:/tmp_home.html -w \"HTTP=%{http_code} bytes=%{size_download}\\\\n\" http://127.0.0.1:8000/)",
+      "Read(//d//**)",
+      "Bash(grep -oE \"section_heading[^\\\\\"]*\\\\\">[^<]{1,80}\" D:/tmp_home.html)",
+      "Skill(update-config)",
+      "Bash(grep -E 'fillable|protected $table' D:/laragon/www/dudu/app/Models/Tour.php D:/laragon/www/dudu/app/Models/City.php D:/laragon/www/dudu/app/Models/Event.php)",
+      "Bash(grep -E 'fillable|protected $table|class ' D:/laragon/www/dudu/app/Models/Post.php D:/laragon/www/dudu/app/Models/PostTranslation.php D:/laragon/www/dudu/app/Models/TourTranslation.php)",
+      "PowerShell(New-Item *)",
+      "Bash(composer require *)",
+      "Bash(grep -E \"use App\\\\\\\\\\\\\\\\Models|Blog::|Post::\" \"D:/laragon/www/dudu/app/Http/Controllers/Website/BlogController.php\")",
+      "Bash(curl -s -m 5 \"http://127.0.0.1:7700/health\")",
+      "Bash(curl -s \"http://127.0.0.1:7700/indexes\" -H \"Authorization: Bearer dudu_local_master_key_change_me\")",
+      "Bash(curl -s \"http://127.0.0.1:7700/indexes/tours_en/search\" -H \"Authorization: Bearer dudu_local_master_key_change_me\" -H \"Content-Type: application/json\" -d '{\"q\":\"cairo\",\"limit\":3}')",
+      "Bash(curl -s \"http://127.0.0.1:7700/indexes/cities_zh/search\" -H \"Authorization: Bearer dudu_local_master_key_change_me\" -H \"Content-Type: application/json\" -d '{\"q\":\"开罗\",\"limit\":3}')",
+      "Bash(curl -s -H \"Accept-Language: zh-Hant\" \"http://127.0.0.1:8000/api/search?q=cairo\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/search?q=開羅\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/search?q=cairo\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/search?q=luxor\")",
+      "Bash(grep *)",
+      "Bash(Select-String -Pattern \"error|Exception\" -SimpleMatch)",
+      "Bash(xargs -I{} basename {})",
+      "Bash(xargs ls)"
+    ]
+  }
+}

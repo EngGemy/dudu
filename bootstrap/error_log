@@ -1,0 +1,8 @@
+[14-Feb-2026 16:02:18 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/egyptdoudou/public_html/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/bootstrap/app.php on line 14
+[15-Feb-2026 22:04:51 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/egyptdoudou/public_html/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/bootstrap/app.php on line 14

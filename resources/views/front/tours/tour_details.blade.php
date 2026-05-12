@@ -1,0 +1,4181 @@
+
+@extends('front.layouts.app')
+@section('search_form')
+    @include('front.layouts.search_form')
+@endsection
+@section('slider_title')
+    <div class="hero">
+        <div class="container">
+            <div class="hero_content">
+                <h1 class="txt-shadow">
+                    {{ $tour->translate(app()->getLocale(), true)->name ?? '' }}
+                </h1>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('slider_img')
+    <img
+        src="{{$tour->photo ?? asset('assets/images/sub-hero-bg.jpeg')}}"
+        class="page-header__bg"
+        alt="slider"
+    />
+@endsection
+
+
+@section('content')
+
+    <main class="relative space-y-12 lg:space-y-16">
+        <section class="pt-12">
+            <div class="container">
+                <ol class="breadcrumb mb-6 lg:mb-10" aria-label="Breadcrumb">
+                    <li>
+                        <a href="#"> Home </a>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Egypt Tours
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </a>
+                    </li>
+                    @if($tour->category->parent_id !=null)
+                        <li>
+                            <a href="#">
+                                {{$tou->category->_parent->name}}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </a>
+                        </li>
+
+                    @endif
+
+                    <li>
+                        <a href="#">
+                            {{$tour->category->name}}
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li aria-current="page">{{$tour->name}} Tour</li>
+                </ol>
+
+                <div class="flex flex-col lg:flex-row lg:gap-7">
+                    <div class="w-full shrink-0 lg:max-w-[380px]">
+                        <div class="max-lg:hidden lg:sticky lg:top-8">
+                            <div
+                                data-hs-scrollspy="#scrollspy-1"
+                                class="mb-2 space-y-2 [--scrollspy-offset:200]"
+                            >
+                                <a
+                                    href="#sc-overview"
+                                    onclick="lenis.scrollTo('#sc-overview', {offset: -200})"
+                                    class="group flex w-full items-center gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white transition-colors hs-scrollspy-active:bg-secondary"
+                                >
+                                    <svg
+                                        class="size-4 shrink-0 text-secondary group-[.active]:text-primary lg:size-6"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M18.5 17.8V15.5C18.5 15.3667 18.45 15.25 18.35 15.15C18.25 15.05 18.1333 15 18 15C17.8667 15 17.75 15.05 17.65 15.15C17.55 15.25 17.5 15.3667 17.5 15.5V17.8C17.5 17.9333 17.525 18.0583 17.575 18.175C17.625 18.2917 17.7 18.4 17.8 18.5L19.325 20.025C19.425 20.125 19.5417 20.175 19.675 20.175C19.8083 20.175 19.925 20.125 20.025 20.025C20.125 19.925 20.175 19.8083 20.175 19.675C20.175 19.5417 20.125 19.425 20.025 19.325L18.5 17.8ZM5 21C4.45 21 3.97933 20.8043 3.588 20.413C3.19667 20.0217 3.00067 19.5507 3 19V5C3 4.45 3.196 3.97933 3.588 3.588C3.98 3.19667 4.45067 3.00067 5 3H19C19.55 3 20.021 3.196 20.413 3.588C20.805 3.98 21.0007 4.45067 21 5V10C21 10.2833 20.904 10.521 20.712 10.713C20.52 10.905 20.2827 11.0007 20 11C19.7167 11 19.4793 10.904 19.288 10.712C19.0967 10.52 19.0007 10.2827 19 10V5H5V19H10C10.2833 19 10.521 19.096 10.713 19.288C10.905 19.48 11.0007 19.7173 11 20C11 20.2833 10.904 20.521 10.712 20.713C10.52 20.905 10.2827 21.0007 10 21H5ZM5 18V19V5V11.075V11V18ZM7 16C7 16.2833 7.096 16.521 7.288 16.713C7.48 16.905 7.71733 17.0007 8 17H10.075C10.3583 17 10.596 16.904 10.788 16.712C10.98 16.52 11.0757 16.2827 11.075 16C11.075 15.7167 10.9793 15.4793 10.788 15.288C10.5967 15.0967 10.359 15.0007 10.075 15H8C7.71667 15 7.47933 15.096 7.288 15.288C7.09667 15.48 7.00067 15.7173 7 16ZM7 12C7 12.2833 7.096 12.521 7.288 12.713C7.48 12.905 7.71733 13.0007 8 13H13C13.2833 13 13.521 12.904 13.713 12.712C13.905 12.52 14.0007 12.2827 14 12C14 11.7167 13.904 11.4793 13.712 11.288C13.52 11.0967 13.2827 11.0007 13 11H8C7.71667 11 7.47933 11.096 7.288 11.288C7.09667 11.48 7.00067 11.7173 7 12ZM7 8C7 8.28333 7.096 8.521 7.288 8.713C7.48 8.905 7.71733 9.00067 8 9H16C16.2833 9 16.521 8.904 16.713 8.712C16.905 8.52 17.0007 8.28267 17 8C17 7.71667 16.904 7.47933 16.712 7.288C16.52 7.09667 16.2827 7.00067 16 7H8C7.71667 7 7.47933 7.096 7.288 7.288C7.09667 7.48 7.00067 7.71733 7 8ZM18 23C16.6167 23 15.4377 22.5123 14.463 21.537C13.4883 20.5617 13.0007 19.3827 13 18C13 16.6167 13.4877 15.4377 14.463 14.463C15.4383 13.4883 16.6173 13.0007 18 13C19.3833 13 20.5627 13.4877 21.538 14.463C22.5133 15.4383 23.0007 16.6173 23 18C23 19.3833 22.5123 20.5627 21.537 21.538C20.5617 22.5133 19.3827 23.0007 18 23Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
+
+                                    Tour Overview
+                                </a>
+
+                                <a
+                                    href="#sc-highlight"
+                                    onclick="lenis.scrollTo('#sc-highlight', {offset: -200})"
+                                    class="group flex w-full items-center gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white transition-colors hs-scrollspy-active:bg-secondary"
+                                >
+                                    <svg
+                                        class="size-4 shrink-0 text-secondary group-[.active]:text-primary lg:size-6"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M18.5 17.8V15.5C18.5 15.3667 18.45 15.25 18.35 15.15C18.25 15.05 18.1333 15 18 15C17.8667 15 17.75 15.05 17.65 15.15C17.55 15.25 17.5 15.3667 17.5 15.5V17.8C17.5 17.9333 17.525 18.0583 17.575 18.175C17.625 18.2917 17.7 18.4 17.8 18.5L19.325 20.025C19.425 20.125 19.5417 20.175 19.675 20.175C19.8083 20.175 19.925 20.125 20.025 20.025C20.125 19.925 20.175 19.8083 20.175 19.675C20.175 19.5417 20.125 19.425 20.025 19.325L18.5 17.8ZM5 21C4.45 21 3.97933 20.8043 3.588 20.413C3.19667 20.0217 3.00067 19.5507 3 19V5C3 4.45 3.196 3.97933 3.588 3.588C3.98 3.19667 4.45067 3.00067 5 3H19C19.55 3 20.021 3.196 20.413 3.588C20.805 3.98 21.0007 4.45067 21 5V10C21 10.2833 20.904 10.521 20.712 10.713C20.52 10.905 20.2827 11.0007 20 11C19.7167 11 19.4793 10.904 19.288 10.712C19.0967 10.52 19.0007 10.2827 19 10V5H5V19H10C10.2833 19 10.521 19.096 10.713 19.288C10.905 19.48 11.0007 19.7173 11 20C11 20.2833 10.904 20.521 10.712 20.713C10.52 20.905 10.2827 21.0007 10 21H5ZM5 18V19V5V11.075V11V18ZM7 16C7 16.2833 7.096 16.521 7.288 16.713C7.48 16.905 7.71733 17.0007 8 17H10.075C10.3583 17 10.596 16.904 10.788 16.712C10.98 16.52 11.0757 16.2827 11.075 16C11.075 15.7167 10.9793 15.4793 10.788 15.288C10.5967 15.0967 10.359 15.0007 10.075 15H8C7.71667 15 7.47933 15.096 7.288 15.288C7.09667 15.48 7.00067 15.7173 7 16ZM7 12C7 12.2833 7.096 12.521 7.288 12.713C7.48 12.905 7.71733 13.0007 8 13H13C13.2833 13 13.521 12.904 13.713 12.712C13.905 12.52 14.0007 12.2827 14 12C14 11.7167 13.904 11.4793 13.712 11.288C13.52 11.0967 13.2827 11.0007 13 11H8C7.71667 11 7.47933 11.096 7.288 11.288C7.09667 11.48 7.00067 11.7173 7 12ZM7 8C7 8.28333 7.096 8.521 7.288 8.713C7.48 8.905 7.71733 9.00067 8 9H16C16.2833 9 16.521 8.904 16.713 8.712C16.905 8.52 17.0007 8.28267 17 8C17 7.71667 16.904 7.47933 16.712 7.288C16.52 7.09667 16.2827 7.00067 16 7H8C7.71667 7 7.47933 7.096 7.288 7.288C7.09667 7.48 7.00067 7.71733 7 8ZM18 23C16.6167 23 15.4377 22.5123 14.463 21.537C13.4883 20.5617 13.0007 19.3827 13 18C13 16.6167 13.4877 15.4377 14.463 14.463C15.4383 13.4883 16.6173 13.0007 18 13C19.3833 13 20.5627 13.4877 21.538 14.463C22.5133 15.4383 23.0007 16.6173 23 18C23 19.3833 22.5123 20.5627 21.537 21.538C20.5617 22.5133 19.3827 23.0007 18 23Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
+
+                                    Tour Highlight
+                                </a>
+
+                                <a
+                                    href="#sc-inclusion-exclusion"
+                                    onclick="lenis.scrollTo('#sc-inclusion-exclusion', {offset: -200})"
+                                    class="group flex w-full items-center gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white transition-colors hs-scrollspy-active:bg-secondary"
+                                >
+                                    <svg
+                                        class="size-4 shrink-0 text-secondary group-[.active]:text-primary lg:size-6"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M10.5 16.0605L6.75 12.3098L7.80975 11.25L10.5 13.9395L16.1887 8.25L17.25 9.31125L10.5 16.0605Z"
+                                            fill="currentColor"
+                                        />
+                                        <path
+                                            d="M12 1.5C9.9233 1.5 7.89323 2.11581 6.16652 3.26957C4.4398 4.42332 3.09399 6.0632 2.29927 7.98182C1.50455 9.90045 1.29661 12.0116 1.70176 14.0484C2.1069 16.0852 3.10693 17.9562 4.57538 19.4246C6.04383 20.8931 7.91476 21.8931 9.95156 22.2982C11.9884 22.7034 14.0996 22.4955 16.0182 21.7007C17.9368 20.906 19.5767 19.5602 20.7304 17.8335C21.8842 16.1068 22.5 14.0767 22.5 12C22.5 9.21523 21.3938 6.54451 19.4246 4.57538C17.4555 2.60625 14.7848 1.5 12 1.5ZM12 21C10.22 21 8.47992 20.4722 6.99987 19.4832C5.51983 18.4943 4.36628 17.0887 3.68509 15.4442C3.0039 13.7996 2.82567 11.99 3.17294 10.2442C3.5202 8.49836 4.37737 6.89471 5.63604 5.63604C6.89472 4.37737 8.49836 3.5202 10.2442 3.17293C11.99 2.82567 13.7996 3.0039 15.4442 3.68508C17.0887 4.36627 18.4943 5.51983 19.4832 6.99987C20.4722 8.47991 21 10.22 21 12C21 14.3869 20.0518 16.6761 18.364 18.364C16.6761 20.0518 14.387 21 12 21Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
+
+                                    Tour Inclusion/ Exclusion
+                                </a>
+
+                                <a
+                                    href="#sc-itinerary"
+                                    onclick="lenis.scrollTo('#sc-itinerary', {offset: -200})"
+                                    class="group flex w-full items-center gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white transition-colors hs-scrollspy-active:bg-secondary"
+                                >
+                                    <svg
+                                        class="size-4 shrink-0 text-secondary group-[.active]:text-primary lg:size-6"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M19.5469 1.51172H21V24H3V1.51172H4.47656V0H5.97656V1.51172H9V0H10.5V1.51172H13.5234V0H15.0234V1.51172H18.0469V0H19.5469V1.51172ZM19.5 22.5V3.01172H4.5V22.5H19.5ZM16.5 6.01172V7.51172H7.5V6.01172H16.5ZM7.5 19.5234V18.0234H16.5V19.5234H7.5ZM7.5 13.5117V12.0117H16.5V13.5117H7.5Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
+
+                                    Tour Itinerary
+                                </a>
+
+                                <a
+                                    href="#sc-packing-tips"
+                                    onclick="lenis.scrollTo('#sc-packing-tips', {offset: -200})"
+                                    class="group flex w-full items-center gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white transition-colors hs-scrollspy-active:bg-secondary"
+                                >
+                                    <svg
+                                        class="size-4 shrink-0 text-secondary group-[.active]:text-primary lg:size-6"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M2.87813 1.1875C4.40203 2.73156 5.42859 4.52312 6.24891 6.30203C6.47859 5.73953 6.59109 5.26141 7.13484 4.78797C9.33797 6.03016 9.96141 6.81766 10.1536 8.55672H13.2848C13.3692 6.86922 13.6411 5.91766 14.9958 4.675C15.7411 5.25672 15.9333 5.93641 16.313 6.58328C16.7114 4.75984 18.0614 2.77328 19.9083 1.80719C17.4473 1.26531 14.8223 1.78703 12.7223 2.62937C13.1583 2.92891 13.7864 3.15578 13.9833 3.54344C13.0927 4.00234 12.1317 5.52859 11.5833 6.79422C10.9223 5.61766 9.54422 4.28922 8.20828 3.62359C8.74734 3.08078 9.28641 2.88344 9.82547 2.55062C8.27859 1.68953 5.50828 1.26297 2.87813 1.1875ZM3.29297 9.40047L1.35938 14.5567H6.45984L8.39109 9.40047H3.29297ZM9.60984 9.40047L11.5411 14.5567H22.6411L20.7098 9.40047H9.60984ZM8.57859 11.3036L7.04109 15.4005H3.42234V22.8067H8.57859V11.3036ZM9.42234 11.3036V22.8067H20.5786V15.4005H10.9598L9.42234 11.3036Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
+
+                                    Packing Tips
+                                </a>
+
+                                <a
+                                    href="#sc-map"
+                                    onclick="lenis.scrollTo('#sc-map', {offset: -200})"
+                                    class="group flex w-full items-center gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white transition-colors hs-scrollspy-active:bg-secondary"
+                                >
+                                    <svg
+                                        class="size-4 shrink-0 text-secondary group-[.active]:text-primary lg:size-6"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <g clip-path="url(#clip0_623_18991)">
+                                            <path
+                                                d="M19.4628 2.32826C20.2464 2.94266 20.7864 3.93506 21.0072 4.97426C21.0339 4.98272 21.06 4.99315 21.0852 5.00546L23.5392 6.14066C23.6764 6.20365 23.7926 6.30457 23.8743 6.43152C23.956 6.55846 23.9996 6.70612 24 6.85706V21.6975C23.9991 21.8207 23.9697 21.9421 23.914 22.0521C23.8584 22.1621 23.778 22.2577 23.6791 22.3314C23.5803 22.4051 23.4658 22.4549 23.3445 22.477C23.2232 22.499 23.0984 22.4926 22.98 22.4583L16.1772 20.5383L8.0892 22.7679C7.94327 22.8079 7.78903 22.8063 7.644 22.7631L0.5688 20.6571C0.405265 20.609 0.261588 20.5095 0.159114 20.3733C0.0566412 20.2371 0.000839592 20.0715 0 19.9011L0 4.79426C0 4.26626 0.5136 3.88706 1.026 4.03586L7.8684 6.02906L11.346 4.96466C11.3939 4.95053 11.4428 4.94049 11.4924 4.93466C11.6268 4.14746 12.0024 3.39146 12.6324 2.65466C13.38 1.77866 14.6916 1.26506 15.9696 1.20386C17.2956 1.14026 18.3084 1.42346 19.4616 2.32706M1.5996 5.85386V19.3119L7.4436 21.0507V7.55426L1.5996 5.85386ZM11.4504 6.59066L9.0432 7.32626V20.8611L15.1212 19.1883V15.2343C15.1212 14.7975 15.48 14.4435 15.9216 14.4435C16.3632 14.4435 16.7208 14.7975 16.7208 15.2355V19.0479L22.4004 20.6499V7.35986L21.0564 6.73586C21.0336 6.86786 21.0048 6.99746 20.9688 7.12346C20.7079 8.04357 20.2701 8.90401 19.68 9.65666L16.7076 13.3683C16.6293 13.4658 16.5294 13.5438 16.4157 13.596C16.302 13.6482 16.1777 13.6731 16.0527 13.6688C15.9277 13.6645 15.8054 13.631 15.6955 13.5712C15.5857 13.5113 15.4914 13.4266 15.42 13.3239L12.642 9.30026C12.1836 8.65946 11.862 8.08826 11.6808 7.57706C11.5671 7.258 11.4898 6.92709 11.4504 6.59066ZM16.0464 2.78546C15.1752 2.82746 14.28 3.17786 13.854 3.67586C13.3416 4.27586 13.0896 4.83746 13.0392 5.40626C12.9792 6.09146 13.02 6.57506 13.1904 7.05386C13.3164 7.40786 13.5672 7.85666 13.9548 8.39786L16.128 11.5443L18.42 8.68226C18.8824 8.09132 19.2252 7.41593 19.4292 6.69386C19.7172 5.68586 19.2828 4.20506 18.4692 3.56906C17.6352 2.91506 17.0052 2.73866 16.0476 2.78546M16.2132 3.62186C17.538 3.62186 18.6132 4.68386 18.6132 5.99426C18.6115 6.30764 18.548 6.61762 18.4265 6.90647C18.3049 7.19532 18.1276 7.45739 17.9047 7.67771C17.6819 7.89802 17.4177 8.07226 17.1275 8.19047C16.8373 8.30869 16.5266 8.36856 16.2132 8.36666C14.8884 8.36666 13.8132 7.30466 13.8132 5.99426C13.8132 4.68386 14.8884 3.62186 16.2132 3.62186ZM16.2132 5.20346C16.1087 5.20283 16.0051 5.22278 15.9084 5.26218C15.8116 5.30158 15.7235 5.35965 15.6492 5.43309C15.5749 5.50652 15.5158 5.59387 15.4752 5.69016C15.4346 5.78645 15.4134 5.88978 15.4128 5.99426C15.4128 6.43106 15.7716 6.78506 16.2132 6.78506C16.3177 6.78553 16.4212 6.76542 16.5179 6.72588C16.6146 6.68633 16.7026 6.62813 16.7768 6.55458C16.851 6.48104 16.91 6.3936 16.9505 6.29725C16.9909 6.2009 17.0119 6.09754 17.0124 5.99306C17.0108 5.78247 16.9258 5.5811 16.776 5.43309C16.6262 5.28508 16.4238 5.2025 16.2132 5.20346Z"
+                                                fill="currentColor"
+                                            />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_623_18991">
+                                                <rect width="24" height="24" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+
+                                    Tour Map
+                                </a>
+
+                                <a
+                                    href="#sc-features"
+                                    onclick="lenis.scrollTo('#sc-features', {offset: -200})"
+                                    class="group flex w-full items-center gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white transition-colors hs-scrollspy-active:bg-secondary"
+                                >
+                                    <svg
+                                        class="size-4 shrink-0 text-secondary group-[.active]:text-primary lg:size-6"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <g clip-path="url(#clip0_623_18987)">
+                                            <path
+                                                fill-rule="evenodd"
+                                                clip-rule="evenodd"
+                                                d="M21.75 12C21.75 14.5859 20.7228 17.0658 18.8943 18.8943C17.0658 20.7228 14.5859 21.75 12 21.75C9.41414 21.75 6.93419 20.7228 5.10571 18.8943C3.27723 17.0658 2.25 14.5859 2.25 12C2.25 9.41414 3.27723 6.93419 5.10571 5.10571C6.93419 3.27723 9.41414 2.25 12 2.25C14.5859 2.25 17.0658 3.27723 18.8943 5.10571C20.7228 6.93419 21.75 9.41414 21.75 12ZM24 12C24 15.1826 22.7357 18.2348 20.4853 20.4853C18.2348 22.7357 15.1826 24 12 24C8.8174 24 5.76516 22.7357 3.51472 20.4853C1.26428 18.2348 0 15.1826 0 12C0 8.8174 1.26428 5.76516 3.51472 3.51472C5.76516 1.26428 8.8174 0 12 0C15.1826 0 18.2348 1.26428 20.4853 3.51472C22.7357 5.76516 24 8.8174 24 12ZM13.032 4.803C12.9447 4.60184 12.8005 4.43057 12.6172 4.31028C12.4338 4.18998 12.2193 4.12589 12 4.12589C11.7807 4.12589 11.5662 4.18998 11.3828 4.31028C11.1995 4.43057 11.0553 4.60184 10.968 4.803L9.399 8.4195L5.4735 8.7945C5.25511 8.81533 5.04758 8.89955 4.87645 9.03681C4.70531 9.17406 4.57804 9.35836 4.51029 9.56701C4.44255 9.77567 4.43729 9.99958 4.49516 10.2112C4.55302 10.4228 4.6715 10.6129 4.836 10.758L7.791 13.368L6.9345 17.2155C6.88649 17.4296 6.90216 17.6532 6.97959 17.8585C7.05701 18.0639 7.19281 18.2421 7.37026 18.3712C7.54771 18.5004 7.75906 18.5748 7.97827 18.5853C8.19748 18.5959 8.41499 18.542 8.604 18.4305L12 16.425L15.396 18.429C15.5849 18.5404 15.8022 18.5941 16.0212 18.5836C16.2403 18.5731 16.4514 18.4988 16.6288 18.3699C16.8062 18.241 16.942 18.063 17.0196 17.8579C17.0972 17.6528 17.1131 17.4295 17.0655 17.2155L16.209 13.368L19.164 10.758C19.329 10.613 19.4479 10.4228 19.5061 10.2109C19.5642 9.99909 19.5591 9.77486 19.4913 9.5659C19.4235 9.35693 19.296 9.17239 19.1246 9.03505C18.9531 8.8977 18.7452 8.81356 18.5265 8.793L14.601 8.4195L13.032 4.803ZM11.199 9.924L12 8.079L12.801 9.924C12.8809 10.1088 13.0089 10.2688 13.1717 10.3873C13.3345 10.5057 13.5261 10.5783 13.7265 10.5975L15.7305 10.788L14.2215 12.12C14.0704 12.2532 13.9578 12.4245 13.8956 12.6161C13.8333 12.8077 13.8236 13.0124 13.8675 13.209L14.3055 15.174L12.5715 14.1495C12.3984 14.0474 12.201 13.9935 12 13.9935C11.799 13.9935 11.6016 14.0474 11.4285 14.1495L9.6945 15.1725L10.1325 13.2075C10.1761 13.0111 10.1663 12.8067 10.104 12.6154C10.0417 12.4241 9.92934 12.2531 9.7785 12.12L8.2695 10.788L10.2735 10.5975C10.4739 10.5783 10.6655 10.5057 10.8283 10.3873C10.9911 10.2688 11.1191 10.1088 11.199 9.924Z"
+                                                fill="currentColor"
+                                            />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_623_18987">
+                                                <rect width="24" height="24" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+
+                                    Tour Features
+                                </a>
+
+                                <a
+                                    href="#sc-gallery"
+                                    onclick="lenis.scrollTo('#sc-gallery', {offset: -200})"
+                                    class="group flex w-full items-center gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white transition-colors hs-scrollspy-active:bg-secondary"
+                                >
+                                    <svg
+                                        class="size-4 shrink-0 text-secondary group-[.active]:text-primary lg:size-6"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M18 8C18 8.53043 17.7893 9.03914 17.4142 9.41421C17.0391 9.78929 16.5304 10 16 10C15.4696 10 14.9609 9.78929 14.5858 9.41421C14.2107 9.03914 14 8.53043 14 8C14 7.46957 14.2107 6.96086 14.5858 6.58579C14.9609 6.21071 15.4696 6 16 6C16.5304 6 17.0391 6.21071 17.4142 6.58579C17.7893 6.96086 18 7.46957 18 8Z"
+                                            fill="currentColor"
+                                        />
+                                        <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M12.057 1.25H11.943C9.634 1.25 7.825 1.25 6.413 1.44C4.969 1.634 3.829 2.04 2.934 2.934C2.039 3.829 1.634 4.969 1.44 6.414C1.25 7.825 1.25 9.634 1.25 11.943V12.057C1.25 14.366 1.25 16.175 1.44 17.587C1.634 19.031 2.04 20.171 2.934 21.066C3.829 21.961 4.969 22.366 6.414 22.56C7.825 22.75 9.634 22.75 11.943 22.75H12.057C14.366 22.75 16.175 22.75 17.587 22.56C19.031 22.366 20.171 21.96 21.066 21.066C21.961 20.171 22.366 19.031 22.56 17.586C22.75 16.175 22.75 14.366 22.75 12.057V11.943C22.75 9.634 22.75 7.825 22.56 6.413C22.366 4.969 21.96 3.829 21.066 2.934C20.171 2.039 19.031 1.634 17.586 1.44C16.175 1.25 14.366 1.25 12.057 1.25ZM3.995 3.995C4.565 3.425 5.335 3.098 6.614 2.926C7.914 2.752 9.622 2.75 12 2.75C14.378 2.75 16.086 2.752 17.386 2.926C18.665 3.098 19.436 3.426 20.006 3.995C20.575 4.565 20.902 5.335 21.074 6.614C21.248 7.914 21.25 9.622 21.25 12L21.249 13.28L21.027 13.25C18.183 12.856 15.581 14.334 14.255 16.563C12.545 12.238 8.028 9.288 2.981 10.013L2.755 10.045C2.766 8.64 2.804 7.526 2.926 6.614C3.098 5.335 3.426 4.565 3.995 3.995Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
+
+                                    Tour Gallery
+                                </a>
+
+                                <a
+                                    href="#sc-information"
+                                    onclick="lenis.scrollTo('#sc-information', {offset: -200})"
+                                    class="group flex w-full items-center gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white transition-colors hs-scrollspy-active:bg-secondary"
+                                >
+                                    <svg
+                                        class="size-4 shrink-0 text-secondary group-[.active]:text-primary lg:size-6"
+                                        width="24"
+                                        height="25"
+                                        viewBox="0 0 24 25"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M11 17.5H13V11.5H11V17.5ZM12 9.5C12.2833 9.5 12.521 9.404 12.713 9.212C12.905 9.02 13.0007 8.78267 13 8.5C13 8.21667 12.904 7.97933 12.712 7.788C12.52 7.59667 12.2827 7.50067 12 7.5C11.7167 7.5 11.4793 7.596 11.288 7.788C11.0967 7.98 11.0007 8.21733 11 8.5C11 8.78333 11.096 9.021 11.288 9.213C11.48 9.405 11.7173 9.50067 12 9.5ZM12 22.5C10.6167 22.5 9.31667 22.2373 8.1 21.712C6.88333 21.1867 5.825 20.4743 4.925 19.575C4.025 18.675 3.31267 17.6167 2.788 16.4C2.26333 15.1833 2.00067 13.8833 2 12.5C2 11.1167 2.26267 9.81667 2.788 8.6C3.31333 7.38333 4.02567 6.325 4.925 5.425C5.825 4.525 6.88333 3.81267 8.1 3.288C9.31667 2.76333 10.6167 2.50067 12 2.5C13.3833 2.5 14.6833 2.76267 15.9 3.288C17.1167 3.81333 18.175 4.52567 19.075 5.425C19.975 6.325 20.6877 7.38333 21.213 8.6C21.7383 9.81667 22.0007 11.1167 22 12.5C22 13.8833 21.7373 15.1833 21.212 16.4C20.6867 17.6167 19.9743 18.675 19.075 19.575C18.175 20.475 17.1167 21.1877 15.9 21.713C14.6833 22.2383 13.3833 22.5007 12 22.5ZM12 20.5C14.2333 20.5 16.125 19.725 17.675 18.175C19.225 16.625 20 14.7333 20 12.5C20 10.2667 19.225 8.375 17.675 6.825C16.125 5.275 14.2333 4.5 12 4.5C9.76667 4.5 7.875 5.275 6.325 6.825C4.775 8.375 4 10.2667 4 12.5C4 14.7333 4.775 16.625 6.325 18.175C7.875 19.725 9.76667 20.5 12 20.5Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
+
+                                    Essential Tip Information
+                                </a>
+                            </div>
+
+                            <div class="hs-accordion-group">
+                                <div
+                                    class="hs-accordion border-transparent hs-accordion-active:border-gray"
+                                    id="accordion-2"
+                                >
+                                    <button
+                                        class="hs-accordion-toggle flex w-full items-center justify-between gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white hs-accordion-active:bg-secondary"
+                                    >
+                        <span class="flex items-center gap-3">
+                          <svg
+                              class="size-4 text-secondary hs-accordion-active:text-primary lg:size-6"
+                          >
+                            <use
+                                href="./assets/images/icons/sprite.svg#task"
+                            ></use>
+                          </svg>
+
+                          Send an Inquiry
+                        </span>
+
+                                        <svg
+                                            class="block size-4 hs-accordion-active:hidden"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="3"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M5 12h14" />
+                                            <path d="M12 5v14" />
+                                        </svg>
+                                        <svg
+                                            class="hidden size-4 hs-accordion-active:block"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="3"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M5 12h14" />
+                                        </svg>
+                                    </button>
+                                    <div
+                                        class="hs-accordion-content accordion-content-wrapper hidden"
+                                    >
+                                        <div class="px-2 pb-2">
+                                            <!-- Stepper -->
+                                            <div
+                                                data-hs-stepper
+                                                class="overflow-y-auto overflow-x-hidden px-6 py-8 max-lg:max-h-[35rem]"
+                                                data-lenis-prevent
+                                            >
+                                                <ul
+                                                    class="relative mx-auto flex max-w-[225px] flex-row gap-x-2 hs-stepper-completed:hidden"
+                                                >
+                                                    <li
+                                                        class="active group flex-1 shrink basis-0"
+                                                        data-hs-stepper-nav-item='{ "index": 1 }'
+                                                    >
+                                                        <div
+                                                            class="inline-flex min-h-7 w-full min-w-7 items-center align-middle text-xs"
+                                                        >
+                                  <span
+                                      class="flex size-7 flex-shrink-0 items-center justify-center rounded-full bg-secondary font-medium text-white group-focus:bg-gray-200"
+                                  >
+                                    <span
+                                        class="hs-stepper-success:hidden hs-stepper-completed:hidden"
+                                    >1</span
+                                    >
+                                    <svg
+                                        class="hidden size-3 flex-shrink-0 text-white hs-stepper-success:block"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                      <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                  </span>
+                                                            <div
+                                                                class="ms-2 h-0.5 w-full flex-1 bg-gray-200 group-last:hidden hs-stepper-success:bg-secondary"
+                                                            ></div>
+                                                        </div>
+                                                    </li>
+                                                    <li
+                                                        class="group shrink basis-0"
+                                                        data-hs-stepper-nav-item='{ "index": 2 }'
+                                                    >
+                                                        <div
+                                                            class="inline-flex min-h-7 w-full min-w-7 items-center align-middle text-xs"
+                                                        >
+                                  <span
+                                      class="flex size-7 flex-shrink-0 items-center justify-center rounded-full border border-gray-100 font-medium text-gray group-[.active]:border-secondary group-[.active]:bg-secondary group-[.active]:text-white"
+                                  >
+                                    <span
+                                        class="hs-stepper-success:hidden hs-stepper-completed:hidden"
+                                    >2</span
+                                    >
+                                    <svg
+                                        class="hidden size-3 flex-shrink-0 text-white hs-stepper-success:block"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                      <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                  </span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="mt-5 sm:mt-8">
+                                                    <!-- First Contnet -->
+                                                    <div
+                                                        data-hs-stepper-content-item='{ "index": 1 }'
+                                                    >
+                                                        <p class="mb-8 flex items-center gap-2">
+                                  <span
+                                      class="inline-flex size-7 items-center justify-center rounded-full bg-secondary text-white"
+                                  >1</span
+                                  >
+                                                            <span
+                                                                class="text-lg font-semibold text-primary lg:text-xl"
+                                                            >Your Information</span
+                                                            >
+                                                        </p>
+
+                                                        <form class="form w-full">
+                                                            <div class="space-y-6">
+                                                                <div class="flex gap-2">
+                                                                    <div
+                                                                        class="relative max-w-[80px] shrink-0"
+                                                                    >
+                                                                        <label
+                                                                            for="title"
+                                                                            class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
+                                                                        >Title</label
+                                                                        >
+                                                                        <select
+                                                                            id="title"
+                                                                            type="text"
+                                                                            class="rounded-xl border border-primary bg-transparent p-3 text-sm text-black outline-none placeholder:text-gray"
+                                                                            placeholder="Your Name"
+                                                                        >
+                                                                            <option value="mr">Mr.</option>
+                                                                            <option value="ms">Ms.</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="relative flex-1">
+                                                                        <label
+                                                                            for="name"
+                                                                            class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
+                                                                        >Name</label
+                                                                        >
+                                                                        <input
+                                                                            id="name"
+                                                                            type="text"
+                                                                            class="w-full rounded-xl border border-primary p-3 text-sm text-black outline-none placeholder:text-gray"
+                                                                            placeholder="Your Name"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="relative">
+                                                                    <label
+                                                                        for="email"
+                                                                        class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
+                                                                    >Email</label
+                                                                    >
+                                                                    <input
+                                                                        id="email"
+                                                                        type="text"
+                                                                        class="w-full rounded-xl border border-primary p-3 text-sm text-black outline-none placeholder:text-gray"
+                                                                        placeholder="Your Name"
+                                                                    />
+                                                                </div>
+                                                                <div class="relative">
+                                                                    <label
+                                                                        for="nationality"
+                                                                        class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
+                                                                    >Nationality</label
+                                                                    >
+                                                                    <select
+                                                                        id="nationality"
+                                                                        type="text"
+                                                                        class="wf w-full rounded-xl border border-primary bg-transparent p-3 text-sm text-black outline-none placeholder:text-gray"
+                                                                        placeholder="Your Name"
+                                                                    >
+                                                                        <option hidden>Your Nationality</option>
+                                                                        <option>Egyption</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div
+                                                                    class="relative flex-1 rounded-xl border border-primary px-4 py-3 text-sm"
+                                                                >
+                                                                    <label
+                                                                        for="tel"
+                                                                        class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
+                                                                    >Phone Number</label
+                                                                    >
+                                                                    <div class="flex items-center gap-3">
+                                                                        <select
+                                                                            name="countries"
+                                                                            class="block border-e-2 border-gray bg-transparent pe-2"
+                                                                        >
+                                                                            <option value="NL">🇳🇱</option>
+                                                                            <option value="DE">🇩🇪</option>
+                                                                            <option value="FR">🇫🇷</option>
+                                                                            <option value="ES">🇪🇸</option>
+                                                                        </select>
+
+                                                                        <input
+                                                                            id="tel"
+                                                                            type="text"
+                                                                            class="w-full flex-1 text-black outline-none placeholder:text-gray"
+                                                                            placeholder="Enter your phone number"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- End First Contnet -->
+
+                                                    <!-- Second Contnet -->
+                                                    <div
+                                                        data-hs-stepper-content-item='{ "index": 2 }'
+                                                        style="display: none"
+                                                    >
+                                                        <p
+                                                            class="mb-8 flex items-center gap-4 lg:gap-2"
+                                                        >
+                                  <span
+                                      class="inline-flex size-7 items-center justify-center rounded-full bg-secondary text-white"
+                                  >2</span
+                                  >
+                                                            <span
+                                                                class="text-lg font-semibold text-primary lg:text-xl"
+                                                            >Tour Information</span
+                                                            >
+                                                        </p>
+
+                                                        <form class="form w-full">
+                                                            <div class="space-y-6">
+                                                                <div class="relative flex-1">
+                                                                    <label
+                                                                        for="arrival-date"
+                                                                        class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
+                                                                    >Arrival Date</label
+                                                                    >
+                                                                    <input
+                                                                        id="arrival-date"
+                                                                        type="date"
+                                                                        class="w-full rounded-xl border border-primary px-4 py-3 text-gray outline-none placeholder:text-gray"
+                                                                    />
+                                                                </div>
+                                                                <div class="relative flex-1">
+                                                                    <label
+                                                                        for="departure-date"
+                                                                        class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
+                                                                    >Departure Date</label
+                                                                    >
+                                                                    <input
+                                                                        id="departure-date"
+                                                                        type="date"
+                                                                        class="w-full rounded-xl border border-primary px-4 py-3 text-gray outline-none placeholder:text-gray"
+                                                                    />
+                                                                </div>
+                                                                <div class="relative flex-1">
+                                                                    <label
+                                                                        for="accommodation"
+                                                                        class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
+                                                                    >Accommodation Choice</label
+                                                                    >
+                                                                    <select
+                                                                        id="accommodation"
+                                                                        type="text"
+                                                                        class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
+                                                                        placeholder="Your Name"
+                                                                    >
+                                                                        <option hidden>
+                                                                            Accommodation Choice
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                                <div
+                                                                    class="flex w-full flex-1 justify-center gap-x-4"
+                                                                >
+                                                                    <div class="flex-1">
+                                                                        <p
+                                                                            class="mb-2 text-center text-primary"
+                                                                        >
+                                                                            Adults
+                                                                        </p>
+                                                                        <div
+                                                                            class="flex items-center justify-center gap-4"
+                                                                        >
+                                                                            <button
+                                                                                type="button"
+                                                                                class="inline-flex size-9 items-center justify-center rounded-md border border-primary text-primary hover:bg-primary hover:text-white"
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <span class="text-black">1</span>
+                                                                            <button
+                                                                                type="button"
+                                                                                class="inline-flex size-9 items-center justify-center rounded-md border border-primary text-primary hover:bg-primary hover:text-white"
+                                                                            >
+                                                                                -
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="flex-1">
+                                                                        <p
+                                                                            class="mb-2 text-center text-primary"
+                                                                        >
+                                                                            Children
+                                                                        </p>
+                                                                        <div
+                                                                            class="flex items-center justify-center gap-4"
+                                                                        >
+                                                                            <button
+                                                                                type="button"
+                                                                                class="inline-flex size-9 items-center justify-center rounded-md border border-primary text-primary hover:bg-primary hover:text-white"
+                                                                            >
+                                                                                +
+                                                                            </button>
+                                                                            <span class="text-black">1</span>
+                                                                            <button
+                                                                                type="button"
+                                                                                class="inline-flex size-9 items-center justify-center rounded-md border border-primary text-primary hover:bg-primary hover:text-white"
+                                                                            >
+                                                                                -
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- End Second Contnet -->
+
+                                                    <!-- Button Group -->
+                                                    <div
+                                                        class="mt-5 flex items-center justify-center gap-x-4"
+                                                    >
+                                                        <button
+                                                            type="button"
+                                                            class="inline-block rounded-lg border border-primary bg-white px-4 py-2 font-medium text-primary hover:bg-primary hover:text-white disabled:pointer-events-none disabled:opacity-50 lg:text-xl"
+                                                            data-hs-stepper-back-btn
+                                                        >
+                                                            Back
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            class="inline-block rounded-lg bg-primary px-4 py-2 font-medium text-white hover:bg-opacity-75 disabled:pointer-events-none disabled:opacity-50 lg:text-xl"
+                                                            data-hs-stepper-next-btn
+                                                        >
+                                                            Next
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            class="inline-block rounded-lg border border-transparent bg-primary px-4 py-2 font-medium text-white hover:bg-opacity-75 disabled:pointer-events-none disabled:opacity-50 lg:text-xl"
+                                                            data-hs-stepper-finish-btn
+                                                            data-hs-overlay="#success-model"
+                                                            style="display: none"
+                                                        >
+                                                            Submit
+                                                        </button>
+                                                    </div>
+                                                    <!-- End Button Group -->
+                                                </div>
+                                            </div>
+                                            <!-- End Stepper -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:flex-1">
+                        <div class="top-0 z-30 mb-6 bg-white py-4 lg:sticky lg:mb-10">
+                            <div
+                                class="mb-4 flex flex-row items-center justify-between gap-2"
+                            >
+                                <p class="section_heading text-primary">
+                                    <span>{{$tour->overview_values('location_to')}}</span>, {{$tour->overview_values('location_from')}} Tour
+                                </p>
+
+                                <div
+                                    class="z-10 flex items-center justify-between gap-2 bg-white max-lg:fixed max-lg:inset-x-0 max-lg:bottom-0 max-lg:px-4 max-lg:py-2"
+                                >
+                      <span
+                          class="rounded-md bg-primary px-5 py-3 text-sm text-white lg:text-xl"
+                      >From {{$tour->getPrice()}}$</span
+                      >
+                                    <div class="flex items-center gap-2">
+                                        <button
+                                            type="button"
+                                            data-hs-overlay="#customize-tour"
+                                            class="rounded-md bg-primary px-5 py-3 text-sm text-white shadow-md transition-colors hover:bg-secondary lg:text-xl"
+                                        >
+                                            Send an Inquiry
+                                        </button>
+                                        <button type="button">
+                                            <img
+                                                src="./assets/images/icons/share.svg"
+                                                class="size-6 lg:size-8"
+                                                alt=""
+                                            />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="flex flex-row items-baseline gap-3 lg:items-center"
+                            >
+                                <div class="flex items-center gap-x-px">
+                                    <svg class="size-4 text-secondary">
+                                        <use href="./assets/images/icons/sprite.svg#star"></use>
+                                    </svg>
+                                    <svg class="size-4 text-secondary">
+                                        <use href="./assets/images/icons/sprite.svg#star"></use>
+                                    </svg>
+                                    <svg class="size-4 text-secondary">
+                                        <use href="./assets/images/icons/sprite.svg#star"></use>
+                                    </svg>
+                                    <svg class="size-4 text-secondary">
+                                        <use href="./assets/images/icons/sprite.svg#star"></use>
+                                    </svg>
+                                    <svg class="size-4 text-gray-200">
+                                        <use href="./assets/images/icons/sprite.svg#star"></use>
+                                    </svg>
+                                </div>
+                                <p class="lg:text-xl">
+                                    {{$tour->rate}}, Wonderful
+                                    <span class="text-gray">({{$tour->reviews}} Reviews)</span> &#124; {{$tour->name}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="scrollspy-1" class="space-y-4 lg:space-y-5.5">
+                            <div class="items-start lg:grid lg:grid-cols-8 lg:gap-8">
+                                <div
+                                    class="h-[400px] max-lg:mb-8 lg:col-span-6 lg:h-[650px]"
+                                >
+                                    <div class="swiper gallery size-full">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide h-full">
+                                                <div class="h-full overflow-hidden rounded-xl">
+                                                    <img
+                                                        src="{{$tour->photo}}"
+                                                        class="size-full object-cover object-center"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            </div>
+                                            @foreach($tour->galleries as $image)
+                                                <div class="swiper-slide h-full">
+                                                    <div class="h-full overflow-hidden rounded-xl">
+                                                        <img
+                                                            src="{{$image->photo}}"
+                                                            class="size-full object-cover object-center"
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="h-[150px] lg:col-span-2 lg:h-[650px]">
+                                    <div class="swiper thumbs size-full flex-1">
+                                        <div class="swiper-wrapper h-full">
+                                            <div
+                                                class="swiper-slide group h-full cursor-pointer rounded-2xl"
+                                            >
+                                                <img
+                                                    src="{{$tour->photo}}"
+                                                    class="size-full rounded-2xl border-2 border-transparent object-cover object-center transition-colors hover:border-primary lg:border-4"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            @foreach($tour->galleries as $image)
+                                                <div
+                                                    class="swiper-slide group h-full cursor-pointer rounded-2xl"
+                                                >
+                                                    <img
+                                                        src="{{$image->photo}}"
+                                                        class="size-full rounded-2xl border-2 border-transparent object-cover object-center transition-colors hover:border-primary lg:border-4"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            @endforeach
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                id="sc-overview"
+                                class="rounded-xl border border-primary p-4 pb-12 lg:rounded-3xl lg:p-6"
+                            >
+                                <h3
+                                    class="mb-8 text-lg font-semibold text-primary lg:text-xl"
+                                >
+                                    <span class="text-secondary">Tour</span> Overview
+                                </h3>
+
+                                <div
+                                    class="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-center lg:justify-evenly"
+                                >
+                                    <div>
+                                        <div
+                                            class="mb-3 inline-flex size-14 items-center justify-center rounded-full border border-primary lg:size-20"
+                                        >
+                                            <svg class="size-6 text-primary lg:size-10">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#clipboard-text-time"
+                                                ></use>
+                                            </svg>
+                                        </div>
+                                        <p
+                                            class="mb-4 text-lg font-semibold text-primary lg:text-xl"
+                                        >
+                                            Duration
+                                        </p>
+                                        <p class="font-medium">5 Days/ 4 Nights</p>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="mb-3 inline-flex size-14 items-center justify-center rounded-full border border-primary lg:size-20"
+                                        >
+                                            <svg class="size-6 text-primary lg:size-10">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#location"
+                                                ></use>
+                                            </svg>
+                                        </div>
+                                        <p
+                                            class="mb-4 text-lg font-semibold text-primary lg:text-xl"
+                                        >
+                                            Location
+                                        </p>
+                                        <p class="font-medium">Cairo, Luxor</p>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="mb-3 inline-flex size-14 items-center justify-center rounded-full border border-primary lg:size-20"
+                                        >
+                                            <svg class="size-6 text-primary lg:size-10">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#travel-card"
+                                                ></use>
+                                            </svg>
+                                        </div>
+                                        <p
+                                            class="mb-4 text-lg font-semibold text-primary lg:text-xl"
+                                        >
+                                            Tour Type
+                                        </p>
+                                        <p class="font-medium">Classic Tour</p>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="mb-3 inline-flex size-14 items-center justify-center rounded-full border border-primary lg:size-20"
+                                        >
+                                            <svg class="size-6 text-primary lg:size-10">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#event-available"
+                                                ></use>
+                                            </svg>
+                                        </div>
+                                        <p
+                                            class="mb-4 text-lg font-semibold text-primary lg:text-xl"
+                                        >
+                                            Availability
+                                        </p>
+                                        <p class="font-medium">Everyday</p>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="mb-3 inline-flex size-14 items-center justify-center rounded-full border border-primary lg:size-20"
+                                        >
+                                            <svg class="size-6 text-primary lg:size-10">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#group-3"
+                                                ></use>
+                                            </svg>
+                                        </div>
+                                        <p
+                                            class="mb-4 text-lg font-semibold text-primary lg:text-xl"
+                                        >
+                                            Group Size
+                                        </p>
+                                        <p class="font-medium">Private Tour</p>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="mb-3 inline-flex size-14 items-center justify-center rounded-full border border-primary lg:size-20"
+                                        >
+                                            <svg class="size-6 text-primary lg:size-10">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#cancel"
+                                                ></use>
+                                            </svg>
+                                        </div>
+                                        <p
+                                            class="mb-4 text-lg font-semibold text-primary lg:text-xl"
+                                        >
+                                            Cancellation
+                                        </p>
+                                        <p class="font-medium">Free Cancellation</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="hs-accordion-group space-y-4 lg:space-y-5.5"
+                                data-hs-accordion-always-open
+                            >
+                                <div
+                                    class="hs-accordion active rounded-xl border border-primary lg:rounded-3xl"
+                                >
+                                    <button
+                                        class="hs-accordion-toggle flex w-full items-center justify-between p-4 text-start text-lg font-semibold text-primary lg:p-6 lg:text-xl"
+                                    >
+                        <span>
+                          <span class="text-secondary">Classic</span> Cairo,
+                          Luxor Tour
+                        </span>
+
+                                        <svg
+                                            class="transition-transform hs-accordion-active:rotate-180"
+                                            width="18"
+                                            height="11"
+                                            viewBox="0 0 18 11"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M1 1.5L9 9.5L17 1.5"
+                                                stroke="black"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <div
+                                        class="hs-accordion-content overflow-hidden transition-[height] duration-300"
+                                    >
+                                        <div class="p-4 pt-0 lg:p-6 lg:pt-0">
+                                            <p class="lg:text-lg lg:leading-relaxed">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                elit, sed do eiusmod tempor incididunt ut labore et
+                                                dolore magna aliqua. Ut enim ad minim veniam, quis
+                                                nostrud exercitation ullamco laboris nisi ut aliquip
+                                                ex ea commodo consequat. Duis aute irure dolor in
+                                                reprehenderit in voluptate velit esse cillum dolore
+                                                eu fugiat nulla pariatur. Excepteur sint occaecat
+                                                cupidatat non proident, sunt in culpa qui officia
+                                                deserunt mollit anim id est laborum
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    id="sc-highlight"
+                                    class="hs-accordion active rounded-xl border border-primary lg:rounded-3xl"
+                                >
+                                    <button
+                                        class="hs-accordion-toggle flex w-full items-center justify-between p-4 text-start text-lg font-semibold text-primary lg:p-6 lg:text-xl"
+                                    >
+                        <span>
+                          <span class="text-secondary">Tour </span> Highlight
+                        </span>
+
+                                        <svg
+                                            class="transition-transform hs-accordion-active:rotate-180"
+                                            width="18"
+                                            height="11"
+                                            viewBox="0 0 18 11"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M1 1.5L9 9.5L17 1.5"
+                                                stroke="black"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <div
+                                        class="hs-accordion-content overflow-hidden transition-[height] duration-300"
+                                    >
+                                        <div class="p-4 pt-0 lg:p-6 lg:pt-0">
+                                            <div class="flex flex-col gap-6 lg:flex-row">
+                                                <div class="w-full lg:w-3/5">
+                                                    <p class="mb-4 text-lg font-medium text-primary">
+                                                        Cairo highlight
+                                                    </p>
+                                                    <ul class="space-y-1">
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-primary">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#location"
+                                                                ></use>
+                                                            </svg>
+                                                            Giza Pyramids Complex
+                                                        </li>
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-primary">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#location"
+                                                                ></use>
+                                                            </svg>
+                                                            Giza Pyramids Complex
+                                                        </li>
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-primary">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#location"
+                                                                ></use>
+                                                            </svg>
+                                                            Giza Pyramids Complex
+                                                        </li>
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-primary">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#location"
+                                                                ></use>
+                                                            </svg>
+                                                            Giza Pyramids Complex
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="w-full lg:w-2/5">
+                                                    <p class="mb-4 text-lg font-medium text-primary">
+                                                        Luxor highlight
+                                                    </p>
+                                                    <ul class="space-y-1">
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-primary">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#location"
+                                                                ></use>
+                                                            </svg>
+                                                            Abu Sambal
+                                                        </li>
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-primary">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#location"
+                                                                ></use>
+                                                            </svg>
+                                                            Abu Sambal
+                                                        </li>
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-primary">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#location"
+                                                                ></use>
+                                                            </svg>
+                                                            Abu Sambal
+                                                        </li>
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-primary">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#location"
+                                                                ></use>
+                                                            </svg>
+                                                            Abu Sambal
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    id="sc-inclusion-exclusion"
+                                    class="hs-accordion active rounded-xl border border-primary lg:rounded-3xl"
+                                >
+                                    <button
+                                        class="hs-accordion-toggle flex w-full items-center justify-between p-4 text-start text-lg font-semibold text-primary lg:p-6 lg:text-xl"
+                                    >
+                        <span>
+                          <span class="text-secondary">Tour </span>
+                          Inclusion/Exclusion
+                        </span>
+
+                                        <svg
+                                            class="transition-transform hs-accordion-active:rotate-180"
+                                            width="18"
+                                            height="11"
+                                            viewBox="0 0 18 11"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M1 1.5L9 9.5L17 1.5"
+                                                stroke="black"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <div
+                                        class="hs-accordion-content overflow-hidden transition-[height] duration-300"
+                                    >
+                                        <div class="p-4 pt-0 lg:p-6 lg:pt-0">
+                                            <div class="flex flex-col gap-6 lg:flex-row">
+                                                <div class="w-full lg:w-3/5">
+                                                    <p
+                                                        class="mb-4 flex items-center gap-1 text-lg font-medium text-primary"
+                                                    >
+                                                        <svg class="size-5 text-green">
+                                                            <use
+                                                                href="./assets/images/icons/sprite.svg#checkmark-filled"
+                                                            ></use>
+                                                        </svg>
+
+                                                        Tour Inclusion
+                                                    </p>
+                                                    <ul class="space-y-1">
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-green">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#checkmark"
+                                                                ></use>
+                                                            </svg>
+                                                            Meet and greet service by our representatives
+                                                            at airportsamids
+                                                        </li>
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-green">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#checkmark"
+                                                                ></use>
+                                                            </svg>
+                                                            Assistance of our guest relations during your
+                                                            stay
+                                                        </li>
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-green">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#checkmark"
+                                                                ></use>
+                                                            </svg>
+                                                            Assistance of our guest relations during your
+                                                            stay
+                                                        </li>
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-green">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#checkmark"
+                                                                ></use>
+                                                            </svg>
+                                                            Assistance of our guest relations during your
+                                                            stay
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="w-full lg:w-2/5">
+                                                    <p
+                                                        class="mb-4 flex items-center gap-1 text-lg font-medium text-primary"
+                                                    >
+                                                        <svg class="size-5 text-red">
+                                                            <use
+                                                                href="./assets/images/icons/sprite.svg#baseline-cancel"
+                                                            ></use>
+                                                        </svg>
+
+                                                        Tour Exlusion
+                                                    </p>
+                                                    <ul class="space-y-1">
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-red">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#cancel-outline"
+                                                                ></use>
+                                                            </svg>
+                                                            International Airfare
+                                                        </li>
+                                                        <li class="flex items-center gap-2">
+                                                            <svg class="size-5 shrink-0 text-red">
+                                                                <use
+                                                                    href="./assets/images/icons/sprite.svg#cancel-outline"
+                                                                ></use>
+                                                            </svg>
+                                                            Egypt Entry Visa
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    id="sc-itinerary"
+                                    class="hs-accordion active rounded-xl border border-primary lg:rounded-3xl"
+                                >
+                                    <button
+                                        class="hs-accordion-toggle flex w-full items-center justify-between p-4 text-start text-lg font-semibold text-primary lg:p-6 lg:text-xl"
+                                    >
+                        <span>
+                          <span class="text-secondary">Tour </span> Itinerary
+                        </span>
+
+                                        <svg
+                                            class="transition-transform hs-accordion-active:rotate-180"
+                                            width="18"
+                                            height="11"
+                                            viewBox="0 0 18 11"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M1 1.5L9 9.5L17 1.5"
+                                                stroke="black"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <div
+                                        class="hs-accordion-content overflow-hidden transition-[height] duration-300"
+                                    >
+                                        <div class="p-4 pt-0 lg:p-6 lg:pt-0">
+                                            <ul class="hs-accordion-group flex w-full flex-col">
+                                                <li
+                                                    class="hs-accordion group relative flex flex-col gap-2"
+                                                >
+                              <span
+                                  class="absolute left-0 top-6 grid h-full w-3 justify-center bg-transparent opacity-100 transition-opacity duration-200 group-last:hidden"
+                              ><span class="h-full w-0.5 bg-gray-200"></span
+                                  ></span>
+                                                    <div class="flex items-center gap-4">
+                                <span
+                                    class="relative z-[2] w-max flex-shrink-0 overflow-hidden rounded-full bg-black p-1.5"
+                                ></span>
+                                                        <button
+                                                            class="hs-accordion-toggle flex w-full items-center justify-between gap-x-3 rounded-xl bg-primary px-6 py-4 text-start text-sm font-semibold text-white lg:text-base"
+                                                        >
+                                  <span class="flex items-center gap-3">
+                                    <span class="text-secondary">Day 1</span>
+                                    Arrival to Cairo Airport
+                                  </span>
+
+                                                            <svg
+                                                                class="block size-4 hs-accordion-active:hidden"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                width="24"
+                                                                height="24"
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                stroke-width="3"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                            >
+                                                                <path d="M5 12h14" />
+                                                                <path d="M12 5v14" />
+                                                            </svg>
+                                                            <svg
+                                                                class="hidden size-4 hs-accordion-active:block"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                width="24"
+                                                                height="24"
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                stroke-width="3"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                            >
+                                                                <path d="M5 12h14" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <div class="flex gap-4">
+                                <span
+                                    class="pointer-events-none invisible h-full w-3 flex-shrink-0"
+                                ></span>
+                                                        <div
+                                                            class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
+                                                        >
+                                                            <div class="px-2 pb-2">
+                                                                <div
+                                                                    class="rounded-bl-xl rounded-br-xl bg-white p-6 shadow-md"
+                                                                >
+                                                                    <div
+                                                                        class="mb-8 flex flex-col gap-4 lg:flex-row"
+                                                                    >
+                                                                        <img
+                                                                            src="./assets/images/tour-img-1.png"
+                                                                            class="max-h-72 w-full max-w-md rounded-xl"
+                                                                            alt=""
+                                                                        />
+
+                                                                        <div
+                                                                            class="flex flex-1 flex-col justify-between gap-6 py-4"
+                                                                        >
+                                                                            <ul class="space-y-2">
+                                                                                <li class="flex items-center gap-4">
+                                                                                    <img
+                                                                                        src="./assets/images/icons/meals.png"
+                                                                                        class="size-12"
+                                                                                        alt=""
+                                                                                    />
+                                                                                    <span
+                                                                                    ><span class="text-primary"
+                                                                                        >Meals:</span
+                                                                                        >
+                                                Breakfast, Lunch</span
+                                                                                    >
+                                                                                </li>
+                                                                                <li class="flex items-center gap-4">
+                                                                                    <img
+                                                                                        src="./assets/images/icons/overnight.png"
+                                                                                        class="size-12"
+                                                                                        alt=""
+                                                                                    />
+                                                                                    <span
+                                                                                    ><span class="text-primary"
+                                                                                        >Overnight:</span
+                                                                                        >
+                                                Cairo Hotel</span
+                                                                                    >
+                                                                                </li>
+                                                                            </ul>
+
+                                                                            <p>
+                                                                                Lorem ipsum dolor sit amet,
+                                                                                consectetur adipiscing elit, sed do
+                                                                                eiusmod tempor incididunt ut labore
+                                                                                et dolore magna aliq
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div
+                                                                        class="relative space-y-8 ps-8 before:absolute before:bottom-0 before:left-2 before:top-8 before:w-0.5 before:border before:border-dashed before:border-gray"
+                                                                    >
+                                                                        <div class="relative ps-2 lg:ps-4">
+                                                                            <img
+                                                                                src="./assets/images/icons/meals.png"
+                                                                                class="absolute start-0 top-0 size-12 -translate-x-full -translate-y-1/4"
+                                                                                alt=""
+                                                                            />
+
+                                                                            <p
+                                                                                class="mb-4 text-lg text-primary lg:text-xl"
+                                                                            >
+                                                                                Dinner Time
+                                                                            </p>
+                                                                            <p>
+                                                                                Lorem ipsum dolor sit amet,
+                                                                                consectetur adipiscing elit, sed do
+                                                                                eiusmod tempor incididunt ut labore
+                                                                                et dolore magna aliq
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="relative ps-2 lg:ps-4">
+                                                                            <img
+                                                                                src="./assets/images/icons/overnight.png"
+                                                                                class="absolute start-0 top-0 size-12 -translate-x-full -translate-y-1/4"
+                                                                                alt=""
+                                                                            />
+
+                                                                            <p
+                                                                                class="mb-4 text-lg text-primary lg:text-xl"
+                                                                            >
+                                                                                Over Night
+                                                                            </p>
+                                                                            <p>
+                                                                                Lorem ipsum dolor sit amet,
+                                                                                consectetur adipiscing elit, sed do
+                                                                                eiusmod tempor incididunt ut labore
+                                                                                et dolore magna aliq
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li
+                                                    class="hs-accordion group relative flex flex-col gap-2"
+                                                >
+                              <span
+                                  class="absolute left-0 top-6 grid h-full w-3 justify-center bg-transparent opacity-100 transition-opacity duration-200 group-last:hidden"
+                              ><span class="h-full w-0.5 bg-gray-200"></span
+                                  ></span>
+                                                    <div class="flex items-center gap-4">
+                                <span
+                                    class="relative z-[2] w-max flex-shrink-0 overflow-hidden rounded-full bg-black p-1.5"
+                                ></span>
+                                                        <button
+                                                            class="hs-accordion-toggle flex w-full items-center justify-between gap-x-3 rounded-xl bg-primary px-6 py-4 text-start text-sm font-semibold text-white lg:text-base"
+                                                        >
+                                  <span class="flex items-center gap-3">
+                                    <span class="text-secondary">Day 1</span>
+                                    Arrival to Cairo Airport
+                                  </span>
+
+                                                            <svg
+                                                                class="block size-4 hs-accordion-active:hidden"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                width="24"
+                                                                height="24"
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                stroke-width="3"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                            >
+                                                                <path d="M5 12h14" />
+                                                                <path d="M12 5v14" />
+                                                            </svg>
+                                                            <svg
+                                                                class="hidden size-4 hs-accordion-active:block"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                width="24"
+                                                                height="24"
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                stroke-width="3"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                            >
+                                                                <path d="M5 12h14" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <div class="flex gap-4">
+                                <span
+                                    class="pointer-events-none invisible h-full w-3 flex-shrink-0"
+                                ></span>
+                                                        <div
+                                                            class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
+                                                        >
+                                                            <div class="px-2 pb-2">
+                                                                <div
+                                                                    class="rounded-bl-xl rounded-br-xl bg-white p-6 shadow-md"
+                                                                >
+                                                                    <div
+                                                                        class="mb-8 flex flex-col gap-4 lg:flex-row"
+                                                                    >
+                                                                        <img
+                                                                            src="./assets/images/tour-img-1.png"
+                                                                            class="max-h-72 w-full max-w-md rounded-xl"
+                                                                            alt=""
+                                                                        />
+
+                                                                        <div
+                                                                            class="flex flex-1 flex-col justify-between gap-6 py-4"
+                                                                        >
+                                                                            <ul class="space-y-2">
+                                                                                <li class="flex items-center gap-4">
+                                                                                    <img
+                                                                                        src="./assets/images/icons/meals.png"
+                                                                                        class="size-12"
+                                                                                        alt=""
+                                                                                    />
+                                                                                    <span
+                                                                                    ><span class="text-primary"
+                                                                                        >Meals:</span
+                                                                                        >
+                                                Breakfast, Lunch</span
+                                                                                    >
+                                                                                </li>
+                                                                                <li class="flex items-center gap-4">
+                                                                                    <img
+                                                                                        src="./assets/images/icons/overnight.png"
+                                                                                        class="size-12"
+                                                                                        alt=""
+                                                                                    />
+                                                                                    <span
+                                                                                    ><span class="text-primary"
+                                                                                        >Overnight:</span
+                                                                                        >
+                                                Cairo Hotel</span
+                                                                                    >
+                                                                                </li>
+                                                                            </ul>
+
+                                                                            <p>
+                                                                                Lorem ipsum dolor sit amet,
+                                                                                consectetur adipiscing elit, sed do
+                                                                                eiusmod tempor incididunt ut labore
+                                                                                et dolore magna aliq
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div
+                                                                        class="relative space-y-8 ps-8 before:absolute before:bottom-0 before:left-2 before:top-8 before:w-0.5 before:border before:border-dashed before:border-gray"
+                                                                    >
+                                                                        <div class="relative ps-2 lg:ps-4">
+                                                                            <img
+                                                                                src="./assets/images/icons/meals.png"
+                                                                                class="absolute start-0 top-0 size-12 -translate-x-full -translate-y-1/4"
+                                                                                alt=""
+                                                                            />
+
+                                                                            <p
+                                                                                class="mb-4 text-lg text-primary lg:text-xl"
+                                                                            >
+                                                                                Dinner Time
+                                                                            </p>
+                                                                            <p>
+                                                                                Lorem ipsum dolor sit amet,
+                                                                                consectetur adipiscing elit, sed do
+                                                                                eiusmod tempor incididunt ut labore
+                                                                                et dolore magna aliq
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="relative ps-2 lg:ps-4">
+                                                                            <img
+                                                                                src="./assets/images/icons/overnight.png"
+                                                                                class="absolute start-0 top-0 size-12 -translate-x-full -translate-y-1/4"
+                                                                                alt=""
+                                                                            />
+
+                                                                            <p
+                                                                                class="mb-4 text-lg text-primary lg:text-xl"
+                                                                            >
+                                                                                Over Night
+                                                                            </p>
+                                                                            <p>
+                                                                                Lorem ipsum dolor sit amet,
+                                                                                consectetur adipiscing elit, sed do
+                                                                                eiusmod tempor incididunt ut labore
+                                                                                et dolore magna aliq
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    id="sc-packing-tips"
+                                    class="hs-accordion active rounded-xl border border-primary lg:rounded-3xl"
+                                >
+                                    <button
+                                        class="hs-accordion-toggle flex w-full items-center justify-between p-4 text-start text-lg font-semibold text-primary lg:p-6 lg:text-xl"
+                                    >
+                        <span>
+                          <span class="text-secondary">Packing</span> Tips
+                        </span>
+
+                                        <svg
+                                            class="transition-transform hs-accordion-active:rotate-180"
+                                            width="18"
+                                            height="11"
+                                            viewBox="0 0 18 11"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M1 1.5L9 9.5L17 1.5"
+                                                stroke="black"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <div
+                                        class="hs-accordion-content overflow-hidden transition-[height] duration-300"
+                                    >
+                                        <div class="p-4 pt-0 lg:p-6 lg:pt-0">
+                                            <ul
+                                                class="flex flex-col flex-wrap gap-y-2 lg:flex-row"
+                                            >
+                                                <li
+                                                    class="flex items-center gap-2 md:w-1/2 lg:w-1/3"
+                                                >
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#feature-highlight"
+                                                        ></use>
+                                                    </svg>
+                                                    Hat
+                                                </li>
+                                                <li
+                                                    class="flex items-center gap-2 md:w-1/2 lg:w-1/3"
+                                                >
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#feature-highlight"
+                                                        ></use>
+                                                    </svg>
+                                                    Camera
+                                                </li>
+                                                <li
+                                                    class="flex items-center gap-2 md:w-1/2 lg:w-1/3"
+                                                >
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#feature-highlight"
+                                                        ></use>
+                                                    </svg>
+                                                    Medication
+                                                </li>
+                                                <li
+                                                    class="flex items-center gap-2 md:w-1/2 lg:w-1/3"
+                                                >
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#feature-highlight"
+                                                        ></use>
+                                                    </svg>
+                                                    Warm Cloths
+                                                </li>
+                                                <li
+                                                    class="flex items-center gap-2 md:w-1/2 lg:w-1/3"
+                                                >
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#feature-highlight"
+                                                        ></use>
+                                                    </svg>
+                                                    Hat
+                                                </li>
+                                                <li
+                                                    class="flex items-center gap-2 md:w-1/2 lg:w-1/3"
+                                                >
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#feature-highlight"
+                                                        ></use>
+                                                    </svg>
+                                                    Camera
+                                                </li>
+                                                <li
+                                                    class="flex items-center gap-2 md:w-1/2 lg:w-1/3"
+                                                >
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#feature-highlight"
+                                                        ></use>
+                                                    </svg>
+                                                    Medication
+                                                </li>
+                                                <li
+                                                    class="flex items-center gap-2 md:w-1/2 lg:w-1/3"
+                                                >
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#feature-highlight"
+                                                        ></use>
+                                                    </svg>
+                                                    Warm Cloths
+                                                </li>
+                                            </ul>
+
+                                            <p class="mt-4 font-medium lg:mt-6">
+                                                <span class="text-secondary">Note:</span> Check our
+                                                blogs about
+                                                <a href="#" class="text-primary underline"
+                                                >what to pack to Egypt</a
+                                                >
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    id="sc-map"
+                                    class="hs-accordion active rounded-xl border border-primary lg:rounded-3xl"
+                                >
+                                    <button
+                                        class="hs-accordion-toggle flex w-full items-center justify-between p-4 text-start text-lg font-semibold text-primary lg:p-6 lg:text-xl"
+                                    >
+                        <span>
+                          <span class="text-secondary">Tour </span> Map
+                        </span>
+
+                                        <svg
+                                            class="transition-transform hs-accordion-active:rotate-180"
+                                            width="18"
+                                            height="11"
+                                            viewBox="0 0 18 11"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M1 1.5L9 9.5L17 1.5"
+                                                stroke="black"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <div
+                                        class="hs-accordion-content overflow-hidden transition-[height] duration-300"
+                                    >
+                                        <div class="p-4 pt-0 lg:p-6 lg:pt-0">
+                                            <div
+                                                class="overflow-hidden rounded-2xl border border-primary"
+                                            >
+                                                <iframe
+                                                    class="w-full"
+                                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3643941.487269758!2d33.516827808152584!3d26.886459940706857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14368976c35c36e9%3A0x2c45a00925c4c444!2z2YXYtdix!5e0!3m2!1sar!2seg!4v1711479836264!5m2!1sar!2seg"
+                                                    height="450"
+                                                    style="border: 0"
+                                                    allowfullscreen=""
+                                                    loading="lazy"
+                                                    referrerpolicy="no-referrer-when-downgrade"
+                                                ></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    id="sc-features"
+                                    class="hs-accordion active rounded-xl border border-primary lg:rounded-3xl"
+                                >
+                                    <button
+                                        class="hs-accordion-toggle flex w-full items-center justify-between p-4 text-start text-lg font-semibold text-primary lg:p-6 lg:text-xl"
+                                    >
+                        <span>
+                          <span class="text-secondary">Tour </span> Features
+                        </span>
+
+                                        <svg
+                                            class="transition-transform hs-accordion-active:rotate-180"
+                                            width="18"
+                                            height="11"
+                                            viewBox="0 0 18 11"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M1 1.5L9 9.5L17 1.5"
+                                                stroke="black"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <div
+                                        class="hs-accordion-content overflow-hidden transition-[height] duration-300"
+                                    >
+                                        <div class="p-4 pt-0 lg:p-6 lg:pt-0">
+                                            <ul class="space-y-2">
+                                                <li class="flex items-center gap-2">
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#heart-alt"
+                                                        ></use>
+                                                    </svg>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                    elit, sed do eiusmod tempor incididunt
+                                                </li>
+                                                <li class="flex items-center gap-2">
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#heart-alt"
+                                                        ></use>
+                                                    </svg>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                    elit, sed do eiusmod tempor incididunt
+                                                </li>
+                                                <li class="flex items-center gap-2">
+                                                    <svg class="size-5 shrink-0 text-primary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#heart-alt"
+                                                        ></use>
+                                                    </svg>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                    elit, sed do eiusmod tempor incididunt
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    id="sc-gallery"
+                                    class="hs-accordion active rounded-xl border border-primary lg:rounded-3xl"
+                                >
+                                    <button
+                                        class="hs-accordion-toggle flex w-full items-center justify-between p-4 text-start text-lg font-semibold text-primary lg:p-6 lg:text-xl"
+                                    >
+                        <span>
+                          <span class="text-secondary">Tour </span> Gallery
+                        </span>
+
+                                        <svg
+                                            class="transition-transform hs-accordion-active:rotate-180"
+                                            width="18"
+                                            height="11"
+                                            viewBox="0 0 18 11"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M1 1.5L9 9.5L17 1.5"
+                                                stroke="black"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <div
+                                        class="hs-accordion-content overflow-hidden transition-[height] duration-300"
+                                    >
+                                        <div class="p-4 pt-0 lg:p-6 lg:pt-0">
+                                            <div
+                                                class="items-start lg:grid lg:grid-cols-8 lg:gap-8"
+                                            >
+                                                <div class="h-[400px] max-lg:mb-8 lg:col-span-6">
+                                                    <div class="swiper gallery-2 size-full">
+                                                        <div class="swiper-wrapper">
+                                                            <div class="swiper-slide h-full">
+                                                                <div
+                                                                    class="h-full overflow-hidden rounded-xl"
+                                                                >
+                                                                    <img
+                                                                        src="./assets/images/tour-img-1.png"
+                                                                        class="size-full object-cover object-center"
+                                                                        alt=""
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div class="swiper-slide h-full">
+                                                                <div
+                                                                    class="h-full overflow-hidden rounded-xl"
+                                                                >
+                                                                    <img
+                                                                        src="./assets/images/tour-img-1.png"
+                                                                        class="size-full object-cover object-center"
+                                                                        alt=""
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div class="swiper-slide h-full">
+                                                                <div
+                                                                    class="h-full overflow-hidden rounded-xl"
+                                                                >
+                                                                    <img
+                                                                        src="./assets/images/tour-img-1.png"
+                                                                        class="size-full object-cover object-center"
+                                                                        alt=""
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="h-[150px] lg:col-span-2 lg:h-[400px]">
+                                                    <div class="swiper thumbs-2 size-full flex-1">
+                                                        <div class="swiper-wrapper h-full">
+                                                            <div
+                                                                class="swiper-slide group h-full cursor-pointer rounded-2xl"
+                                                            >
+                                                                <img
+                                                                    src="./assets/images/tour-img-1.png"
+                                                                    class="size-full rounded-2xl border-2 border-transparent object-cover object-center transition-colors hover:border-primary lg:border-4"
+                                                                    alt=""
+                                                                />
+                                                            </div>
+                                                            <div
+                                                                class="swiper-slide group h-full cursor-pointer rounded-2xl"
+                                                            >
+                                                                <img
+                                                                    src="./assets/images/tour-img-1.png"
+                                                                    class="size-full rounded-2xl border-2 border-transparent object-cover object-center transition-colors hover:border-primary lg:border-4"
+                                                                    alt=""
+                                                                />
+                                                            </div>
+                                                            <div
+                                                                class="swiper-slide group h-full cursor-pointer rounded-2xl"
+                                                            >
+                                                                <img
+                                                                    src="./assets/images/tour-img-1.png"
+                                                                    class="size-full rounded-2xl object-cover object-center"
+                                                                    alt=""
+                                                                />
+
+                                                                <a
+                                                                    href="./gallery.html"
+                                                                    class="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-gray/50"
+                                                                >
+                                                                    <svg
+                                                                        width="33"
+                                                                        height="32"
+                                                                        viewBox="0 0 33 32"
+                                                                        fill="none"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                    >
+                                                                        <circle
+                                                                            cx="16.5"
+                                                                            cy="16"
+                                                                            r="15"
+                                                                            stroke="white"
+                                                                            stroke-width="2"
+                                                                        />
+                                                                        <path
+                                                                            d="M17.7256 13.1057C17.6641 13.0485 17.6149 12.9795 17.5807 12.9028C17.5466 12.8261 17.5282 12.7434 17.5267 12.6595C17.5252 12.5755 17.5407 12.4922 17.5721 12.4144C17.6035 12.3365 17.6503 12.2658 17.7097 12.2065C17.769 12.1471 17.8397 12.1004 17.9176 12.0689C17.9954 12.0375 18.0787 12.0221 18.1627 12.0235C18.2466 12.025 18.3293 12.0434 18.406 12.0775C18.4827 12.1117 18.5517 12.161 18.6089 12.2224L21.9422 15.5557C22.0593 15.6729 22.125 15.8317 22.125 15.9974C22.125 16.163 22.0593 16.3218 21.9422 16.439L18.6089 19.7724C18.5517 19.8338 18.4827 19.883 18.406 19.9172C18.3293 19.9513 18.2466 19.9697 18.1627 19.9712C18.0787 19.9727 17.9954 19.9572 17.9176 19.9258C17.8397 19.8944 17.769 19.8476 17.7097 19.7882C17.6503 19.7289 17.6035 19.6582 17.5721 19.5804C17.5407 19.5025 17.5252 19.4192 17.5267 19.3353C17.5282 19.2513 17.5466 19.1686 17.5807 19.0919C17.6149 19.0152 17.6641 18.9462 17.7256 18.889L19.9922 16.6224H11.9172C11.7515 16.6224 11.5925 16.5565 11.4753 16.4393C11.3581 16.3221 11.2922 16.1631 11.2922 15.9974C11.2922 15.8316 11.3581 15.6726 11.4753 15.5554C11.5925 15.4382 11.7515 15.3724 11.9172 15.3724H19.9922L17.7256 13.1057Z"
+                                                                            fill="#F8F8F8"
+                                                                        />
+                                                                    </svg>
+
+                                                                    <span class="mt-1 text-white"
+                                                                    >See More</span
+                                                                    >
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    id="sc-information"
+                                    class="hs-accordion active rounded-xl border border-primary lg:rounded-3xl"
+                                >
+                                    <button
+                                        class="hs-accordion-toggle flex w-full items-center justify-between p-4 text-start text-lg font-semibold text-primary lg:p-6 lg:text-xl"
+                                    >
+                        <span>
+                          <span class="text-secondary">Essential</span> Tip
+                          Information
+                        </span>
+
+                                        <svg
+                                            class="transition-transform hs-accordion-active:rotate-180"
+                                            width="18"
+                                            height="11"
+                                            viewBox="0 0 18 11"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M1 1.5L9 9.5L17 1.5"
+                                                stroke="black"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <div
+                                        class="hs-accordion-content overflow-hidden transition-[height] duration-300"
+                                    >
+                                        <div class="p-4 pt-0 lg:p-6 lg:pt-0">
+                                            <div class="flex gap-2">
+                                                <svg class="mt-1 size-6 shrink-0 text-primary">
+                                                    <use
+                                                        href="./assets/images/icons/sprite.svg#info"
+                                                    ></use>
+                                                </svg>
+                                                <p class="lg:text-lg lg:leading-relaxed">
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                    elit, sed do eiusmod tempor incididunt ut labore
+                                                    et dolore magna aliqua. Ut enim ad minim veniam,
+                                                    quis nostrud exercitation ullamco laboris nisi ut
+                                                    aliquip ex ea commodo consequat. Duis aute irure
+                                                    dolor in reprehenderit in voluptate velit esse
+                                                    cillum dolore eu fugiat nulla pariatur. Excepteur
+                                                    sint occaecat cupidatat non proident, sunt in
+                                                    culpa qui officia deserunt mollit anim id est
+                                                    laborum
+                                                    <a href="#" class="text-primary underline"
+                                                    >View Essential Trip Information</a
+                                                    >
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- comments -->
+                            <div class="overflow-hidden rounded-xl border border-gray">
+                                <div
+                                    class="flex items-center justify-between border-b border-gray px-6 py-4 lg:px-8 lg:py-6"
+                                >
+                                    <p class="lg:text-lg">Comments (9)</p>
+
+                                    <div class="hs-dropdown relative flex">
+                                        <button
+                                            class="hs-dropdown-toggle inline-flex items-center gap-2 text-sm"
+                                        >
+                                            Top Comments
+                                            <svg
+                                                width="11"
+                                                height="6"
+                                                viewBox="0 0 11 6"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    d="M1.5 1L5.5 5L9.5 1"
+                                                    stroke="#232323"
+                                                    stroke-width="1.5"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                />
+                                            </svg>
+                                        </button>
+
+                                        <div
+                                            class="hs-dropdown-menu duration mt-2 hidden min-w-40 rounded-lg bg-white p-2 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
+                                        >
+                                            <button
+                                                type="button"
+                                                class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                                            >
+                                                Most recent
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="h-96 space-y-5 overflow-auto px-6 py-5"
+                                    data-lenis-prevent
+                                >
+                                    <div>
+                                        <div class="mb-3 flex items-center gap-2">
+                                            <div
+                                                class="size-8 shrink-0 overflow-hidden rounded-full lg:size-10"
+                                            >
+                                                <img
+                                                    src="./assets/images/avatar.jpeg"
+                                                    class="size-full object-cover object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <p class="mb-1 text-sm text-black">
+                                                    Mai Hussien
+                                                    <span class="text-gray">10 Feb 2024</span>
+                                                </p>
+                                                <div class="flex items-center gap-x-px">
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-gray-200">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p
+                                            class="line-clamp-4 font-normal leading-relaxed text-gray"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut labore et
+                                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                                            nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum lpa qui
+                                            officia deserunt mollit anim id est laborum...
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <div class="mb-3 flex items-center gap-2">
+                                            <div
+                                                class="size-8 shrink-0 overflow-hidden rounded-full lg:size-10"
+                                            >
+                                                <img
+                                                    src="./assets/images/avatar.jpeg"
+                                                    class="size-full object-cover object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <p class="mb-1 text-sm text-black">
+                                                    Mai Hussien
+                                                    <span class="text-gray">10 Feb 2024</span>
+                                                </p>
+                                                <div class="flex items-center gap-x-px">
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-gray-200">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p
+                                            class="line-clamp-4 font-normal leading-relaxed text-gray"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut labore et
+                                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                                            nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum lpa qui
+                                            officia deserunt mollit anim id est laborum...
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <div class="mb-3 flex items-center gap-2">
+                                            <div
+                                                class="size-8 shrink-0 overflow-hidden rounded-full lg:size-10"
+                                            >
+                                                <img
+                                                    src="./assets/images/avatar.jpeg"
+                                                    class="size-full object-cover object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <p class="mb-1 text-sm text-black">
+                                                    Mai Hussien
+                                                    <span class="text-gray">10 Feb 2024</span>
+                                                </p>
+                                                <div class="flex items-center gap-x-px">
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-gray-200">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p
+                                            class="line-clamp-4 font-normal leading-relaxed text-gray"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut labore et
+                                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                                            nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum lpa qui
+                                            officia deserunt mollit anim id est laborum...
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <div class="mb-3 flex items-center gap-2">
+                                            <div
+                                                class="size-8 shrink-0 overflow-hidden rounded-full lg:size-10"
+                                            >
+                                                <img
+                                                    src="./assets/images/avatar.jpeg"
+                                                    class="size-full object-cover object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <p class="mb-1 text-sm text-black">
+                                                    Mai Hussien
+                                                    <span class="text-gray">10 Feb 2024</span>
+                                                </p>
+                                                <div class="flex items-center gap-x-px">
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-gray-200">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p
+                                            class="line-clamp-4 font-normal leading-relaxed text-gray"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut labore et
+                                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                                            nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum lpa qui
+                                            officia deserunt mollit anim id est laborum...
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- <p class="flex items-center justify-center text-gray-300 px-6 py-9 gap-2.5">
+                      <svg class="text-gray-300 size-6 shrink-0">
+                        <use
+                          href="./assets/images/icons/sprite.svg#comment"
+                        ></use>
+                      </svg>
+                      No available comments yet!...
+                    </p> -->
+
+                                <div
+                                    class="border-t border-gray bg-gray-50 px-6 py-6 lg:px-8"
+                                >
+                                    <form
+                                        class="flex items-center gap-2.5 rounded-xl border border-gray bg-white px-5 py-3"
+                                    >
+                                        <svg class="size-6 shrink-0 text-gray-300">
+                                            <use
+                                                href="./assets/images/icons/sprite.svg#comment"
+                                            ></use>
+                                        </svg>
+
+                                        <input
+                                            type="text"
+                                            class="block w-full border-none bg-transparent text-black outline-none placeholder:text-gray-300"
+                                            placeholder="Write your comment here..."
+                                        />
+
+                                        <button class="shrink-0">
+                                            <svg class="size-6 text-primary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#send"
+                                                ></use>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <img
+                    src="./assets/images/section-divider.png"
+                    class="pointer-events-none mx-auto mt-5 lg:mt-10 lg:w-4/5"
+                    alt=""
+                />
+            </div>
+        </section>
+
+        <!-- ---------- -->
+
+        <section id="blog">
+            <div class="container">
+                <header
+                    class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
+                >
+                    <h2 class="section_heading text-primary">
+                        <span>Read</span> Before You Go
+                    </h2>
+
+                    <div class="flex items-center gap-4 max-lg:ms-auto">
+                        <a href="#" class="text-secondary lg:text-lg">View All</a>
+
+                        <menu class="flex items-center gap-2">
+                            <li>
+                                <button type="button" class="swiper-btn prev">
+                                    <svg>
+                                        <use
+                                            href="./assets/images/icons/sprite.svg#arrow-left"
+                                        ></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="swiper-btn next">
+                                    <svg>
+                                        <use
+                                            href="./assets/images/icons/sprite.svg#arrow-right"
+                                        ></use>
+                                    </svg>
+                                </button>
+                            </li>
+                        </menu>
+                    </div>
+                </header>
+
+                <div class="swiper overflow-visible">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <article class="tour-card">
+                                <div class="tour-card__thumbnail-wrapper">
+                                    <img
+                                        src="./assets/images/tour-1.jpeg"
+                                        class="tour-card__thumbnail"
+                                        alt=""
+                                    />
+                                </div>
+
+                                <div class="tour-card__content">
+                                    <h3>{{ __('front.site.sections.best_time_to_visit_egypt') }}</h3>
+
+                                    <ul class="tour-card__features">
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#calendar-date"
+                                                ></use>
+                                            </svg>
+                                            13 March, 2024
+                                        </li>
+                                    </ul>
+
+                                    <p class="tour-card__desc">
+                                        DOUDOU is about meeting others. You can get to know
+                                        people online through the website...
+                                    </p>
+
+                                    <div class="tour-card__footer">
+                                        <p>
+                                            Published By
+                                            <a href="#">Doudue Team</a>
+                                        </p>
+
+                                        <a href="#" class="tour-card__link">Read More</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="swiper-slide">
+                            <article class="tour-card">
+                                <div class="tour-card__thumbnail-wrapper">
+                                    <img
+                                        src="./assets/images/tour-2.jpeg"
+                                        class="tour-card__thumbnail"
+                                        alt=""
+                                    />
+                                </div>
+
+                                <div class="tour-card__content">
+                                    <h3>{{ __('front.site.sections.best_time_to_visit_egypt') }}</h3>
+
+                                    <ul class="tour-card__features">
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#calendar-date"
+                                                ></use>
+                                            </svg>
+                                            13 March, 2024
+                                        </li>
+                                    </ul>
+
+                                    <p class="tour-card__desc">
+                                        DOUDOU is about meeting others. You can get to know
+                                        people online through the website...
+                                    </p>
+
+                                    <div class="tour-card__footer">
+                                        <p>
+                                            Published By
+                                            <a href="#">Doudue Team</a>
+                                        </p>
+
+                                        <a href="#" class="tour-card__link">Read More</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="swiper-slide">
+                            <article class="tour-card">
+                                <div class="tour-card__thumbnail-wrapper">
+                                    <img
+                                        src="./assets/images/tour-3.jpeg"
+                                        class="tour-card__thumbnail"
+                                        alt=""
+                                    />
+                                </div>
+
+                                <div class="tour-card__content">
+                                    <h3>{{ __('front.site.sections.best_time_to_visit_egypt') }}</h3>
+
+                                    <ul class="tour-card__features">
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#calendar-date"
+                                                ></use>
+                                            </svg>
+                                            13 March, 2024
+                                        </li>
+                                    </ul>
+
+                                    <p class="tour-card__desc">
+                                        DOUDOU is about meeting others. You can get to know
+                                        people online through the website...
+                                    </p>
+
+                                    <div class="tour-card__footer">
+                                        <p>
+                                            Published By
+                                            <a href="#">Doudue Team</a>
+                                        </p>
+
+                                        <a href="#" class="tour-card__link">Read More</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="swiper-slide">
+                            <article class="tour-card">
+                                <div class="tour-card__thumbnail-wrapper">
+                                    <img
+                                        src="./assets/images/tour-4.jpeg"
+                                        class="tour-card__thumbnail"
+                                        alt=""
+                                    />
+                                </div>
+
+                                <div class="tour-card__content">
+                                    <h3>{{ __('front.site.sections.best_time_to_visit_egypt') }}</h3>
+
+                                    <ul class="tour-card__features">
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#calendar-date"
+                                                ></use>
+                                            </svg>
+                                            13 March, 2024
+                                        </li>
+                                    </ul>
+
+                                    <p class="tour-card__desc">
+                                        DOUDOU is about meeting others. You can get to know
+                                        people online through the website...
+                                    </p>
+
+                                    <div class="tour-card__footer">
+                                        <p>
+                                            Published By
+                                            <a href="#">Doudue Team</a>
+                                        </p>
+
+                                        <a href="#" class="tour-card__link">Read More</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+                <img
+                    src="./assets/images/section-divider.png"
+                    class="pointer-events-none mx-auto mt-5 lg:mt-10 lg:w-4/5"
+                    alt=""
+                />
+            </div>
+        </section>
+
+        <section id="recommended-tours">
+            <div class="container">
+                <header
+                    class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
+                >
+                    <h2 class="section_heading text-primary">
+                        <span>Recommended</span> Egypt Tours
+                    </h2>
+
+                    <div class="flex items-center gap-4 max-lg:ms-auto">
+                        <a href="#" class="text-secondary lg:text-lg">View All</a>
+
+                        <menu class="flex items-center gap-2">
+                            <li>
+                                <button type="button" class="swiper-btn prev">
+                                    <svg>
+                                        <use
+                                            href="./assets/images/icons/sprite.svg#arrow-left"
+                                        ></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="swiper-btn next">
+                                    <svg>
+                                        <use
+                                            href="./assets/images/icons/sprite.svg#arrow-right"
+                                        ></use>
+                                    </svg>
+                                </button>
+                            </li>
+                        </menu>
+                    </div>
+                </header>
+
+                <div class="swiper swiper-lg overflow-visible">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <article class="tour-card">
+                                <div class="tour-card__thumbnail-wrapper">
+                                    <div class="swiper swiper-sm">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-1.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-1.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-1.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <menu
+                                            class="absolute inset-0 z-50 mx-auto flex h-full items-center justify-between px-6"
+                                        >
+                                            <li class="rounded-full bg-white/70">
+                                                <button type="button" class="swiper-btn prev">
+                                                    <svg>
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#arrow-left"
+                                                        ></use>
+                                                    </svg>
+                                                </button>
+                                            </li>
+                                            <li class="rounded-full bg-white/70">
+                                                <button type="button" class="swiper-btn next">
+                                                    <svg>
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#arrow-right"
+                                                        ></use>
+                                                    </svg>
+                                                </button>
+                                            </li>
+                                        </menu>
+                                    </div>
+                                </div>
+
+                                <div class="tour-card__content">
+                                    <h3>{{ __('front.site.sections.cairo_luxor_tour') }}</h3>
+                                    <div class="tour-card__review">
+                                        <div class="flex items-center gap-x-px">
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-gray-200">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                        </div>
+                                        <p>4.5, Wonderful <span>(330 Reviews)</span></p>
+                                    </div>
+
+                                    <ul class="tour-card__features">
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#location"
+                                                ></use>
+                                            </svg>
+                                            Cairo, Luxor
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#clipboard-text-time"
+                                                ></use>
+                                            </svg>
+                                            5 Days / 4 Nights
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#travel-card"
+                                                ></use>
+                                            </svg>
+                                            Classic Tour
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#event-available"
+                                                ></use>
+                                            </svg>
+                                            Everyday
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#group-3"
+                                                ></use>
+                                            </svg>
+                                            Private Tour
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#cancel"
+                                                ></use>
+                                            </svg>
+                                            Free Cancellation
+                                        </li>
+                                    </ul>
+
+                                    <div class="tour-card__footer">
+                                        <a href="#" class="tour-card__link">View Tour</a>
+                                        <p>
+                                            Starting from
+                                            <span class="price">550$</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="swiper-slide">
+                            <article class="tour-card">
+                                <div class="tour-card__thumbnail-wrapper">
+                                    <div class="swiper swiper-sm">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-2.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-1.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-1.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <menu
+                                            class="absolute inset-0 z-50 mx-auto flex h-full items-center justify-between px-6"
+                                        >
+                                            <li class="rounded-full bg-white/70">
+                                                <button type="button" class="swiper-btn prev">
+                                                    <svg>
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#arrow-left"
+                                                        ></use>
+                                                    </svg>
+                                                </button>
+                                            </li>
+                                            <li class="rounded-full bg-white/70">
+                                                <button type="button" class="swiper-btn next">
+                                                    <svg>
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#arrow-right"
+                                                        ></use>
+                                                    </svg>
+                                                </button>
+                                            </li>
+                                        </menu>
+                                    </div>
+                                </div>
+
+                                <div class="tour-card__content">
+                                    <h3>{{ __('front.site.sections.cairo_luxor_tour') }}</h3>
+                                    <div class="tour-card__review">
+                                        <div class="flex items-center gap-x-px">
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-gray-200">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                        </div>
+                                        <p>4.5, Wonderful <span>(330 Reviews)</span></p>
+                                    </div>
+
+                                    <ul class="tour-card__features">
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#location"
+                                                ></use>
+                                            </svg>
+                                            Cairo, Luxor
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#clipboard-text-time"
+                                                ></use>
+                                            </svg>
+                                            5 Days / 4 Nights
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#travel-card"
+                                                ></use>
+                                            </svg>
+                                            Classic Tour
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#event-available"
+                                                ></use>
+                                            </svg>
+                                            Everyday
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#group-3"
+                                                ></use>
+                                            </svg>
+                                            Private Tour
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#cancel"
+                                                ></use>
+                                            </svg>
+                                            Free Cancellation
+                                        </li>
+                                    </ul>
+
+                                    <div class="tour-card__footer">
+                                        <a href="#" class="tour-card__link">View Tour</a>
+                                        <p>
+                                            Starting from
+                                            <span class="price">550$</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="swiper-slide">
+                            <article class="tour-card">
+                                <div class="tour-card__thumbnail-wrapper">
+                                    <div class="swiper swiper-sm">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-3.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-1.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-1.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <menu
+                                            class="absolute inset-0 z-50 mx-auto flex h-full items-center justify-between px-6"
+                                        >
+                                            <li class="rounded-full bg-white/70">
+                                                <button type="button" class="swiper-btn prev">
+                                                    <svg>
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#arrow-left"
+                                                        ></use>
+                                                    </svg>
+                                                </button>
+                                            </li>
+                                            <li class="rounded-full bg-white/70">
+                                                <button type="button" class="swiper-btn next">
+                                                    <svg>
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#arrow-right"
+                                                        ></use>
+                                                    </svg>
+                                                </button>
+                                            </li>
+                                        </menu>
+                                    </div>
+                                </div>
+
+                                <div class="tour-card__content">
+                                    <h3>{{ __('front.site.sections.cairo_luxor_tour') }}</h3>
+                                    <div class="tour-card__review">
+                                        <div class="flex items-center gap-x-px">
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-gray-200">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                        </div>
+                                        <p>4.5, Wonderful <span>(330 Reviews)</span></p>
+                                    </div>
+
+                                    <ul class="tour-card__features">
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#location"
+                                                ></use>
+                                            </svg>
+                                            Cairo, Luxor
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#clipboard-text-time"
+                                                ></use>
+                                            </svg>
+                                            5 Days / 4 Nights
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#travel-card"
+                                                ></use>
+                                            </svg>
+                                            Classic Tour
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#event-available"
+                                                ></use>
+                                            </svg>
+                                            Everyday
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#group-3"
+                                                ></use>
+                                            </svg>
+                                            Private Tour
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#cancel"
+                                                ></use>
+                                            </svg>
+                                            Free Cancellation
+                                        </li>
+                                    </ul>
+
+                                    <div class="tour-card__footer">
+                                        <a href="#" class="tour-card__link">View Tour</a>
+                                        <p>
+                                            Starting from
+                                            <span class="price">550$</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="swiper-slide">
+                            <article class="tour-card">
+                                <div class="tour-card__thumbnail-wrapper">
+                                    <div class="swiper swiper-sm">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-4.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-1.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img
+                                                    src="./assets/images/tour-1.jpeg"
+                                                    class="tour-card__thumbnail"
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <menu
+                                            class="absolute inset-0 z-50 mx-auto flex h-full items-center justify-between px-6"
+                                        >
+                                            <li class="rounded-full bg-white/70">
+                                                <button type="button" class="swiper-btn prev">
+                                                    <svg>
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#arrow-left"
+                                                        ></use>
+                                                    </svg>
+                                                </button>
+                                            </li>
+                                            <li class="rounded-full bg-white/70">
+                                                <button type="button" class="swiper-btn next">
+                                                    <svg>
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#arrow-right"
+                                                        ></use>
+                                                    </svg>
+                                                </button>
+                                            </li>
+                                        </menu>
+                                    </div>
+                                </div>
+
+                                <div class="tour-card__content">
+                                    <h3>{{ __('front.site.sections.cairo_luxor_tour') }}</h3>
+                                    <div class="tour-card__review">
+                                        <div class="flex items-center gap-x-px">
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-secondary">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                            <svg class="star text-gray-200">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#star"
+                                                ></use>
+                                            </svg>
+                                        </div>
+                                        <p>4.5, Wonderful <span>(330 Reviews)</span></p>
+                                    </div>
+
+                                    <ul class="tour-card__features">
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#location"
+                                                ></use>
+                                            </svg>
+                                            Cairo, Luxor
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#clipboard-text-time"
+                                                ></use>
+                                            </svg>
+                                            5 Days / 4 Nights
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#travel-card"
+                                                ></use>
+                                            </svg>
+                                            Classic Tour
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#event-available"
+                                                ></use>
+                                            </svg>
+                                            Everyday
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#group-3"
+                                                ></use>
+                                            </svg>
+                                            Private Tour
+                                        </li>
+                                        <li>
+                                            <svg class="icon">
+                                                <use
+                                                    href="./assets/images/icons/sprite.svg#cancel"
+                                                ></use>
+                                            </svg>
+                                            Free Cancellation
+                                        </li>
+                                    </ul>
+
+                                    <div class="tour-card__footer">
+                                        <a href="#" class="tour-card__link">View Tour</a>
+                                        <p>
+                                            Starting from
+                                            <span class="price">550$</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="videos">
+            <div class="container">
+                <header
+                    class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
+                >
+                    <h2 class="section_heading text-primary">
+                        <span>Popular</span> Videos
+                    </h2>
+
+                    <a href="#" class="text-secondary lg:text-lg">View All</a>
+                </header>
+
+                <div class="items-start lg:grid lg:grid-cols-8 lg:gap-8">
+                    <div class="h-[400px] max-lg:mb-8 lg:col-span-6 lg:h-[600px]">
+                        <div class="swiper videos size-full">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide h-full">
+                                    <div
+                                        class="relative z-20 h-full overflow-hidden rounded-xl border-2 border-primary lg:border-4"
+                                    >
+                                        <img
+                                            src="./assets/images/video-poster.jpeg"
+                                            class="size-full object-cover object-center"
+                                            alt=""
+                                        />
+
+                                        <div
+                                            class="absolute inset-x-0 top-0 flex items-center gap-4 p-8 lg:p-10"
+                                        >
+                                            <div
+                                                class="flex size-12 shrink-0 items-center justify-center rounded-full bg-white"
+                                            >
+                                                <img
+                                                    src="./assets/images/logo-sm.png"
+                                                    class="size-10 object-contain object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <p
+                                                class="text-lg font-semibold text-white lg:text-xl"
+                                            >
+                                                A Great Holiday Review on Nile Cruises ...
+                                            </p>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="absolute start-1/2 top-1/2 z-30 block size-12 -translate-x-1/2 -translate-y-1/2 lg:size-20"
+                                        >
+                                            <img src="./assets/images/icons/play.svg" alt="" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide h-full">
+                                    <div
+                                        class="relative z-20 h-full overflow-hidden rounded-xl border-2 border-primary lg:border-4"
+                                    >
+                                        <img
+                                            src="./assets/images/video-poster.jpeg"
+                                            class="size-full object-cover object-center"
+                                            alt=""
+                                        />
+
+                                        <div
+                                            class="absolute inset-x-0 top-0 flex items-center gap-4 p-8 lg:p-10"
+                                        >
+                                            <div
+                                                class="flex size-12 shrink-0 items-center justify-center rounded-full bg-white"
+                                            >
+                                                <img
+                                                    src="./assets/images/logo-sm.png"
+                                                    class="size-10 object-contain object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <p
+                                                class="text-lg font-semibold text-white lg:text-xl"
+                                            >
+                                                A Great Holiday Review on Nile Cruises ...
+                                            </p>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="absolute start-1/2 top-1/2 z-30 block size-12 -translate-x-1/2 -translate-y-1/2 lg:size-20"
+                                        >
+                                            <img src="./assets/images/icons/play.svg" alt="" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide h-full">
+                                    <div
+                                        class="relative z-20 h-full overflow-hidden rounded-xl border-2 border-primary lg:border-4"
+                                    >
+                                        <img
+                                            src="./assets/images/video-poster.jpeg"
+                                            class="size-full object-cover object-center"
+                                            alt=""
+                                        />
+
+                                        <div
+                                            class="absolute inset-x-0 top-0 flex items-center gap-4 p-8 lg:p-10"
+                                        >
+                                            <div
+                                                class="flex size-12 shrink-0 items-center justify-center rounded-full bg-white"
+                                            >
+                                                <img
+                                                    src="./assets/images/logo-sm.png"
+                                                    class="size-10 object-contain object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <p
+                                                class="text-lg font-semibold text-white lg:text-xl"
+                                            >
+                                                A Great Holiday Review on Nile Cruises ...
+                                            </p>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="absolute start-1/2 top-1/2 z-30 block size-12 -translate-x-1/2 -translate-y-1/2 lg:size-20"
+                                        >
+                                            <img src="./assets/images/icons/play.svg" alt="" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide h-full">
+                                    <div
+                                        class="relative z-20 h-full overflow-hidden rounded-xl border-2 border-primary lg:border-4"
+                                    >
+                                        <img
+                                            src="./assets/images/video-poster.jpeg"
+                                            class="size-full object-cover object-center"
+                                            alt=""
+                                        />
+
+                                        <div
+                                            class="absolute inset-x-0 top-0 flex items-center gap-4 p-8 lg:p-10"
+                                        >
+                                            <div
+                                                class="flex size-12 shrink-0 items-center justify-center rounded-full bg-white"
+                                            >
+                                                <img
+                                                    src="./assets/images/logo-sm.png"
+                                                    class="size-10 object-contain object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <p
+                                                class="text-lg font-semibold text-white lg:text-xl"
+                                            >
+                                                A Great Holiday Review on Nile Cruises ...
+                                            </p>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="absolute start-1/2 top-1/2 z-30 block size-12 -translate-x-1/2 -translate-y-1/2 lg:size-20"
+                                        >
+                                            <img src="./assets/images/icons/play.svg" alt="" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex h-[150px] flex-col gap-4 lg:col-span-2 lg:h-[600px] lg:flex-row lg:gap-6"
+                    >
+                        <div class="swiper thumbs size-full flex-1">
+                            <div class="swiper-wrapper h-full">
+                                <div class="swiper-slide h-full cursor-pointer">
+                                    <div
+                                        class="relative z-20 h-full overflow-hidden rounded-xl border-2 border-primary lg:border-4"
+                                    >
+                                        <img
+                                            src="./assets/images/video-poster.jpeg"
+                                            class="size-full object-cover object-center"
+                                            alt=""
+                                        />
+
+                                        <button
+                                            type="button"
+                                            class="absolute start-1/2 top-1/2 z-30 block size-8 -translate-x-1/2 -translate-y-1/2 lg:size-12"
+                                        >
+                                            <img src="./assets/images/icons/play.svg" alt="" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide h-full cursor-pointer">
+                                    <div
+                                        class="relative z-20 h-full overflow-hidden rounded-xl border-2 border-primary lg:border-4"
+                                    >
+                                        <img
+                                            src="./assets/images/video-poster.jpeg"
+                                            class="size-full object-cover object-center"
+                                            alt=""
+                                        />
+
+                                        <button
+                                            type="button"
+                                            class="absolute start-1/2 top-1/2 z-30 block size-8 -translate-x-1/2 -translate-y-1/2 lg:size-12"
+                                        >
+                                            <img src="./assets/images/icons/play.svg" alt="" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide h-full cursor-pointer">
+                                    <div
+                                        class="relative z-20 h-full overflow-hidden rounded-xl border-2 border-primary lg:border-4"
+                                    >
+                                        <img
+                                            src="./assets/images/video-poster.jpeg"
+                                            class="size-full object-cover object-center"
+                                            alt=""
+                                        />
+
+                                        <button
+                                            type="button"
+                                            class="absolute start-1/2 top-1/2 z-30 block size-8 -translate-x-1/2 -translate-y-1/2 lg:size-12"
+                                        >
+                                            <img src="./assets/images/icons/play.svg" alt="" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide h-full cursor-pointer">
+                                    <div
+                                        class="relative z-20 h-full overflow-hidden rounded-xl border-2 border-primary lg:border-4"
+                                    >
+                                        <img
+                                            src="./assets/images/video-poster.jpeg"
+                                            class="size-full object-cover object-center"
+                                            alt=""
+                                        />
+
+                                        <button
+                                            type="button"
+                                            class="absolute start-1/2 top-1/2 z-30 block size-8 -translate-x-1/2 -translate-y-1/2 lg:size-12"
+                                        >
+                                            <img src="./assets/images/icons/play.svg" alt="" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <menu
+                            class="thumbs-arrows flex items-center justify-center gap-12 lg:flex-col"
+                        >
+                            <li>
+                                <button type="button" class="swiper-btn prev lg:rotate-90">
+                                    <svg>
+                                        <use
+                                            href="./assets/images/icons/sprite.svg#arrow-left"
+                                        ></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="swiper-btn next lg:rotate-90">
+                                    <svg>
+                                        <use
+                                            href="./assets/images/icons/sprite.svg#arrow-right"
+                                        ></use>
+                                    </svg>
+                                </button>
+                            </li>
+                        </menu>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="bg-secondary pt-12 text-white lg:pt-20">
+            <div class="container">
+                <div class="grid gap-12 lg:grid-cols-3">
+                    <header class="lg:col-span-1">
+                        <h2 class="txt-shadow mb-4 text-3xl">
+                            How Good is Egypt Doudou Travel?
+                        </h2>
+                        <p class="mb-6 lg:mb-8">
+                            DOUDOU is about meeting others. You can get to know people
+                            online through the website or meet them in real life...
+                        </p>
+                        <a
+                            href="#"
+                            class="inline-flex h-10 items-center justify-center rounded-xl bg-primary px-5 text-center text-sm text-white transition-colors hover:bg-opacity-80"
+                        >Explore All</a
+                        >
+                    </header>
+
+                    <div class="flex min-w-0 items-center gap-4 lg:col-span-2">
+                <span class="rounded-full bg-white/70">
+                  <button type="button" class="swiper-btn prev shrink-0">
+                    <svg>
+                      <use
+                          href="./assets/images/icons/sprite.svg#arrow-left"
+                      ></use>
+                    </svg>
+                  </button>
+                </span>
+
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="rounded-3xl bg-white p-6 shadow-xl">
+                                        <div class="mb-3 flex items-center gap-2">
+                                            <div
+                                                class="size-8 shrink-0 overflow-hidden rounded-full lg:size-10"
+                                            >
+                                                <img
+                                                    src="./assets/images/avatar.jpeg"
+                                                    class="size-full object-cover object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <p class="mb-1 text-sm text-black">
+                                                    Mai Hussien
+                                                    <span class="text-gray">10 Feb 2024</span>
+                                                </p>
+                                                <div class="flex items-center gap-x-px">
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-gray">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p
+                                            class="line-clamp-4 font-normal leading-relaxed text-gray"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut labore et
+                                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                                            nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum lpa qui
+                                            officia deserunt mollit anim id est laborum...
+                                        </p>
+                                        <a href="#" class="text-primary hover:underline"
+                                        >Read More</a
+                                        >
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="rounded-3xl bg-white p-6 shadow-xl">
+                                        <div class="mb-3 flex items-center gap-2">
+                                            <div
+                                                class="size-8 shrink-0 overflow-hidden rounded-full lg:size-10"
+                                            >
+                                                <img
+                                                    src="./assets/images/avatar.jpeg"
+                                                    class="size-full object-cover object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <p class="mb-1 text-sm text-black">
+                                                    Mai Hussien
+                                                    <span class="text-gray">10 Feb 2024</span>
+                                                </p>
+                                                <div class="flex items-center gap-x-px">
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-gray">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p
+                                            class="line-clamp-4 font-normal leading-relaxed text-gray"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut labore et
+                                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                                            nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum lpa qui
+                                            officia deserunt mollit anim id est laborum...
+                                        </p>
+                                        <a href="#" class="text-primary hover:underline"
+                                        >Read More</a
+                                        >
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="rounded-3xl bg-white p-6 shadow-xl">
+                                        <div class="mb-3 flex items-center gap-2">
+                                            <div
+                                                class="size-8 shrink-0 overflow-hidden rounded-full lg:size-10"
+                                            >
+                                                <img
+                                                    src="./assets/images/avatar.jpeg"
+                                                    class="size-full object-cover object-center"
+                                                    alt=""
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <p class="mb-1 text-sm text-black">
+                                                    Mai Hussien
+                                                    <span class="text-gray">10 Feb 2024</span>
+                                                </p>
+                                                <div class="flex items-center gap-x-px">
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-secondary">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                    <svg class="size-3 text-gray">
+                                                        <use
+                                                            href="./assets/images/icons/sprite.svg#star"
+                                                        ></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p
+                                            class="line-clamp-4 font-normal leading-relaxed text-gray"
+                                        >
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut labore et
+                                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                                            nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex ea commodo consequat. Duis aute irure dolor in
+                                            reprehenderit in voluptate velit esse cillum lpa qui
+                                            officia deserunt mollit anim id est laborum...
+                                        </p>
+                                        <a href="#" class="text-primary hover:underline"
+                                        >Read More</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <span class="rounded-full bg-white/70">
+                  <button type="button" class="swiper-btn next shrink-0">
+                    <svg>
+                      <use
+                          href="./assets/images/icons/sprite.svg#arrow-right"
+                      ></use>
+                    </svg>
+                  </button>
+                </span>
+                    </div>
+                </div>
+            </div>
+
+            <img
+                src="./assets/images/section-decoration.png"
+                class="mt-6 w-full lg:mt-14"
+                alt=""
+            />
+        </section>
+
+        <section id="gallery">
+            <div class="container">
+                <header
+                    class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
+                >
+                    <h2 class="section_heading text-primary">
+                        <span>Explore</span> Gallery packages
+                    </h2>
+
+                    <a href="#" class="text-secondary lg:text-lg">View All</a>
+                </header>
+
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img
+                                src="./assets/images/gallery-1.jpeg"
+                                class="spotlight h-[350px] w-full rounded-xl object-cover object-center"
+                                alt=""
+                            />
+                        </div>
+                        <div class="swiper-slide">
+                            <img
+                                src="./assets/images/gallery-2.jpeg"
+                                class="spotlight h-[350px] w-full rounded-xl object-cover object-center"
+                                alt=""
+                            />
+                        </div>
+                        <div class="swiper-slide">
+                            <img
+                                src="./assets/images/gallery-3.jpeg"
+                                class="spotlight h-[350px] w-full rounded-xl object-cover object-center"
+                                alt=""
+                            />
+                        </div>
+                        <div class="swiper-slide">
+                            <img
+                                src="./assets/images/gallery-4.jpeg"
+                                class="spotlight h-[350px] w-full rounded-xl object-cover object-center"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="swiper-btn prev absolute left-0 top-1/2 z-20 -translate-y-1/2 lg:left-1/4"
+                    >
+                        <svg>
+                            <use href="./assets/images/icons/sprite.svg#arrow-left"></use>
+                        </svg>
+                    </button>
+                    <button
+                        type="button"
+                        class="swiper-btn next absolute right-0 top-1/2 z-20 -translate-y-1/2 lg:right-1/4"
+                    >
+                        <svg>
+                            <use
+                                href="./assets/images/icons/sprite.svg#arrow-right"
+                            ></use>
+                        </svg>
+                    </button>
+                </div>
+
+                <img
+                    src="./assets/images/section-divider.png"
+                    class="pointer-events-none mx-auto mt-5 lg:mt-10 lg:w-4/5"
+                    alt=""
+                />
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <header class="section_header">
+                    <h2 class="section_heading text-primary">
+                        <span>Frequently</span> Asked Questions
+                    </h2>
+                </header>
+
+                <div class="hs-accordion-group space-y-2">
+                    <div
+                        class="hs-accordion border-transparent hs-accordion-active:border-gray"
+                        id="faq-1"
+                    >
+                        <button
+                            class="hs-accordion-toggle flex w-full items-center justify-between gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white"
+                            aria-controls="faq-content-1"
+                        >
+                  <span class="flex items-center gap-3">
+                    <svg class="size-4 text-secondary lg:size-6">
+                      <use
+                          href="./assets/images/icons/sprite.svg#question"
+                      ></use>
+                    </svg>
+
+                    Question Title Here?
+                  </span>
+
+                            <svg
+                                class="block size-4 hs-accordion-active:hidden"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14" />
+                                <path d="M12 5v14" />
+                            </svg>
+                            <svg
+                                class="hidden size-4 hs-accordion-active:block"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14" />
+                            </svg>
+                        </button>
+                        <div
+                            id="faq-content-1"
+                            class="hs-accordion-content accordion-content-wrapper hidden"
+                            aria-labelledby="faq-1"
+                        >
+                            <div class="px-5 pb-5">
+                                <div
+                                    class="rounded-bl-xl rounded-br-xl bg-white p-8 shadow-lg"
+                                >
+                                    <p class="text-black">
+                                        <em>This is the third item's accordion body.</em> It is
+                                        hidden by default, until the collapse plugin adds the
+                                        appropriate classes that we use to style each element.
+                                        These classes control the overall appearance, as well as
+                                        the showing and hiding via CSS transitions.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="hs-accordion border-transparent hs-accordion-active:border-gray"
+                        id="faq-2"
+                    >
+                        <button
+                            class="hs-accordion-toggle flex w-full items-center justify-between gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white"
+                            aria-controls="faq-content-2"
+                        >
+                  <span class="flex items-center gap-3">
+                    <svg class="size-4 text-secondary lg:size-6">
+                      <use
+                          href="./assets/images/icons/sprite.svg#question"
+                      ></use>
+                    </svg>
+
+                    Question Title Here?
+                  </span>
+
+                            <svg
+                                class="block size-4 hs-accordion-active:hidden"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14" />
+                                <path d="M12 5v14" />
+                            </svg>
+                            <svg
+                                class="hidden size-4 hs-accordion-active:block"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14" />
+                            </svg>
+                        </button>
+                        <div
+                            id="faq-content-2"
+                            class="hs-accordion-content accordion-content-wrapper hidden"
+                            aria-labelledby="faq-2"
+                        >
+                            <div class="px-5 pb-5">
+                                <div
+                                    class="rounded-bl-xl rounded-br-xl bg-white p-8 shadow-lg"
+                                >
+                                    <p class="text-black">
+                                        <em>This is the third item's accordion body.</em> It is
+                                        hidden by default, until the collapse plugin adds the
+                                        appropriate classes that we use to style each element.
+                                        These classes control the overall appearance, as well as
+                                        the showing and hiding via CSS transitions.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="hs-accordion border-transparent hs-accordion-active:border-gray"
+                        id="faq-3"
+                    >
+                        <button
+                            class="hs-accordion-toggle flex w-full items-center justify-between gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white"
+                            aria-controls="faq-content-3"
+                        >
+                  <span class="flex items-center gap-3">
+                    <svg class="size-4 text-secondary lg:size-6">
+                      <use
+                          href="./assets/images/icons/sprite.svg#question"
+                      ></use>
+                    </svg>
+
+                    Question Title Here?
+                  </span>
+
+                            <svg
+                                class="block size-4 hs-accordion-active:hidden"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14" />
+                                <path d="M12 5v14" />
+                            </svg>
+                            <svg
+                                class="hidden size-4 hs-accordion-active:block"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M5 12h14" />
+                            </svg>
+                        </button>
+                        <div
+                            id="faq-content-3"
+                            class="hs-accordion-content accordion-content-wrapper hidden"
+                            aria-labelledby="faq-3"
+                        >
+                            <div class="px-5 pb-5">
+                                <div
+                                    class="rounded-bl-xl rounded-br-xl bg-white p-8 shadow-lg"
+                                >
+                                    <p class="text-black">
+                                        <em>This is the third item's accordion body.</em> It is
+                                        hidden by default, until the collapse plugin adds the
+                                        appropriate classes that we use to style each element.
+                                        These classes control the overall appearance, as well as
+                                        the showing and hiding via CSS transitions.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-center">
+                    <a href="#" class="text-lg text-secondary underline">Show More</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="partners" class="pb-20 pt-12 lg:pb-32">
+            <div class="container">
+                <header class="section_header">
+                    <h2 class="section_heading text-primary">
+                        <span>Doudou</span> Partners
+                    </h2>
+                </header>
+
+                <div class="flex items-center gap-6">
+              <span class="rounded-full bg-white/70">
+                <button type="button" class="swiper-btn prev shrink-0">
+                  <svg>
+                    <use
+                        href="./assets/images/icons/sprite.svg#arrow-left"
+                    ></use>
+                  </svg>
+                </button>
+              </span>
+
+                    <div class="swiper flex-1">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide w-auto p-2">
+                                <div class="img-shadow rounded-xl p-3">
+                                    <img
+                                        src="./assets/images/egyptair.png"
+                                        class="size-28 object-contain object-center lg:size-40"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="swiper-slide w-auto p-2">
+                                <div class="img-shadow rounded-xl p-3">
+                                    <img
+                                        src="./assets/images/egyptair.png"
+                                        class="size-28 object-contain object-center lg:size-40"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="swiper-slide w-auto p-2">
+                                <div class="img-shadow rounded-xl p-3">
+                                    <img
+                                        src="./assets/images/egyptair.png"
+                                        class="size-28 object-contain object-center lg:size-40"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="swiper-slide w-auto p-2">
+                                <div class="img-shadow rounded-xl p-3">
+                                    <img
+                                        src="./assets/images/egyptair.png"
+                                        class="size-28 object-contain object-center lg:size-40"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="swiper-slide w-auto p-2">
+                                <div class="img-shadow rounded-xl p-3">
+                                    <img
+                                        src="./assets/images/egyptair.png"
+                                        class="size-28 object-contain object-center lg:size-40"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="swiper-slide w-auto p-2">
+                                <div class="img-shadow rounded-xl p-3">
+                                    <img
+                                        src="./assets/images/egyptair.png"
+                                        class="size-28 object-contain object-center lg:size-40"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="swiper-slide w-auto p-2">
+                                <div class="img-shadow rounded-xl p-3">
+                                    <img
+                                        src="./assets/images/egyptair.png"
+                                        class="size-28 object-contain object-center lg:size-40"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            <div class="swiper-slide w-auto p-2">
+                                <div class="img-shadow rounded-xl p-3">
+                                    <img
+                                        src="./assets/images/egyptair.png"
+                                        class="size-28 object-contain object-center lg:size-40"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="rounded-full bg-white/70">
+                <button type="button" class="swiper-btn next shrink-0">
+                  <svg>
+                    <use
+                        href="./assets/images/icons/sprite.svg#arrow-right"
+                    ></use>
+                  </svg>
+                </button>
+              </span>
+                </div>
+            </div>
+        </section>
+    </main>
+@endsection
+@section('scripts')
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <script>
+        function sort_products(el){
+            $('#sort_products').submit();
+        }
+    </script>
+@endsection
+
+<!-- footer -->
+
+

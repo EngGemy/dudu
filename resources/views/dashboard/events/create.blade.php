@@ -1,0 +1,484 @@
+@extends('dashboard.layouts.app')
+@section('style')
+    <link rel="stylesheet" href="{{asset('node_modules/select2/dist/css/select2.min.css')}}">
+@endsection
+@section('content')
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">Events</h2>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <!-- Basic Horizontal form layout section start -->
+                <section id="basic-horizontal-layouts">
+                    <div class="row match-height">
+                        <div class="col-md-12 col-12">
+                            <div class="card">
+                                <div class="card-header">
+
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form form-horizontal"
+                                              action="{{route('events.store')}}"
+                                              method="POST"
+                                              enctype="multipart/form-data">
+                                            @csrf
+
+                                            <div class="form-body dd">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Title</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                @include('dashboard._partials.locale-tabs', [
+                                                                    'field' => 'name',
+                                                                    'label' => '',
+                                                                    'type' => 'input',
+                                                                    'maxlength' => 255,
+                                                                    'required' => true,
+                                                                    'translations' => collect(),
+                                                                    'locales' => ['en', 'zh', 'zh-Hant'],
+                                                                ])
+                                                                @error('name.en')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Active</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="custom-control custom-switch custom-switch-success mr-2 mb-1">
+
+                                                                    <input type="checkbox" class="custom-control-input" id="customSwitch4" name="is_active">
+                                                                    <label class="custom-control-label" for="customSwitch4"></label>
+                                                                </div>
+
+                                                                @error('is_active')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Description</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                @include('dashboard._partials.locale-tabs', [
+                                                                    'field' => 'description',
+                                                                    'label' => '',
+                                                                    'type' => 'textarea',
+                                                                    'rows' => 7,
+                                                                    'required' => true,
+                                                                    'translations' => collect(),
+                                                                    'locales' => ['en', 'zh', 'zh-Hant'],
+                                                                ])
+                                                                <script>
+                                                                    @foreach(['en','zh','zh-Hant'] as $loc)
+                                                                    CKEDITOR.replace('description_{{ $loc }}', { language: '{{ CKEDITOR() }}' });
+                                                                    @endforeach
+                                                                </script>
+                                                                @error('description.en')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+                                                    <div class="col-12" style="margin-top: 20px">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Exclusions</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="container2">
+
+                                                                    <div class="custom-inputs">
+
+                                                                        <div style="width: 100%"><input type="text"  @if(old('exclusions')) value="{{old('exclusions')[0]}}" @endif  class="form-control custom-2"  name="exclusions[]" style="display: inline-flex">
+                                                                            <button class="add_form_field2"><i class="fas fa-plus-circle"></i> </button>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    @if(old('exclusions')  and count(old('exclusions')) >1)
+                                                                        @for($i=1; $i<count(old('exclusions')); $i++)
+
+                                                                            <div class="custom-inputs"><input type="text" value="{{old('exclusions')[$i]}}"   class="form-control custom-2"  name="exclusions[]" style="display: inline-flex">
+                                                                                <a href="#" class="delete_field2"><i class="fas fa-trash"></i></a>
+                                                                            </div>
+                                                                        @endfor
+                                                                    @endif
+
+
+
+
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12" style="margin-top: 20px">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Inclusions</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="container3">
+
+                                                                    <div class="custom-inputs">
+
+                                                                        <div style="width: 100%"><input type="text"  @if(old('inclusions')) value="{{old('inclusions')[0]}}" @endif  class="form-control custom-2"  name="inclusions[]" style="display: inline-flex">
+                                                                            <button class="add_form_field3"><i class="fas fa-plus-circle"></i> </button>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    @if(old('inclusions')  and count(old('inclusions')) >1)
+                                                                        @for($i=1; $i<count(old('inclusions')); $i++)
+
+                                                                            <div class="custom-inputs"><input type="text" value="{{old('inclusions')[$i]}}"   class="form-control custom-2"  name="exclusions[]" style="display: inline-flex">
+                                                                                <a href="#" class="delete_field3"><i class="fas fa-trash"></i></a>
+                                                                            </div>
+                                                                        @endfor
+                                                                    @endif
+
+
+
+
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Main Photo</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input  type="file"
+                                                                        class="form-control" name="photo" >
+                                                                @error('photo')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Locations</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <select  class="form-control" name="locations[]" id="locations" multiple>
+
+                                                                    @foreach($cities as $city)
+                                                                        <option @if(old('locations'))@if(in_array($city->id,old('locations'))) selected @endif @endif value="{{$city->id}}" >{{$city->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>website</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input  type="text"
+                                                                        class="form-control" name="website" value="{{old('website')}}" required>
+                                                                @error('website')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>phone</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input  type="text"
+                                                                        class="form-control" name="phone" value="{{old('phone')}}" required>
+                                                                @error('phone')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Email</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input  type="email"
+                                                                        class="form-control" name="email" value="{{old('email')}}" required>
+                                                                @error('phone')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Start Date</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input  type="date"
+                                                                        class="form-control" name="start_date" value="{{old('start_date')}}" required>
+                                                                @error('start_date')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>End Date</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input  type="date"
+                                                                        class="form-control" name="end_date" value="{{old('end_date')}}" required>
+                                                                @error('end_date')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Statues</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <select class="form-control" name="statues">
+
+                                                                    <option value="everyday">Everyday</option>
+                                                                    <option value="monday">Every Monday</option>
+                                                                    <option value="friday">Every Friday</option>
+
+
+                                                                </select>
+                                                                @error('statues')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Cancellation</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <select class="form-control" name="cancellation">
+
+                                                                    <option value="free">Free </option>
+                                                                    <option value="pro">pro rata</option>
+                                                                    <option value="flat"> flat rate</option>
+                                                                    <option value="short"> short-rate</option>
+
+
+                                                                </select>
+                                                                @error('cancellation')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Meta Title</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                @include('dashboard._partials.locale-tabs', [
+                                                                    'field' => 'meta_title',
+                                                                    'label' => '',
+                                                                    'type' => 'input',
+                                                                    'maxlength' => 255,
+                                                                    'translations' => collect(),
+                                                                    'locales' => ['en', 'zh', 'zh-Hant'],
+                                                                ])
+                                                                @error('meta_title')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Meta Description</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                @include('dashboard._partials.locale-tabs', [
+                                                                    'field' => 'meta_description',
+                                                                    'label' => '',
+                                                                    'type' => 'textarea',
+                                                                    'rows' => 5,
+                                                                    'translations' => collect(),
+                                                                    'locales' => ['en', 'zh', 'zh-Hant'],
+                                                                ])
+                                                                @error('meta_description')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-4">
+                                                                <span>Meta Image</span>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="file" class="form-control" name="meta_img"
+                                                                       placeholder="Meta Image">
+                                                                @error('meta_img')
+                                                                <span class="text-danger">{{$message}}</span>
+                                                                @enderror
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="col-md-12 offset-md-0">
+                                                    <button type="submit"
+                                                            class="btn btn-primary mr-1 mb-1">save</button>
+
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <!-- // Basic Horizontal form layout section end -->
+
+                <!-- // Basic Floating Label Form section end -->
+
+            </div>
+        </div>
+    </div>
+@endsection
+@section('scripts')
+
+    <script  src="//maps.google.com/maps/api/js?libraries=places&key=AIzaSyClpYC9kBHWhxuz08xtbt7bEG93n4FzNzk&region=sa&language=ar&sensor=true"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{asset('node_modules/select2/dist/js/select2.js')}}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#locations').select2({
+                placeholder: 'choose Locations',
+                allowClear: true, // Adds a clear button
+
+            });
+
+        });
+    </script>
+<script>
+    $(document).ready(function() {
+        var max_fields      = 10;
+        var wrapper         = $(".container2");
+        var add_button      = $(".add_form_field2");
+
+        var x = 1;
+        $(add_button).click(function(e){
+
+            e.preventDefault();
+            if(x < max_fields){
+                x++;
+                $(wrapper).append('<div class="custom-inputs">' +
+                    '<input type="text" class="form-control custom-2" name="exclusions[]">' +
+                    '<a href="#" class="delete_field2"><i class="fas fa-trash"></i></a></div>'
+                ); //add input box
+            }
+            else
+            {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper).on("click",".delete_field2", function(e){
+            e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+    });
+    $(document).ready(function() {
+        var max_fields      = 10;
+        var wrapper         = $(".container3");
+        var add_button      = $(".add_form_field3");
+
+        var x = 1;
+        $(add_button).click(function(e){
+            e.preventDefault();
+            if(x < max_fields){
+                x++;
+                $(wrapper).append('<div class="custom-inputs">' +
+                    '<input type="text" class="form-control custom-2" name="exclusions[]">' +
+                    '<a href="#" class="delete_field3"><i class="fas fa-trash"></i></a></div>'
+                ); //add input box
+            }
+            else
+            {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper).on("click",".delete_field3", function(e){
+            e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+    });
+</script>
+
+@endsection

@@ -1,0 +1,1415 @@
+<!doctype html>
+<html lang="{{ app()->getLocale() }}" dir="{{ in_array(app()->getLocale(), ['ar','he']) ? 'rtl' : 'ltr' }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ __('front.site.sections.customer_gallery') }}</title>
+
+    @include('front.layouts.hreflang')
+      <link rel="icon" <?php  $site_name=\App\Models\General_setting::select('site_logo_icon')->first() ?> href="{{$site_name->site_logo_icon}}"  type="image/png">
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/spotlight.js@0.7.8/dist/css/spotlight.min.css"
+    />
+    <link rel="stylesheet" href="./assets/styles/main.css" />
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
+    ></script>
+      <link rel="stylesheet" href="{{asset('node_modules/select2/dist/css/select2.min.css')}}">
+    <script defer src="./assets/scripts/main.js"></script>
+  </head>
+
+  <body>
+    <div class="app">
+      <header class="page-header">
+        <div class="navbar">
+          <div class="container">
+            <div class="navbar_top">
+                <?php  $site_name=\App\Models\General_setting::first() ?>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there">
+                        <svg class="size-5 text-white">
+                            <use href="{{asset('assets/images/icons/sprite.svg#whatsapp')}}"></use>
+                        </svg>
+                    </a>
+                    <a href="{{route('about')}}">
+                        <svg class="size-5 text-white">
+                            <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-4 lg:gap-10">
+                    <div class="flex items-center gap-2">
+                        <svg class="size-5 text-white">
+                            <use href="{{asset('assets/images/icons/sprite.svg#clock')}}"></use>
+                        </svg>
+                        <span class="text-sm text-white"
+                        >{{ __('front.site.nav.cairo') }} : <span id="time">{{time()}}</span></span
+                        >
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="size-5 text-white">
+                            <use
+                                href="{{asset('assets/images/icons/sprite.svg#cloud-sun')}}"
+                            ></use>
+                        </svg>
+                        <span class="text-sm text-white">: 15 OC/ 60 OF</span>
+                    </div>
+                    @include('front.layouts.lang-switcher')
+                </div>
+            </div>
+          </div>
+
+          <nav class="navbar_nav">
+            <div class="container">
+                @include('front.layouts.nav-list')
+            </div>
+          </nav>
+
+          <div class="navbar_desktop">
+              <a href="{{route('home')}}">
+                  <img
+                      src="{{header_logo()}}"
+              class="w-48 shrink-0 lg:w-60"
+              alt=""
+            />
+              </a>
+          </div>
+
+          <div class="navbar_mobile static">
+            <div class="flex items-center gap-2">
+              <div class="hs-dropdown relative inline-flex">
+                <button type="button">
+                  <svg class="size-6 text-white">
+                    <use href="./assets/images/icons/sprite.svg#menu"></use>
+                  </svg>
+                </button>
+
+                <div
+                  class="hs-dropdown-menu duration hidden min-w-72 opacity-0 transition-opacity hs-dropdown-open:opacity-100"
+                  style="height: calc(100vh - 45px)"
+                >
+                  <div
+                    class="bg-gradient -ms-4 flex h-full flex-col justify-between px-4 pb-14 pt-10"
+                  >
+                      @include('front.layouts.mobile-nav-list')
+                    <ul class="social-list white mt-7 justify-center">
+                      <li>
+                        <a href="#">
+                          <svg>
+                            <use
+                              href="./assets/images/icons/sprite.svg#facebook"
+                            ></use>
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <svg>
+                            <use
+                              href="./assets/images/icons/sprite.svg#linkedin"
+                            ></use>
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <svg>
+                            <use
+                              href="./assets/images/icons/sprite.svg#youtube"
+                            ></use>
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <svg>
+                            <use
+                              href="./assets/images/icons/sprite.svg#instagram"
+                            ></use>
+                          </svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <img src="{{footer_logo()}}" class="h-8" alt="" />
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div
+                class="hs-dropdown group relative inline-flex [--auto-close:outside] [--offset:20]"
+              >
+                <button type="button">
+                  <svg class="size-4.5 text-white group-[.open]:hidden">
+                    <use href="./assets/images/icons/sprite.svg#search"></use>
+                  </svg>
+                  <svg class="hidden size-6 text-white group-[.open]:block">
+                    <use href="./assets/images/icons/sprite.svg#close"></use>
+                  </svg>
+                </button>
+
+                <div
+                  class="hs-dropdown-menu duration z-50 hidden max-w-80 p-px opacity-0 transition-opacity hs-dropdown-open:opacity-100"
+                >
+                  <div class="rounded-xl border border-primary bg-white">
+                    <div class="divide-y divide-primary">
+                      <div class="px-4 py-3">
+                        <div
+                          class="hs-dropdown relative flex h-full [--auto-close:outside] [--offset:5] [--strategy:absolute]"
+                        >
+                          <button
+                            type="button"
+                            class="hs-dropdown-toggle flex w-full items-center gap-3 text-nowrap text-start"
+                          >
+                            <svg class="size-6 shrink-0 text-primary">
+                              <use
+                                href="./assets/images/icons/sprite.svg#hotel"
+                              ></use>
+                            </svg>
+                            <p class="flex-1">High Luxury 5 Stars</p>
+                            <svg
+                              class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            >
+                              <path d="m6 9 6 6 6-6" />
+                            </svg>
+                          </button>
+
+                          <div
+                            class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden space-y-3 rounded-lg bg-white p-5 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
+                          >
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                              aria-pressed="true"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                            <button
+                              type="button"
+                              class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                            >
+                              Hotel Name
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex flex-1 items-center gap-3 px-4 py-3">
+                        <svg class="size-6 shrink-0 text-primary">
+                          <use
+                            href="./assets/images/icons/sprite.svg#calender"
+                          ></use>
+                        </svg>
+                        <input
+                          id="range"
+                          type="text"
+                          class="flatpickr flatpickr-input max-w-52 flex-1 shrink bg-transparent outline-none"
+                          placeholder="Check in date - Check out date"
+                        />
+                        <svg
+                          class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="m6 9 6 6 6-6" />
+                        </svg>
+                      </div>
+                      <div class="px-4 py-3">
+                        <div
+                          class="hs-dropdown relative flex h-full w-full [--offset:5] [--strategy:absolute] [--auto-close:inside]"
+                        >
+                          <button
+                            type="button"
+                            class="hs-dropdown-toggle flex h-full w-full items-center gap-3 text-nowrap text-start"
+                          >
+                            <svg class="size-6 shrink-0 text-primary">
+                              <use
+                                href="./assets/images/icons/sprite.svg#subscription-cashflow"
+                              ></use>
+                            </svg>
+                            <p class="flex-1">Budget From - to</p>
+                            <svg
+                              class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            >
+                              <path d="m6 9 6 6 6-6" />
+                            </svg>
+                          </button>
+
+                          <div
+                            class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden rounded-lg bg-white p-6 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
+                          >
+                            <p class="mb-4 text-sm">Your Budget</p>
+                            <div id="slider-3">
+                              <div class="slider mb-3"></div>
+                              <p
+                                class="flex items-center justify-between text-sm"
+                              >
+                                <span>$<span class="slider-min"></span></span>
+                                <span>$<span class="slider-max"></span></span>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="inline-block w-full rounded-bl-xl rounded-br-xl bg-primary px-5 py-3 text-white transition-colors hover:bg-opacity-80"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button type="button">
+                <svg class="size-5.5 text-white">
+                  <use
+                    href="./assets/images/icons/sprite.svg#customer-service-2"
+                  ></use>
+                </svg>
+              </button>
+              <button type="button" data-hs-overlay="#customize-tour">
+                <svg class="size-5 text-white">
+                  <use href="./assets/images/icons/sprite.svg#settings"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero">
+          <div class="container">
+            <div class="hero_content">
+              <h1 class="txt-shadow">{{ __('front.site.sections.customer_gallery') }}</h1>
+              <p class="txt-shadow">
+                Provide everyone with the finest vacation accompanied by the
+                highest level of safety, luxury and affordable prices
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <img
+          src="./assets/images/gallery-bg.jpeg"
+          class="page-header__bg"
+          alt=""
+        />
+      </header>
+
+      <main class="relative space-y-8 lg:space-y-10">
+        <section class="pt-12">
+          <div class="container">
+            <ol class="breadcrumb mb-8" aria-label="Breadcrumb">
+              <li>
+                <a href="#"> Home </a>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </li>
+              <li aria-current="page">{{ __('front.site.sections.customer_gallery') }}</li>
+            </ol>
+
+            <div
+              class="mb-12 flex flex-col items-start gap-4 lg:flex-row lg:items-center lg:justify-between"
+            >
+              <p class="text-xl font-semibold lg:text-2xl">
+                <span class="text-primary"
+                  ><span class="text-secondary">Doudou</span> Customer
+                  Gallery</span
+                >: 1240 Uploaded Photos
+              </p>
+
+              <div class="hs-dropdown relative [--strategy:absolute]">
+                <button
+                  type="button"
+                  class="hs-dropdown-toggle inline-flex items-center gap-2 text-nowrap rounded-xl border border-primary p-3 text-sm xl:px-4 xl:text-base"
+                >
+                  <svg class="size-6 text-primary">
+                    <use href="./assets/images/icons/sprite.svg#sort"></use>
+                  </svg>
+                  <span>Sort by: Latest Uploads</span>
+                  <svg
+                    class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+
+                <div
+                  class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden min-w-72 space-y-3 rounded-lg bg-white p-5 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
+                >
+                  <button
+                    type="button"
+                    class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                    aria-pressed="true"
+                  >
+                    Our Top Picks
+                  </button>
+                  <button
+                    type="button"
+                    class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                  >
+                    Traveler Rating
+                  </button>
+                  <button
+                    type="button"
+                    class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                  >
+                    Price (Low to High)
+                  </button>
+                  <button
+                    type="button"
+                    class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                  >
+                    Price (High to Low)
+                  </button>
+                  <button
+                    type="button"
+                    class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                  >
+                    Duration (Low to High)
+                  </button>
+                  <button
+                    type="button"
+                    class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                  >
+                    Duration (High to Low)
+                  </button>
+                  <button
+                    type="button"
+                    class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
+                  >
+                    Most Popular First
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="grid gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4"
+            >
+              <div class="min-h-60 overflow-hidden rounded-2xl shadow">
+                <img
+                  src="./assets/images/dest-1.jpeg"
+                  class="spotlight cursor-pointer size-full object-cover object-center"
+                  alt=""
+                />
+              </div>
+              <div class="min-h-60 overflow-hidden rounded-2xl shadow">
+                <img
+                  src="./assets/images/dest-2.jpeg"
+                  class="spotlight cursor-pointer size-full object-cover object-center"
+                  alt=""
+                />
+              </div>
+              <div class="min-h-60 overflow-hidden rounded-2xl shadow">
+                <img
+                  src="./assets/images/dest-3.jpeg"
+                  class="spotlight cursor-pointer size-full object-cover object-center"
+                  alt=""
+                />
+              </div>
+              <div class="min-h-60 overflow-hidden rounded-2xl shadow">
+                <img
+                  src="./assets/images/tour-1.jpeg"
+                  class="spotlight cursor-pointer size-full object-cover object-center"
+                  alt=""
+                />
+              </div>
+              <div class="min-h-60 overflow-hidden rounded-2xl shadow">
+                <img
+                  src="./assets/images/tour-2.jpeg"
+                  class="spotlight cursor-pointer size-full object-cover object-center"
+                  alt=""
+                />
+              </div>
+              <div class="min-h-60 overflow-hidden rounded-2xl shadow">
+                <img
+                  src="./assets/images/tour-4.jpeg"
+                  class="spotlight cursor-pointer size-full object-cover object-center"
+                  alt=""
+                />
+              </div>
+              <div class="min-h-60 overflow-hidden rounded-2xl shadow">
+                <img
+                  src="./assets/images/tip-1.jpeg"
+                  class="spotlight cursor-pointer size-full object-cover object-center"
+                  alt=""
+                />
+              </div>
+              <div class="min-h-60 overflow-hidden rounded-2xl shadow">
+                <img
+                  src="./assets/images/tip-2.jpeg"
+                  class="spotlight cursor-pointer size-full object-cover object-center"
+                  alt=""
+                />
+              </div>
+            </div>
+
+                          <!-- Pagination -->
+              <nav class="pagination">
+                <button type="button" class="pagination__arrow" disabled>
+                  <svg
+                    class="pagination__icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                  <span aria-hidden="true" class="sr-only">Previous</span>
+                </button>
+                <div class="pagination__numbers">
+                  <button
+                    type="button"
+                    class="pagination__number"
+                    aria-pressed="true"
+                  >
+                    1
+                  </button>
+                  <button type="button" class="pagination__number">2</button>
+                  <button type="button" class="pagination__number">3</button>
+                </div>
+                <button type="button" class="pagination__arrow">
+                  <span aria-hidden="true" class="sr-only">Next</span>
+                  <svg
+                    class="pagination__icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+              </nav>
+          </div>
+        </section>
+
+        <!-- ---------- -->
+
+        <section id="reviews" class="bg-secondary pt-12 text-white lg:pt-20">
+          <div class="container">
+            <div class="grid gap-12 lg:grid-cols-3">
+              <header class="lg:col-span-1">
+                <h2 class="txt-shadow mb-4 text-3xl">
+                  How Good is Egypt Doudou Travel?
+                </h2>
+                <p class="mb-6 lg:mb-8">
+                  DOUDOU is about meeting others. You can get to know people
+                  online through the website or meet them in real life...
+                </p>
+                <a
+                  href="#"
+                  class="inline-flex h-10 items-center justify-center rounded-xl bg-primary px-5 text-center text-sm text-white transition-colors hover:bg-opacity-80"
+                  >Explore All</a
+                >
+              </header>
+
+              <div class="flex min-w-0 items-center gap-4 lg:col-span-2">
+                <span class="rounded-full bg-white/70">
+                  <button type="button" class="swiper-btn prev shrink-0">
+                    <svg>
+                      <use
+                        href="./assets/images/icons/sprite.svg#arrow-left"
+                      ></use>
+                    </svg>
+                  </button>
+                </span>
+
+                <div class="swiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="rounded-3xl bg-white p-6 shadow-xl">
+                        <div class="mb-3 flex items-center gap-2">
+                          <div
+                            class="size-8 shrink-0 overflow-hidden rounded-full lg:size-10"
+                          >
+                            <img
+                              src="./assets/images/avatar.jpeg"
+                              class="h-full w-full object-cover object-center"
+                              alt=""
+                            />
+                          </div>
+
+                          <div>
+                            <p class="mb-1 text-sm text-black">
+                              Mai Hussien
+                              <span class="text-gray">10 Feb 2024</span>
+                            </p>
+                            <div class="flex items-center gap-x-px">
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-gray-200">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+
+                        <p
+                          class="line-clamp-4 font-normal leading-relaxed text-gray"
+                        >
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua. Ut enim ad minim veniam, quis
+                          nostrud exercitation ullamco laboris nisi ut aliquip
+                          ex ea commodo consequat. Duis aute irure dolor in
+                          reprehenderit in voluptate velit esse cillum lpa qui
+                          officia deserunt mollit anim id est laborum...
+                        </p>
+                        <a href="#" class="text-primary hover:underline"
+                          >Read More</a
+                        >
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="rounded-3xl bg-white p-6 shadow-xl">
+                        <div class="mb-3 flex items-center gap-2">
+                          <div
+                            class="size-8 shrink-0 overflow-hidden rounded-full lg:size-10"
+                          >
+                            <img
+                              src="./assets/images/avatar.jpeg"
+                              class="h-full w-full object-cover object-center"
+                              alt=""
+                            />
+                          </div>
+
+                          <div>
+                            <p class="mb-1 text-sm text-black">
+                              Mai Hussien
+                              <span class="text-gray">10 Feb 2024</span>
+                            </p>
+                            <div class="flex items-center gap-x-px">
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-gray-200">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+
+                        <p
+                          class="line-clamp-4 font-normal leading-relaxed text-gray"
+                        >
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua. Ut enim ad minim veniam, quis
+                          nostrud exercitation ullamco laboris nisi ut aliquip
+                          ex ea commodo consequat. Duis aute irure dolor in
+                          reprehenderit in voluptate velit esse cillum lpa qui
+                          officia deserunt mollit anim id est laborum...
+                        </p>
+                        <a href="#" class="text-primary hover:underline"
+                          >Read More</a
+                        >
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="rounded-3xl bg-white p-6 shadow-xl">
+                        <div class="mb-3 flex items-center gap-2">
+                          <div
+                            class="size-8 shrink-0 overflow-hidden rounded-full lg:size-10"
+                          >
+                            <img
+                              src="./assets/images/avatar.jpeg"
+                              class="h-full w-full object-cover object-center"
+                              alt=""
+                            />
+                          </div>
+
+                          <div>
+                            <p class="mb-1 text-sm text-black">
+                              Mai Hussien
+                              <span class="text-gray">10 Feb 2024</span>
+                            </p>
+                            <div class="flex items-center gap-x-px">
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-secondary">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                              <svg class="size-3 text-gray-200">
+                                <use
+                                  href="./assets/images/icons/sprite.svg#star"
+                                ></use>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+
+                        <p
+                          class="line-clamp-4 font-normal leading-relaxed text-gray"
+                        >
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua. Ut enim ad minim veniam, quis
+                          nostrud exercitation ullamco laboris nisi ut aliquip
+                          ex ea commodo consequat. Duis aute irure dolor in
+                          reprehenderit in voluptate velit esse cillum lpa qui
+                          officia deserunt mollit anim id est laborum...
+                        </p>
+                        <a href="#" class="text-primary hover:underline"
+                          >Read More</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <span class="rounded-full bg-white/70">
+                  <button type="button" class="swiper-btn next shrink-0">
+                    <svg>
+                      <use
+                        href="./assets/images/icons/sprite.svg#arrow-right"
+                      ></use>
+                    </svg>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <img
+            src="./assets/images/section-decoration.png"
+            class="mt-6 w-full lg:mt-14"
+            alt=""
+          />
+        </section>
+
+        <section>
+          <div class="container">
+            <header class="section_header">
+              <h2 class="section_heading text-primary">
+                <span>Frequently</span> Asked Questions
+              </h2>
+            </header>
+
+            <div class="hs-accordion-group space-y-2">
+              <div
+                class="hs-accordion border-transparent hs-accordion-active:border-gray"
+                id="faq-1"
+              >
+                <button
+                  class="hs-accordion-toggle flex w-full items-center justify-between gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white"
+                  aria-controls="faq-content-1"
+                >
+                  <span class="flex items-center gap-3">
+                    <svg class="size-4 text-secondary lg:size-6">
+                      <use
+                        href="./assets/images/icons/sprite.svg#question"
+                      ></use>
+                    </svg>
+
+                    Question Title Here?
+                  </span>
+
+                  <svg
+                    class="block size-4 hs-accordion-active:hidden"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                  </svg>
+                  <svg
+                    class="hidden size-4 hs-accordion-active:block"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                  </svg>
+                </button>
+                <div
+                  id="faq-content-1"
+                  class="hs-accordion-content accordion-content-wrapper hidden"
+                  aria-labelledby="faq-1"
+                >
+                  <div class="px-5 pb-5">
+                    <div
+                      class="rounded-bl-xl rounded-br-xl bg-white p-8 shadow-lg"
+                    >
+                      <p class="text-black">
+                        <em>This is the third item's accordion body.</em> It is
+                        hidden by default, until the collapse plugin adds the
+                        appropriate classes that we use to style each element.
+                        These classes control the overall appearance, as well as
+                        the showing and hiding via CSS transitions.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="hs-accordion border-transparent hs-accordion-active:border-gray"
+                id="faq-2"
+              >
+                <button
+                  class="hs-accordion-toggle flex w-full items-center justify-between gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white"
+                  aria-controls="faq-content-2"
+                >
+                  <span class="flex items-center gap-3">
+                    <svg class="size-4 text-secondary lg:size-6">
+                      <use
+                        href="./assets/images/icons/sprite.svg#question"
+                      ></use>
+                    </svg>
+
+                    Question Title Here?
+                  </span>
+
+                  <svg
+                    class="block size-4 hs-accordion-active:hidden"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                  </svg>
+                  <svg
+                    class="hidden size-4 hs-accordion-active:block"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                  </svg>
+                </button>
+                <div
+                  id="faq-content-2"
+                  class="hs-accordion-content accordion-content-wrapper hidden"
+                  aria-labelledby="faq-2"
+                >
+                  <div class="px-5 pb-5">
+                    <div
+                      class="rounded-bl-xl rounded-br-xl bg-white p-8 shadow-lg"
+                    >
+                      <p class="text-black">
+                        <em>This is the third item's accordion body.</em> It is
+                        hidden by default, until the collapse plugin adds the
+                        appropriate classes that we use to style each element.
+                        These classes control the overall appearance, as well as
+                        the showing and hiding via CSS transitions.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="hs-accordion border-transparent hs-accordion-active:border-gray"
+                id="faq-3"
+              >
+                <button
+                  class="hs-accordion-toggle flex w-full items-center justify-between gap-x-3 rounded-xl bg-primary px-6 py-4 text-start font-semibold text-white"
+                  aria-controls="faq-content-3"
+                >
+                  <span class="flex items-center gap-3">
+                    <svg class="size-4 text-secondary lg:size-6">
+                      <use
+                        href="./assets/images/icons/sprite.svg#question"
+                      ></use>
+                    </svg>
+
+                    Question Title Here?
+                  </span>
+
+                  <svg
+                    class="block size-4 hs-accordion-active:hidden"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                  </svg>
+                  <svg
+                    class="hidden size-4 hs-accordion-active:block"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                  </svg>
+                </button>
+                <div
+                  id="faq-content-3"
+                  class="hs-accordion-content accordion-content-wrapper hidden"
+                  aria-labelledby="faq-3"
+                >
+                  <div class="px-5 pb-5">
+                    <div
+                      class="rounded-bl-xl rounded-br-xl bg-white p-8 shadow-lg"
+                    >
+                      <p class="text-black">
+                        <em>This is the third item's accordion body.</em> It is
+                        hidden by default, until the collapse plugin adds the
+                        appropriate classes that we use to style each element.
+                        These classes control the overall appearance, as well as
+                        the showing and hiding via CSS transitions.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 text-center">
+              <a href="#" class="text-lg text-secondary underline">Show More</a>
+            </div>
+          </div>
+        </section>
+
+        <section id="partners" class="pb-20 pt-12 lg:pb-32">
+          <div class="container">
+            <header class="section_header">
+              <h2 class="section_heading text-primary">
+                <span>Doudou</span> Partners
+              </h2>
+            </header>
+
+            <div class="flex items-center gap-6">
+              <span class="rounded-full bg-white/70">
+                <button type="button" class="swiper-btn prev shrink-0">
+                  <svg>
+                    <use
+                      href="./assets/images/icons/sprite.svg#arrow-left"
+                    ></use>
+                  </svg>
+                </button>
+              </span>
+
+              <div class="swiper flex-1">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide w-auto p-2">
+                    <div class="img-shadow rounded-xl p-3">
+                      <img
+                        src="./assets/images/egyptair.png"
+                        class="size-28 object-contain object-center lg:size-40"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="swiper-slide w-auto p-2">
+                    <div class="img-shadow rounded-xl p-3">
+                      <img
+                        src="./assets/images/egyptair.png"
+                        class="size-28 object-contain object-center lg:size-40"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="swiper-slide w-auto p-2">
+                    <div class="img-shadow rounded-xl p-3">
+                      <img
+                        src="./assets/images/egyptair.png"
+                        class="size-28 object-contain object-center lg:size-40"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="swiper-slide w-auto p-2">
+                    <div class="img-shadow rounded-xl p-3">
+                      <img
+                        src="./assets/images/egyptair.png"
+                        class="size-28 object-contain object-center lg:size-40"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="swiper-slide w-auto p-2">
+                    <div class="img-shadow rounded-xl p-3">
+                      <img
+                        src="./assets/images/egyptair.png"
+                        class="size-28 object-contain object-center lg:size-40"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="swiper-slide w-auto p-2">
+                    <div class="img-shadow rounded-xl p-3">
+                      <img
+                        src="./assets/images/egyptair.png"
+                        class="size-28 object-contain object-center lg:size-40"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="swiper-slide w-auto p-2">
+                    <div class="img-shadow rounded-xl p-3">
+                      <img
+                        src="./assets/images/egyptair.png"
+                        class="size-28 object-contain object-center lg:size-40"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="swiper-slide w-auto p-2">
+                    <div class="img-shadow rounded-xl p-3">
+                      <img
+                        src="./assets/images/egyptair.png"
+                        class="size-28 object-contain object-center lg:size-40"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <span class="rounded-full bg-white/70">
+                <button type="button" class="swiper-btn next shrink-0">
+                  <svg>
+                    <use
+                      href="./assets/images/icons/sprite.svg#arrow-right"
+                    ></use>
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- footer -->
+      <div class="relative">
+        <img
+          src="./assets/images/section-decoration.png"
+          class="w-full"
+          alt=""
+        />
+
+        <footer class="footer">
+          <div class="container">
+            <div class="footer__grid">
+              <div class="footer__aside">
+                <img
+                  src="./assets/images/logo-footer.png"
+                  class="footer__logo"
+                  alt=""
+                />
+
+                <ul>
+                  <li>
+                    <svg>
+                      <use
+                        href="./assets/images/icons/sprite.svg#map-pin"
+                      ></use>
+                    </svg>
+                    <a href="#">Put Address Here</a>
+                  </li>
+                  <li>
+                    <svg>
+                      <use href="./assets/images/icons/sprite.svg#mail"></use>
+                    </svg>
+
+                    <a href="mailto:email">Put Email Here</a>
+                  </li>
+                  <li>
+                    <svg>
+                      <use href="./assets/images/icons/sprite.svg#phone"></use>
+                    </svg>
+
+                    <a href="tel:+tel">Put Phone Here</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="footer__sitemap">
+                <div>
+                  <h3>{{ __('front.site.footer.popular_tour_packages') }}</h3>
+
+                  <ul>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.egypt_travel_package') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.egypt_shore_excursions') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.egypt_nile_cruises_package') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.egypt_family_holiday_package') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.group_tours_to_egypt') }}</a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>{{ __('front.site.footer.main_links') }}</h3>
+
+                  <ul>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.about_us') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.contact_us') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.careers') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.blogs') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.faqs') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.privacy_policy') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.terms_conditions') }}</a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>{{ __('front.site.footer.official_pages') }}</h3>
+
+                  <ul>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.how_it_works') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.loyalty_program') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.events') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.become_partner') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.egypt_travel_guide') }}</a>
+                    </li>
+                    <li>
+                      <a href="#">{{ __('front.site.footer.services') }}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="footer__copyright">
+              <p class="max-lg:order-2 max-lg:text-center max-lg:text-sm">
+                {{ __('front.site.footer.rights_reserved') }} &copy;
+                <span class="text-secondary">{{ __('front.site.footer.brand') }} </span>
+                2024
+              </p>
+
+              <ul class="flex items-center gap-x-3 max-lg:order-1">
+                <li>
+                  <a href="#">
+                    <img
+                      src="./assets/images/icons/facebook.png"
+                      class="size-8"
+                      alt=""
+                    />
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img
+                      src="./assets/images/icons/linkedin.png"
+                      class="size-8"
+                      alt=""
+                    />
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img
+                      src="./assets/images/icons/youtube.png"
+                      class="size-8"
+                      alt=""
+                    />
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img
+                      src="./assets/images/icons/instagram.png"
+                      class="size-8"
+                      alt=""
+                    />
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+      </div>
+        <button type="button" id="toTop" onclick="lenis.scrollTo('body')">
+            <svg>
+                <use href="./assets/images/icons/sprite.svg#back-to-top"></use>
+            </svg>
+        </button>
+
+    </div>
+
+    <!-- js -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      // reviews
+      new Swiper("#reviews .swiper", {
+        slidesPerView: 1,
+        spaceBetween: 24,
+        breakpoints: {
+          1024: {
+            slidesPerView: 2,
+          },
+        },
+
+        navigation: {
+          nextEl: "#reviews .next",
+          prevEl: "#reviews .prev",
+        },
+      });
+
+      // Partners
+      new Swiper("#partners .swiper", {
+        spaceBetween: 40,
+        grabCursor: true,
+        a11y: false,
+        freeMode: true,
+        speed: 11000,
+        loop: true,
+        slidesPerView: "auto",
+        autoplay: {
+          delay: 0.5,
+          disableOnInteraction: false,
+        },
+        breakpoints: {
+          0: {
+            spaceBetween: 30,
+          },
+          480: {
+            spaceBetween: 30,
+          },
+          767: {
+            spaceBetween: 40,
+          },
+          992: {
+            spaceBetween: 40,
+          },
+        },
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{asset('node_modules/select2/dist/js/select2.js')}}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#selectedHotel').select2({
+                placeholder: 'choose Hotels',
+                allowClear: true, // Adds a clear button
+
+
+            });
+
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/spotlight.js@0.7.8/dist/spotlight.bundle.min.js"></script>
+  </body>
+</html>

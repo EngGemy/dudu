@@ -1,0 +1,372 @@
+[09-May-2024 16:23:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[27-May-2024 07:49:53 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[02-Mar-2025 14:22:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/cache.php on line 18
+[02-Jul-2025 00:31:37 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/cache.php on line 18
+[02-Jul-2025 00:32:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[02-Jul-2025 00:32:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[15-Oct-2025 10:42:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[15-Oct-2025 10:42:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[15-Oct-2025 10:42:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/cache.php on line 18
+[15-Oct-2025 10:42:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[15-Oct-2025 10:42:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/queue.php on line 16
+[15-Oct-2025 10:42:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/egyptdoudou/public_html/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/view.php on line 17
+[15-Oct-2025 10:42:20 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/session.php on line 21
+[15-Oct-2025 10:42:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/services.php on line 18
+[15-Oct-2025 10:42:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/filesystems.php on line 16
+[15-Oct-2025 10:42:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/broadcasting.php on line 18
+[30-Oct-2025 09:26:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[30-Oct-2025 09:26:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[30-Oct-2025 09:26:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[30-Oct-2025 09:26:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/cache.php on line 18
+[30-Oct-2025 09:26:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/session.php on line 21
+[30-Oct-2025 09:26:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/queue.php on line 16
+[30-Oct-2025 09:26:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/egyptdoudou/public_html/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/view.php on line 17
+[30-Oct-2025 09:26:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/services.php on line 18
+[30-Oct-2025 09:26:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/filesystems.php on line 16
+[30-Oct-2025 09:26:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/broadcasting.php on line 18
+[30-Nov-2025 14:11:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[30-Nov-2025 14:11:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[30-Nov-2025 14:11:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[06-Dec-2025 17:58:29 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/services.php on line 18
+[06-Dec-2025 17:58:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/broadcasting.php on line 18
+[12-Dec-2025 11:24:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/cache.php on line 18
+[12-Dec-2025 11:24:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[12-Dec-2025 11:24:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/queue.php on line 16
+[12-Dec-2025 11:24:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/egyptdoudou/public_html/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/view.php on line 17
+[12-Dec-2025 11:24:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/session.php on line 21
+[12-Dec-2025 11:24:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/filesystems.php on line 16
+[20-Dec-2025 00:30:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[20-Dec-2025 00:30:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[20-Dec-2025 00:30:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/services.php on line 18
+[27-Dec-2025 14:16:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/services.php on line 18
+[14-Feb-2026 16:00:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[14-Feb-2026 16:00:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[14-Feb-2026 16:00:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[14-Feb-2026 16:00:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/services.php on line 18
+[14-Feb-2026 16:01:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/cache.php on line 18
+[14-Feb-2026 16:02:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/filesystems.php on line 16
+[14-Feb-2026 16:02:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/queue.php on line 16
+[14-Feb-2026 16:02:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/session.php on line 21
+[14-Feb-2026 16:02:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/egyptdoudou/public_html/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/view.php on line 17
+[14-Feb-2026 16:02:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/logging.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/logging.php on line 20
+[14-Feb-2026 16:02:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/broadcasting.php on line 18
+[15-Feb-2026 22:03:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[15-Feb-2026 22:03:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[15-Feb-2026 22:03:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[15-Feb-2026 22:03:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/services.php on line 18
+[15-Feb-2026 22:03:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/cache.php on line 18
+[15-Feb-2026 22:04:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/filesystems.php on line 16
+[15-Feb-2026 22:04:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/queue.php on line 16
+[15-Feb-2026 22:04:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/session.php on line 21
+[15-Feb-2026 22:04:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/egyptdoudou/public_html/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/view.php on line 17
+[15-Feb-2026 22:04:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/logging.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/logging.php on line 20
+[15-Feb-2026 22:04:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/broadcasting.php on line 18
+[18-Feb-2026 18:01:13 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[20-Feb-2026 20:01:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[20-Feb-2026 20:01:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/broadcasting.php on line 18
+[20-Feb-2026 20:01:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/cache.php on line 18
+[20-Feb-2026 20:01:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[20-Feb-2026 20:01:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/filesystems.php on line 16
+[20-Feb-2026 20:01:43 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[20-Feb-2026 20:01:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/queue.php on line 16
+[20-Feb-2026 20:01:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/services.php on line 18
+[20-Feb-2026 20:01:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/session.php on line 21
+[20-Feb-2026 20:01:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/egyptdoudou/public_html/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/view.php on line 17
+[06-Apr-2026 06:09:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[06-Apr-2026 06:09:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[16-Apr-2026 05:11:28 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[16-Apr-2026 05:11:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[16-Apr-2026 05:11:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/services.php on line 18
+[16-Apr-2026 05:11:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/filesystems.php on line 16
+[16-Apr-2026 05:11:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/broadcasting.php on line 18
+[16-Apr-2026 05:11:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/cache.php on line 18
+[16-Apr-2026 05:11:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/session.php on line 21
+[16-Apr-2026 05:12:00 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[18-Apr-2026 06:38:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/database.php on line 18
+[18-Apr-2026 06:38:52 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16
+[18-Apr-2026 06:38:53 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/services.php on line 18
+[18-Apr-2026 06:38:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/session.php on line 21
+[18-Apr-2026 06:39:16 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/broadcasting.php on line 18
+[18-Apr-2026 06:39:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/app.php on line 18
+[18-Apr-2026 06:39:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/cache.php on line 18
+[18-Apr-2026 06:39:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/filesystems.php on line 16
+[18-Apr-2026 12:47:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/egyptdoudou/public_html/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/egyptdoudou/public_html/config/mail.php on line 16

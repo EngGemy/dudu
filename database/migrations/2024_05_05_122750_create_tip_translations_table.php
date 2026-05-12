@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('tip_translations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('tip_id')->unsigned();
+            $table->string('locale')->index();  // ar en
+            $table->string('name')->nullable();
+            $table->unique(['tip_id', 'locale']);
+            $table->foreign('tip_id')->references('id')->on('tips')->onDelete('cascade');
+
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('tip_translations');
+    }
+};
