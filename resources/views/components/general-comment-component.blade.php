@@ -26,16 +26,15 @@
         <div class="grid gap-12 lg:grid-cols-3">
             <header class="lg:col-span-1">
                 <h2 class="txt-shadow mb-4 text-3xl">
-                    How Good is Egypt Doudou Travel?
+                    {{ __('front.site.about.reviews_title') }}
                 </h2>
                 <p class="mb-6 lg:mb-8">
-                    DOUDOU is about meeting others. You can get to know people
-                    online through the website or meet them in real life...
+                    {{ __('front.site.about.reviews_intro') }}
                 </p>
                 <a
                     href="{{ route('general-comments') }}"
                     class="inline-flex h-10 items-center justify-center rounded-xl bg-primary px-5 text-center text-sm text-white transition-colors hover:bg-opacity-80"
-                >Explore All</a
+                >{{ __('front.site.about.explore_all') }}</a
                 >
             </header>
 

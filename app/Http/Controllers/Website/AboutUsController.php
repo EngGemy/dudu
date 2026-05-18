@@ -16,6 +16,7 @@ use App\Models\Question\Question;
 use App\Models\Service\Service;
 use App\Models\Slider\Slider;
 use App\Models\Tour;
+use App\Models\TravelService\TravelService;
 
 class AboutUsController extends Controller
 {
@@ -34,6 +35,7 @@ class AboutUsController extends Controller
         $team = AboutUs::query()->where('status', AboutUsStatus::Team->value)->first();
 
         $services = Service::query()->orderBy('id', 'desc')->take(4)->get();
+        $travel_services = TravelService::query()->orderBy('id')->take(5)->get();
         $popular_video = PopularVideo::query()
             ->where('status', PopularVideoStatus::ACTIVE->value)
             ->first();
@@ -47,6 +49,6 @@ class AboutUsController extends Controller
         $tours = Tour::with('galleries', 'tour_comments')->where('publish', 1)->orderBy('id', 'desc')->take(4)->get();
         $nationalities = Nationality::query()->orderBy('id', 'desc')->take(5)->get();
 
-        return view('front.about', compact('header', 'nationalities', 'tours', 'services', 'popular_video', 'popular_videos', 'questions', 'gallary_packages', 'cities', 'who_we_are', 'mission', 'vision', 'about_service', 'team', 'hotels'));
+        return view('front.about', compact('header', 'nationalities', 'tours', 'services', 'travel_services', 'popular_video', 'popular_videos', 'questions', 'gallary_packages', 'cities', 'who_we_are', 'mission', 'vision', 'about_service', 'team', 'hotels'));
     }
 }

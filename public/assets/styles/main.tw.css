@@ -593,6 +593,15 @@
 .btn:hover .content-bg {
   @apply scale-x-100 opacity-100 delay-0;
 }
+.btn:focus-within .content-wrapper {
+  @apply pointer-events-auto;
+}
+.btn:focus-within .content {
+  @apply opacity-100 delay-100;
+}
+.btn:focus-within .content-bg {
+  @apply scale-x-100 opacity-100 delay-0;
+}
 
 input,
 textarea select {

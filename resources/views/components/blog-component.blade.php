@@ -36,7 +36,7 @@
                     </p>
 
                     <a href="{{route('blog_preview',$blog->slug)}}" class="tour-card__link"
-                    >Read More</a
+                    >{{ __('front.site.sections.read_more') }}</a
                     >
                 </div>
             </div>

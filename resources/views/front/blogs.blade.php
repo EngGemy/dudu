@@ -24,7 +24,17 @@
       {{--    <link rel="stylesheet" href="./assets/styles/main.css" />--}}
 
       <link rel="stylesheet" href="{{asset('assets/styles/main.css')}}" />
+      <link rel="stylesheet" href="{{asset('assets/styles/doudou-design.css')}}" />
       <link rel="stylesheet" href="{{asset('node_modules/select2/dist/css/select2.min.css')}}">
+      <style>
+          .blog-reveal-card{transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease}
+          .blog-reveal-card:hover{transform:translateY(-6px);box-shadow:0 22px 44px rgba(0,40,70,.14);border-color:rgba(0,113,189,.22)}
+          .blog-side-panel{position:sticky;top:96px}
+          .blog-filter-shell{border:1px solid rgba(0,113,189,.1);border-radius:18px;background:linear-gradient(180deg,#fff,#f8fbfd);box-shadow:0 18px 44px rgba(0,40,70,.08);overflow:hidden}
+          .blog-tabs-wrap{backdrop-filter:blur(14px);box-shadow:0 8px 24px rgba(0,40,70,.06)}
+          .blog-tip-card{animation:blogFloatIn .55s cubic-bezier(.16,1,.3,1) both}
+          @keyframes blogFloatIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+      </style>
 
       <script
           defer
@@ -40,6 +50,7 @@
       ></script>
       {{--    <script defer src="./assets/scripts/main.js"></script>--}}
       <script defer src="{{asset('assets/scripts/main.js')}}"></script>
+      <script defer src="{{asset('assets/scripts/doudou-design.js')}}"></script>
   </head>
 
   <body>
@@ -50,18 +61,7 @@
             <div class="navbar_top">
                 <?php  $site_name=\App\Models\General_setting::first() ?>
 
-                <div class="flex items-center gap-3">
-                    <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there">
-                        <svg class="size-5 text-white">
-                            <use href="{{asset('assets/images/icons/sprite.svg#whatsapp')}}"></use>
-                        </svg>
-                    </a>
-                    <a href="mailto:{{$site_name->email}}">
-                        <svg class="size-5 text-white">
-                            <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
-                        </svg>
-                    </a>
-                </div>
+                <x-social-links variant="white" class="topbar-socials max-md:hidden" />
 
                 <div class="flex items-center gap-4 lg:gap-10">
                     <div class="flex items-center gap-2">
@@ -190,7 +190,7 @@
                                       class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
                                       multiple
                                   >
-                                      <option value=""  >Select Hotel</option>
+                                      <option value=""  >{{ __('front.site.search.select_hotel') }}</option>
 
                                       @foreach($hotels as $hotel)
                                           <option value="{{$hotel->id}}">{{ $hotel->name }}</option>
@@ -207,7 +207,7 @@
                                           type="text"
                                           name = "checkIn_checkOut"
                                           class="flatpickr flatpickr-input max-w-52 flex-1 shrink bg-transparent text-sm text-black outline-none"
-                                          placeholder="Check in date - Check out date"
+                                          placeholder="{{ __('front.site.search.date_placeholder') }}"
                                       />
                                       <svg
                                           class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
@@ -237,7 +237,7 @@
                                                       href="./assets/images/icons/sprite.svg#subscription-cashflow"
                                                   ></use>
                                               </svg>
-                                              <p class="flex-1 text-sm">Budget From - to</p>
+                                              <p class="flex-1 text-sm">{{ __('front.site.search.budget_from_to') }}</p>
                                               <svg
                                                   class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                                                   xmlns="http://www.w3.org/2000/svg"
@@ -257,7 +257,7 @@
                                           <div
                                               class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden rounded-lg bg-white p-6 text-sm text-black opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
                                           >
-                                              <p class="mb-4 text-sm">Your Budget</p>
+                                              <p class="mb-4 text-sm">{{ __('front.site.search.your_budget') }}</p>
                                               <div id="slider-1">
                                                   <div class="slider mb-3"></div>
                                                   <p
@@ -290,7 +290,7 @@
                                   type="submit"
                                   class="inline-block w-full rounded-bl-xl rounded-br-xl bg-primary px-5 py-3 text-white transition-colors hover:bg-opacity-80"
                               >
-                                  Search
+                                  {{ __('front.site.search.search') }}
                               </button>
                           </div>
                       </form>
@@ -319,26 +319,26 @@
       <main class="relative space-y-12 lg:space-y-16">
         <section class="pt-8">
           <div class="relative">
-            <div class="sticky top-0 z-40 mb-8 bg-white py-4">
+            <div class="blog-tabs-wrap sticky top-0 z-40 mb-8 bg-white/90 py-4">
               <div class="container">
                 <menu class="tabs mb-0">
                   <li>
                     <a href="{{route('blogs')}}" class="tab" aria-current="page"
-                      >Essential Tour Tips</a
+                      >{{ __('front.site.blog.essential_tour_tips') }}</a
                     >
                   </li>
                   <li>
                     <a href="{{route('blogs-destination')}}" class="tab"
-                      >Explore By Destination</a
+                      >{{ __('front.site.blog.explore_by_destination') }}</a
                     >
                   </li>
                   <li>
                     <a href="{{route('blogs-interest')}}" class="tab"
-                      >Explore By Interest</a
+                      >{{ __('front.site.blog.explore_by_interest') }}</a
                     >
                   </li>
                   <li>
-                    <a href="{{route('blogs-trending')}}" class="tab">Trending Now</a>
+                    <a href="{{route('blogs-trending')}}" class="tab">{{ __('front.site.blog.trending_now') }}</a>
                   </li>
                 </menu>
               </div>
@@ -347,7 +347,7 @@
             <div class="container">
               <ol class="breadcrumb mb-8" aria-label="Breadcrumb">
                 <li>
-                  <a href="{{route('home')}}"> Home </a>
+                  <a href="{{route('home')}}"> {{ __('front.site.nav.home') }} </a>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -364,7 +364,7 @@
                 </li>
                 <li>
                   <a href="{{route('blogs')}}">
-                    Blogs
+                    {{ __('front.site.footer.blogs') }}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -380,13 +380,13 @@
                     </svg>
                   </a>
                 </li>
-                <li aria-current="page">Essential Tour Tips</li>
+                <li aria-current="page">{{ __('front.site.blog.essential_tour_tips') }}</li>
               </ol>
 
               <div class="mb-8">
                 <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                     @foreach($blog_tips as $blog_tip)
-                  <a href="{{route('blog_preview',$blog_tip->slug)}}" class="card">
+                  <a href="{{route('blog_preview',$blog_tip->slug)}}" class="card blog-tip-card" style="animation-delay: {{ min($loop->index * 80, 320) }}ms">
                     <figure>
                       <img src="{{$blog_tip->image_url}}" alt="tip" />
                     </figure>
@@ -406,9 +406,9 @@
               </div>
 
               <div class="flex flex-col gap-10 lg:flex-row">
-                <div class="w-full shrink-0 lg:max-w-[420px]">
+                <div class="blog-side-panel w-full shrink-0 lg:max-w-[420px]">
                   <div
-                    class="hs-accordion-group mb-2 space-y-2"
+                    class="blog-filter-shell hs-accordion-group mb-2 space-y-2"
                     data-hs-accordion-always-open
                   >
                     <div class="hs-accordion active accordion-filter">
@@ -420,7 +420,7 @@
                             href="./assets/images/icons/sprite.svg#search"
                           ></use>
                         </svg>
-                        Search Articles
+                        {{ __('front.site.blog.search_articles') }}
                       </button>
                       <div
                         class="hs-accordion-content accordion-content-wrapper"
@@ -440,14 +440,14 @@
                               type="text"
                               name="search"
                               class="block w-full text-sm font-normal text-black outline-none placeholder:text-gray"
-                              placeholder="Search Blogs"
+                              placeholder="{{ __('front.site.blog.search_blogs_placeholder') }}"
                               required
                             />
                             <button
                               type="submit"
                               class="bg-primary px-6 py-2 text-white"
                             >
-                              Search
+                              {{ __('front.site.search.search') }}
                             </button>
                           </div>
                             </form>
@@ -464,7 +464,7 @@
                             href="./assets/images/icons/sprite.svg#articles"
                           ></use>
                         </svg>
-                        Latest Articles
+                        {{ __('front.site.blog.latest_articles') }}
                       </button>
                       <div
                         class="hs-accordion-content accordion-content-wrapper"
@@ -482,7 +482,7 @@
                                   href="./assets/images/icons/sprite.svg#sort"
                                 ></use>
                               </svg>
-                              <span>Sort by: Recommended</span>
+                              <span>{{ __('front.site.blog.sort_by_recommended') }}</span>
                               <svg
                                 class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -507,43 +507,43 @@
                                 class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                                 aria-pressed="true"
                               >
-                                Our Top Picks
+                                {{ __('front.site.blog.our_top_picks') }}
                               </button>
                               <button
                                 type="button"
                                 class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                               >
-                                Traveler Rating
+                                {{ __('front.site.blog.traveler_rating') }}
                               </button>
                               <button
                                 type="button"
                                 class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                               >
-                                Price (Low to High)
+                                {{ __('front.site.blog.price_low_to_high') }}
                               </button>
                               <button
                                 type="button"
                                 class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                               >
-                                Price (High to Low)
+                                {{ __('front.site.blog.price_high_to_low') }}
                               </button>
                               <button
                                 type="button"
                                 class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                               >
-                                Duration (Low to High)
+                                {{ __('front.site.blog.duration_low_to_high') }}
                               </button>
                               <button
                                 type="button"
                                 class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                               >
-                                Duration (High to Low)
+                                {{ __('front.site.blog.duration_high_to_low') }}
                               </button>
                               <button
                                 type="button"
                                 class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                               >
-                                Most Popular First
+                                {{ __('front.site.blog.most_popular_first') }}
                               </button>
                             </div>
                           </div>
@@ -591,7 +591,7 @@
                             href="./assets/images/icons/sprite.svg#tag"
                           ></use>
                         </svg>
-                        Tags
+                        {{ __('front.site.blog.tags') }}
                       </button>
                       <div
                         class="hs-accordion-content accordion-content-wrapper"
@@ -617,7 +617,7 @@
                             href="./assets/images/icons/sprite.svg#info"
                           ></use>
                         </svg>
-                        About Us
+                        {{ __('front.site.footer.about_us') }}
                       </button>
                       <div
                         class="hs-accordion-content accordion-content-wrapper"
@@ -685,33 +685,33 @@
                             href="./assets/images/icons/sprite.svg#mail"
                           ></use>
                         </svg>
-                        Enter Email Address
+                        {{ __('front.site.blog.enter_email_address') }}
                       </button>
                       <div
                         class="hs-accordion-content accordion-content-wrapper"
                       >
                         <div class="accordion-content">
                           <p class="mb-6">
-                            Subscribe for latest Updates & promotions
+                            {{ __('front.site.blog.subscribe_for_updates') }}
                           </p>
 
                           <div class="relative mb-4 flex-1">
                             <label
                               for="email"
                               class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                              >Email</label
+                              >{{ __('front.site.contact.email') }}</label
                             >
                             <input
                               id="emails"
                               type="email"
                               class="w-full rounded-xl border border-primary px-4 py-3 text-gray outline-none placeholder:text-gray"
-                              placeholder="Your Email"
+                              placeholder="{{ __('front.site.contact.your_email') }}"
                             />
                             <button
                               data-hs-overlay="#send-email"
                               class="absolute inset-y-0 end-0 rounded-br-xl rounded-tr-xl bg-primary px-5 py-2 text-white"
                             >
-                              Go
+                              {{ __('front.site.blog.go') }}
                             </button>
                           </div>
 
@@ -721,7 +721,7 @@
                                 href="./assets/images/icons/sprite.svg#lock"
                               ></use>
                             </svg>
-                            Your information is safe with us
+                            {{ __('front.site.blog.your_information_is_safe') }}
                           </p>
                         </div>
                       </div>
@@ -735,9 +735,9 @@
                   >
                     <p class="text-xl font-semibold lg:text-2xl">
                       <span class="text-primary"
-                        ><span class="text-secondary">Search</span>
-                        Results</span
-                      >: {{$count_blogs}} Available Blogs
+                        ><span class="text-secondary">{{ __('front.site.search.search') }}</span>
+                        {{ __('front.site.blog.results') }}</span
+                      >: {{$count_blogs}} {{ __('front.site.blog.available_blogs') }}
                     </p>
 
                     <div class="hs-dropdown relative [--strategy:absolute]">
@@ -750,7 +750,7 @@
                             href="./assets/images/icons/sprite.svg#sort"
                           ></use>
                         </svg>
-                        <span>Sort by: Recommended</span>
+                        <span>{{ __('front.site.blog.sort_by_recommended') }}</span>
                         <svg
                           class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
                           xmlns="http://www.w3.org/2000/svg"
@@ -775,43 +775,43 @@
                           class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                           aria-pressed="true"
                         >
-                          Our Top Picks
+                          {{ __('front.site.blog.our_top_picks') }}
                         </button>
                         <button
                           type="button"
                           class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                         >
-                          Traveler Rating
+                          {{ __('front.site.blog.traveler_rating') }}
                         </button>
                         <button
                           type="button"
                           class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                         >
-                          Price (Low to High)
+                          {{ __('front.site.blog.price_low_to_high') }}
                         </button>
                         <button
                           type="button"
                           class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                         >
-                          Price (High to Low)
+                          {{ __('front.site.blog.price_high_to_low') }}
                         </button>
                         <button
                           type="button"
                           class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                         >
-                          Duration (Low to High)
+                          {{ __('front.site.blog.duration_low_to_high') }}
                         </button>
                         <button
                           type="button"
                           class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                         >
-                          Duration (High to Low)
+                          {{ __('front.site.blog.duration_high_to_low') }}
                         </button>
                         <button
                           type="button"
                           class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                         >
-                          Most Popular First
+                          {{ __('front.site.blog.most_popular_first') }}
                         </button>
                       </div>
                     </div>
@@ -890,7 +890,7 @@
                             >
                                 <path d="m15 18-6-6 6-6" />
                             </svg>
-                            <span aria-hidden="true" class="sr-only">Previous</span>
+                <span aria-hidden="true" class="sr-only">{{ __('pagination.previous') }}</span>
                         </button>
                     @else
                         <a href="{{ $blogs->previousPageUrl() }}" class="pagination__arrow">
@@ -908,7 +908,7 @@
                             >
                                 <path d="m15 18-6-6 6-6" />
                             </svg>
-                            <span aria-hidden="true" class="sr-only">Previous</span>
+                            <span aria-hidden="true" class="sr-only">{{ __('pagination.previous') }}</span>
                         </a>
                     @endif
 
@@ -924,7 +924,7 @@
                     <!-- Next Page Link -->
                     @if ($blogs->hasMorePages())
                         <a href="{{ $blogs->nextPageUrl() }}" class="pagination__arrow">
-                            <span aria-hidden="true" class="sr-only">Next</span>
+                            <span aria-hidden="true" class="sr-only">{{ __('pagination.next') }}</span>
                             <svg
                                 class="pagination__icon"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -942,7 +942,7 @@
                         </a>
                     @else
                         <button type="button" class="pagination__arrow" disabled>
-                            <span aria-hidden="true" class="sr-only">Next</span>
+                            <span aria-hidden="true" class="sr-only">{{ __('pagination.next') }}</span>
                             <svg
                                 class="pagination__icon"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -977,7 +977,7 @@
           <div class="container">
             <header class="section_header">
               <h2 class="section_heading text-primary">
-                <span>Frequently</span> Asked Questions
+                <span>{{ __('front.site.blog.frequently') }}</span> {{ __('front.site.blog.asked_questions') }}
               </h2>
             </header>
 
@@ -986,7 +986,7 @@
             </div>
 
             <div class="mt-6 text-center">
-              <a href="{{route('faq')}}" class="text-lg text-secondary underline">Show More</a>
+              <a href="{{route('faq')}}" class="text-lg text-secondary underline">{{ __('front.site.sections.show_more') }}</a>
             </div>
           </div>
         </section>
@@ -995,7 +995,7 @@
           <div class="container">
             <header class="section_header">
               <h2 class="section_heading text-primary">
-                <span>Doudou</span> Partners
+                <span>{{ __('front.site.sections.doudou') }}</span> {{ __('front.site.sections.partners') }}
               </h2>
             </header>
 
@@ -1058,14 +1058,14 @@
             style="background: linear-gradient(90deg, #005690 0%, #0071bd 100%)"
           >
             <h3 class="text-lg font-semibold text-white lg:text-xl">
-              Email Received
+              {{ __('front.site.blog.message_received') }}
             </h3>
             <button
               type="button"
               class="flex size-7 items-center justify-center rounded-full border-2 border-white"
               data-hs-overlay="#send-email"
             >
-              <span class="sr-only">Close</span>
+              <span class="sr-only">{{ __('front.site.form.close') }}</span>
               <svg
                 class="size-5 shrink-0 text-white"
                 xmlns="http://www.w3.org/2000/svg"
@@ -1091,11 +1091,10 @@
               alt=""
             />
             <p class="mb-3 text-2xl text-primary lg:text-3xl">
-              Your Email Received
+              {{ __('front.site.blog.message_received') }}
             </p>
             <p class="mb-7 lg:mb-10 lg:text-lg">
-              Your tour Inquire has been successfully recived. We look forward
-              to contact you very soon!
+              {{ __('front.site.blog.feedback_success_message') }}
             </p>
 
             <ul class="social-list primary justify-center">
@@ -1154,14 +1153,14 @@
                     style="background: linear-gradient(90deg, #005690 0%, #0071bd 100%)"
                 >
                     <h3 class="text-lg font-semibold text-white lg:text-xl">
-                        Customize Your Own Tour
+                        {{ __('front.site.form.customize_your_own_tour') }}
                     </h3>
                     <button
                         type="button"
                         class="flex size-7 items-center justify-center rounded-full border-2 border-white"
                         data-hs-overlay="#customize-tour"
                     >
-                        <span class="sr-only">Close</span>
+                        <span class="sr-only">{{ __('front.site.form.close') }}</span>
                         <svg
                             class="size-5 shrink-0 text-white"
                             xmlns="http://www.w3.org/2000/svg"
@@ -1265,7 +1264,7 @@
                   >1</span
                   >
                                 <span class="text-lg font-semibold text-primary lg:text-xl"
-                                >Your Information</span
+                                >{{ __('front.site.form.your_information') }}</span
                                 >
                             </p>
 
@@ -1277,7 +1276,7 @@
 
                                                 for="title"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Title</label
+                                            >{{ __('front.site.form.title') }}</label
                                             >
                                             <select
                                                 onchange="checkInputs()"
@@ -1286,10 +1285,10 @@
                                                 type="text"
                                                 name="title"
                                                 class="rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                                                placeholder="Your Name"
+                                                placeholder="{{ __('front.site.form.your_name') }}"
                                             >
-                                                <option value="0">Mr.</option>
-                                                <option value="1">Ms.</option>
+                                                <option value="0">{{ __('front.site.form.mr') }}</option>
+                                                <option value="1">{{ __('front.site.form.ms') }}</option>
                                             </select>
                                         </div>
                                         <div class="relative flex-1">
@@ -1297,7 +1296,7 @@
 
                                                 for="name"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Name</label
+                                            >{{ __('front.site.form.name') }}</label
                                             >
                                             <input
                                                 oninput="checkInputs()"
@@ -1306,7 +1305,7 @@
                                                 name="name"
                                                 type="text"
                                                 class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                                placeholder="Your Name"
+                                                placeholder="{{ __('front.site.form.your_name') }}"
                                             />
                                             <span class="invalid text-danger" id="name_error"></span>
 
@@ -1317,7 +1316,7 @@
                                             <label
                                                 for="email"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Email</label
+                                            >{{ __('front.site.form.email') }}</label
                                             >
                                             <input
                                                 oninput="checkInputs()"
@@ -1326,7 +1325,7 @@
                                                 type="text"
                                                 name="email"
                                                 class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                                placeholder="Your Email"
+                                                placeholder="{{ __('front.site.form.your_email') }}"
 
                                             />
                                             <span class="invalid text-danger" id="email_error"></span>
@@ -1335,7 +1334,7 @@
                                             <label
                                                 for="nationality"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Nationality</label
+                                            >{{ __('front.site.form.nationality') }}</label
                                             >
                                             <select
                                                 onchange="checkInputs()"
@@ -1344,9 +1343,9 @@
                                                 type="text"
                                                 name="nationality"
                                                 class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                                                placeholder="Your Name"
+                                                placeholder="{{ __('front.site.form.your_name') }}"
                                             >
-                                                <option hidden>Your Nationality</option>
+                                                <option hidden>{{ __('front.site.form.your_nationality') }}</option>
                                                 @foreach($nationalities as $nationality)
                                                     <option value="{{$nationality->id}}">{{$nationality->title}}</option>
                                                 @endforeach
@@ -1361,7 +1360,7 @@
                                         <label
                                             for="tel"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Phone Number</label
+                                        >{{ __('front.site.form.phone_number') }}</label
                                         >
                                         <div class="flex items-center gap-3">
                                             <select
@@ -1379,7 +1378,7 @@
                                                 type="text"
                                                 name="phone"
                                                 class="flex-1 text-black outline-none placeholder:text-gray"
-                                                placeholder="Enter your phone number"
+                                                placeholder="{{ __('front.site.form.enter_phone_number') }}"
                                             /><br>
 
 
@@ -1403,7 +1402,7 @@
                   >2</span
                   >
                                 <span class="text-lg font-semibold text-primary lg:text-xl"
-                                >Tour Information</span
+                                >{{ __('front.site.form.tour_information') }}</span
                                 >
                             </p>
 
@@ -1414,7 +1413,7 @@
                                             <label
                                                 for="arrival-date"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Arrival Date</label
+                                            >{{ __('front.site.form.arrival_date') }}</label
                                             >
                                             <input
                                                 id="arrival-date"
@@ -1428,7 +1427,7 @@
                                             <label
                                                 for="departure-date"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Departure Date</label
+                                            >{{ __('front.site.form.departure_date') }}</label
                                             >
                                             <input
                                                 id="departure-date"
@@ -1445,7 +1444,7 @@
                                             <!-- <label
                                             for="destination"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Your Destination</label
+                                        >{{ __('front.site.form.your_destination') }}</label
                                         >
                                         <select
                                             id="destination"
@@ -1461,11 +1460,11 @@
                                             </select> -->
                                             <div class="relative" >
                                                 <div class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base">
-                                                    <label for="destination" class="">Your Destination</label>
+                                                    <label for="destination" class="">{{ __('front.site.form.your_destination') }}</label>
                                                 </div>
                                                 <div id="selected-options" style="padding-bottom: 0px" class="flex flex-wrap gap-2 p-2 w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray">
                                                     <select style="width: 100%;margin-bottom: 2px" id="destination" name="city_id" multiple >
-                                                        <option value="" disabled>Select Destination</option>
+                                                        <option value="" disabled>{{ __('front.site.form.select_destination') }}</option>
                                                         @foreach ($cities as $city)
                                                             <option value="{{ $city->id }}">{{ $city->name }}</option>
                                                         @endforeach
@@ -1486,16 +1485,16 @@
                                             <label
                                                 for="accommodation"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Accommodation Tour</label
+                                            >{{ __('front.site.form.accommodation_tour') }}</label
                                             >
                                             <select
                                                 id="accommodation"
                                                 type="text"
 
                                                 class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                                placeholder="Your Name"
+                                                placeholder="{{ __('front.site.form.your_name') }}"
                                             >
-                                                <option value="" disabled selected>Select Accommodation Tour</option>
+                                                <option value="" disabled selected>{{ __('front.site.form.select_accommodation_tour') }}</option>
                                                 @foreach ($tours as $tour )
                                                     <option value="{{ $tour->id }}">{{ $tour->name }}</option>
                                                 @endforeach
@@ -1509,23 +1508,23 @@
                                             <label
                                                 for="age"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Age Range (Optional)</label
+                                            >{{ __('front.site.form.age_range_optional') }}</label
                                             >
                                             <select
                                                 id="age"
                                                 type="text"
                                                 name="range_age"
                                                 class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                                placeholder="Your Name"
+                                                placeholder="{{ __('front.site.form.your_name') }}"
                                             >
-                                                <option value="" disabled selected>Select Age Range</option>
-                                                <option value="0">AGE_1_TO_10</option>
-                                                <option value="1">AGE_11_TO_20</option>
-                                                <option value="2">AGE_21_TO_30</option>                                        </select>
+                                                <option value="" disabled selected>{{ __('front.site.form.select_age_range') }}</option>
+                                                <option value="0">{{ __('front.site.form.age_1_to_10') }}</option>
+                                                <option value="1">{{ __('front.site.form.age_11_to_20') }}</option>
+                                                <option value="2">{{ __('front.site.form.age_21_to_30') }}</option>                                        </select>
                                         </div>
                                         <div class="flex w-full flex-1 justify-center gap-x-4">
                                             <div class="flex-1">
-                                                <p class="mb-2 text-center text-primary">Adults</p>
+                                                <p class="mb-2 text-center text-primary">{{ __('front.site.form.adults') }}</p>
                                                 <div class="flex items-center justify-center gap-4">
                                                     <button
                                                         type="button"
@@ -1545,7 +1544,7 @@
                                                 </div>
                                             </div>
                                             <div class="flex-1">
-                                                <p class="mb-2 text-center text-primary">Children</p>
+                                                <p class="mb-2 text-center text-primary">{{ __('front.site.form.children') }}</p>
                                                 <div class="flex items-center justify-center gap-4">
                                                     <button
                                                         type="button"
@@ -1570,14 +1569,14 @@
                                         <label
                                             for="notes"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Requests</label
+                                        >{{ __('front.site.form.requests') }}</label
                                         >
                                         <textarea
                                             id="notes"
                                             type="date"
                                             name="notes"
                                             class="w-full rounded-xl border border-primary px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                            placeholder="Write your requests here..."
+                                            placeholder="{{ __('front.site.form.requests_placeholder') }}"
                                             rows="4"
                                         ></textarea>
                                     </div>
@@ -1586,7 +1585,7 @@
                                         <label
                                             for="file"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Your Tour Program <span class="text-gray text-xs">(Optional)</span></label
+                                        >{{ __('front.site.form.your_tour_program') }} <span class="text-gray text-xs">{{ __('front.site.form.optional') }}</span></label
                                         >
                                         <input
                                             id="file"
@@ -1613,11 +1612,10 @@
                                 alt=""
                             />
                             <p class="text-2xl text-primary lg:text-3xl">
-                                An Inquire Received
+                                {{ __('front.site.form.inquire_received') }}
                             </p>
                             <p class="mb-7 lg:mb-10 lg:text-lg">
-                                Your tour Inquire has been successfully recived. We look
-                                forward to contact you very soon!
+                                {{ __('front.site.form.inquire_success') }}
                             </p>
 
                             <ul class="social-list primary justify-center">
@@ -1669,7 +1667,7 @@
                                 data-hs-stepper-back-btn
                                 id="backButton"
                             >
-                                Back
+                                {{ __('front.site.form.back') }}
                             </button>
                             <button
                                 type="button"
@@ -1678,7 +1676,7 @@
                                 id="nextButton"
                                 disabled
                             >
-                                Next
+                                {{ __('front.site.form.next') }}
                             </button>
                             <button
                                 type="button"
@@ -1688,7 +1686,7 @@
                                 id="Inquire"
                                 style="display: none"
                             >
-                                Inquire Now
+                                {{ __('front.site.form.inquire_now') }}
                             </button>
                         </div>
                         <!-- End Button Group -->
@@ -1718,14 +1716,14 @@
                     style="background: linear-gradient(90deg, #005690 0%, #0071bd 100%)"
                 >
                     <h3 class="text-lg font-semibold text-white lg:text-xl">
-                        Contact us
+                        {{ __('front.site.footer.contact_us') }}
                     </h3>
                     <button
                         type="button"
                         class="flex size-7 items-center justify-center rounded-full border-2 border-white"
                         data-hs-overlay="#customer-service"
                     >
-                        <span class="sr-only">Close</span>
+                        <span class="sr-only">{{ __('front.site.form.close') }}</span>
                         <svg
                             class="size-5 shrink-0 text-white"
                             xmlns="http://www.w3.org/2000/svg"
@@ -1745,71 +1743,11 @@
                 </div>
                 <div class="px-6 py-8">
                     <div>
-                        <p class="mb-2 text-center text-sm">
-                            Do you face any issue sending a Request?
-                            <span class="text-primary">Please contact directly by</span>
+                        <p class="mb-6 text-center text-sm text-gray">
+                            {{ __('front.site.contact.contact_issue') }}
+                            <span class="font-semibold text-primary">{{ __('front.site.contact.contact_directly_by') }}</span>
                         </p>
-                        <div
-                            class="mb-6 flex flex-col items-center justify-center gap-x-4 gap-y-2 lg:flex-row"
-                        >
-                            <?php  $site_name=\App\Models\General_setting::first() ?>
-                            <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there" target="_blank"
-                               class="flex items-center gap-1 text-sm"
-                            >
-                                <svg class="size-5 text-primary">
-                                    <use href="./assets/images/icons/sprite.svg#whatsapp"></use>
-                                </svg>
-                                {{$site_name->manager_phone}}
-                            </a>
-                            <a
-                                href="mailto:{{$site_name->email}}"
-                                class="flex items-center gap-1 text-sm"
-                            >
-                                <svg class="size-5 text-primary">
-                                    <use href="./assets/images/icons/sprite.svg#mail"></use>
-                                </svg>
-                                {{$site_name->email}}
-                            </a>
-                        </div>
-                        <?php  $social=\App\Models\Social_setting::first() ?>
-                        <ul class="social-list primary justify-center">
-                            <li>
-                                <a href="{{$social->facebook}}">
-                                    <svg>
-                                        <use
-                                            href="./assets/images/icons/sprite.svg#facebook"
-                                        ></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{$social->twitter}}">
-                                    <svg>
-                                        <use
-                                            href="./assets/images/icons/sprite.svg#linkedin"
-                                        ></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{$social->youtube}}">
-                                    <svg>
-                                        <use
-                                            href="./assets/images/icons/sprite.svg#youtube"
-                                        ></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{$social->instagram}}">
-                                    <svg>
-                                        <use
-                                            href="./assets/images/icons/sprite.svg#instagram"
-                                        ></use>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
+                        <x-contact-channel-actions mode="cards" />
                     </div>
                 </div>
 
@@ -2279,28 +2217,28 @@
             // Validate Name
             const nameInput = document.getElementById('name');
             if (nameInput.value.trim() === '') {
-                document.getElementById('name_error').textContent = 'Please enter your name';
+                document.getElementById('name_error').textContent = '{{ __('front.site.form.validation_name_required') }}';
                 isValid = false;
             }
 
             // Validate Email
             const emailInput = document.getElementById('email');
             if (emailInput.value.trim() === '') {
-                document.getElementById('email_error').textContent = 'Please enter your email';
+                document.getElementById('email_error').textContent = '{{ __('front.site.form.validation_email_required') }}';
                 isValid = false;
             }
 
             // Validate Nationality
             const nationalityInput = document.getElementById('nationality');
             if (nationalityInput.value === '0' || nationalityInput.value.trim() === '') {
-                document.getElementById('nationality_error').textContent = 'Please select your nationality';
+                document.getElementById('nationality_error').textContent = '{{ __('front.site.form.validation_nationality_required') }}';
                 isValid = false;
             }
 
             // Validate Phone Number
             const telInput = document.getElementById('tel');
             if (telInput.value.trim() === '') {
-                document.getElementById('tel_error').textContent = 'Please enter your phone number';
+                document.getElementById('tel_error').textContent = '{{ __('front.site.form.validation_phone_required') }}';
                 isValid = false;
             }
 
@@ -2449,44 +2387,44 @@
             }
             const departure_date = document.getElementById('departure-date');
             if (departure_date.value.trim() === '') {
-                document.getElementById('departure-date').textContent = 'Please enter your departure date';
+                document.getElementById('departure-date').textContent = '{{ __('front.site.form.validation_departure_required') }}';
                 isValid = false;
             }
 
             const arrival_date = document.getElementById('arrival-date');
             if (arrival_date.value.trim() === '') {
-                document.getElementById('arrival-date_error').textContent = 'Please enter your arrival date';
+                document.getElementById('arrival-date_error').textContent = '{{ __('front.site.form.validation_arrival_required') }}';
                 isValid = false;
             }
             const city_id = document.getElementById('destination');
             if (city_id.value === '') {
-                document.getElementById('destination_error').textContent = 'Please enter your Destination';
+                document.getElementById('destination_error').textContent = '{{ __('front.site.form.validation_destination_required') }}';
 
                 isValid = false;
             }
             const tour_id = document.getElementById('accommodation');
             if (tour_id.value.trim() === '') {
-                document.getElementById('accommodation_error').textContent = 'Please enter your Accommodation';
+                document.getElementById('accommodation_error').textContent = '{{ __('front.site.form.validation_accommodation_required') }}';
                 isValid = false;
             }
             const range_age = document.getElementById('age');
             if (range_age.value.trim() === '') {
-                document.getElementById('age_error').textContent = 'Please enter your Age';
+                document.getElementById('age_error').textContent = '{{ __('front.site.form.validation_age_required') }}';
                 isValid = false;
             }
             const notes = document.getElementById('notes');
             if (range_age.value.trim() === '') {
-                document.getElementById('notes_error').textContent = 'Please enter your notes';
+                document.getElementById('notes_error').textContent = '{{ __('front.site.form.validation_notes_required') }}';
                 isValid = false;
             }
             const adt = document.getElementById('adults-count');
             if (adt.value === '') {
-                document.getElementById('adults-count_error').textContent = 'Please enter your adults count';
+                document.getElementById('adults-count_error').textContent = '{{ __('front.site.form.validation_adults_required') }}';
                 isValid = false;
             }
             const chd = document.getElementById('children-count');
             if (chd.value === '') {
-                document.getElementById('children-count_error').textContent = 'Please enter your children count';
+                document.getElementById('children-count_error').textContent = '{{ __('front.site.form.validation_children_required') }}';
                 isValid = false;
             }
             return isValid;
@@ -2573,7 +2511,7 @@
     <script>
         $(document).ready(function() {
             $('#selectedHotel').select2({
-                placeholder: 'choose Hotels',
+                placeholder: '{{ __('front.site.form.choose_hotels') }}',
                 allowClear: true, // Adds a clear button
 
 
@@ -2600,7 +2538,7 @@
     <script>
         $(document).ready(function() {
             $('#destination').select2({
-                placeholder: 'choose Cities',
+                placeholder: '{{ __('front.site.form.choose_cities') }}',
                 allowClear: true, // Adds a clear button
 
 

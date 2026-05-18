@@ -1040,7 +1040,7 @@
                                             class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
                                             placeholder="Your City"
                                         >
-                                            <option value="" disabled selected>Select City</option>
+                                            <option value="" disabled selected>{{ __('front.site.contact.your_city') }}</option>
                                             @foreach ($cities as $city )
                                                 <option value="{{ $city->id }}">{{ $city->name }}</option>
                                             @endforeach

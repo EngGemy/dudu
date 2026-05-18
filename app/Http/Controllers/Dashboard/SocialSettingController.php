@@ -22,7 +22,7 @@ class SocialSettingController extends Controller
      */
     public function index()
     {
-        $setting = Social_setting::first();
+        $setting = Social_setting::query()->firstOrCreate([]);
 
         return view('dashboard.settings.social_edit', compact('setting'));
     }
@@ -79,9 +79,23 @@ class SocialSettingController extends Controller
     public function update(SocialSettingRequest $request, $id)
     {
         try {
-            $setting = Social_setting::first();
+            $setting = Social_setting::query()->firstOrCreate([]);
 
-            $setting->update($request->except('_token', 'id'));
+            $setting->update($request->only([
+                'instagram',
+                'facebook',
+                'youtube',
+                'tiktok',
+                'douyin',
+                'redbook',
+                'wechat',
+                'line',
+                'twitter',
+                'snap',
+                'google_play',
+                'app_store',
+                'telegram',
+            ]));
 
             return redirect()->route('SocialSettings.index')->with(['success' => 'Update Success']);
         } catch (\Exception $ex) {

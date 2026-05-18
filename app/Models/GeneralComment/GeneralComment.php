@@ -22,10 +22,12 @@ class GeneralComment extends Model
     public function getImageUrlAttribute()
     {
 
-        if ($this->photo) {
+        if ($this->photo && file_exists(public_path('assets/images/general-comments/'.$this->photo))) {
             return asset('/assets/images/general-comments/'.$this->photo);
 
         }
+
+        return asset('/assets/images/avatar.jpeg');
     }
 
     public function getFormattedDate()

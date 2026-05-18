@@ -39,6 +39,9 @@ class DatabaseSeeder extends Seeder
             QuestionSeeder::class,
             CareerSeeder::class,
             SliderSeeder::class,
+            DoudouPartnerSeeder::class,
+            PopularVideoSeeder::class,
+            DoudouFrontendPageSeeder::class,
         ]);
 
         // \App\Models\User::factory(10)->create();

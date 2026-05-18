@@ -5,6 +5,7 @@ use App\Http\Controllers\Website\AboutUsController;
 use App\Http\Controllers\Website\BlogController;
 use App\Http\Controllers\Website\BookingController;
 use App\Http\Controllers\Website\CareersController;
+use App\Http\Controllers\Website\ContactController;
 use App\Http\Controllers\Website\DouduoPartnerController;
 use App\Http\Controllers\Website\EventController;
 use App\Http\Controllers\Website\HomeController;
@@ -14,7 +15,6 @@ use App\Http\Controllers\Website\QuestionController;
 use App\Http\Controllers\Website\SpecialOfferController;
 use App\Http\Controllers\Website\TravelServiceController;
 use App\Http\Controllers\Website\WorkController;
-use App\Models\Nationality\Nationality;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -137,13 +137,7 @@ Route::get('/blogs-interest-art', function () {
 Route::get('/event-details', function () {
     return view('front.event-details');
 })->name('event-details');
-Route::get('/contact', function () {
-    $cities = \App\Models\City::get();
-    $tours = \App\Models\Tour::get();
-    $nationalities = Nationality::query()->orderBy('id', 'desc')->take(5)->get();
-
-    return view('front.contact', compact('cities', 'nationalities', 'tours'));
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 //Route::get('/faq', function () {
 //    return view('front.faq');
 //})->name('faq');

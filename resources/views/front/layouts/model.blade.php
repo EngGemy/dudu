@@ -8,14 +8,14 @@
         <div class="flex w-full flex-col overflow-hidden rounded-3xl bg-white">
             <div class="flex items-center justify-between bg-primary px-6 py-5" style="background: linear-gradient(90deg, #005690 0%, #0071BD 100%)">
                 <h3 class="text-lg font-semibold text-white lg:text-xl">
-                    Customize Your Own Tour
+                    {{ __('front.site.form.customize_your_own_tour') }}
                 </h3>
                 <button
                     type="button"
                     class="flex size-7 items-center justify-center rounded-full border-2 border-white"
                     data-hs-overlay="#customize-tour"
                 >
-                    <span class="sr-only">Close</span>
+                    <span class="sr-only">{{ __('front.site.form.close') }}</span>
                     <svg
                         class="size-5 shrink-0 text-white"
                         xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +119,7 @@
                   >1</span
                   >
                             <span class="text-lg font-semibold text-primary lg:text-xl"
-                            >Your Information</span
+                            >{{ __('front.site.form.your_information') }}</span
                             >
                         </p>
 
@@ -130,29 +130,29 @@
                                         <label
                                             for="title"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Title</label
+                                        >{{ __('front.site.form.title') }}</label
                                         >
                                         <select
                                             id="title"
                                             type="text"
                                             class="rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         >
-                                            <option value="mr">Mr.</option>
-                                            <option value="ms">Ms.</option>
+                                            <option value="mr">{{ __('front.site.form.mr') }}</option>
+                                            <option value="ms">{{ __('front.site.form.ms') }}</option>
                                         </select>
                                     </div>
                                     <div class="relative flex-1">
                                         <label
                                             for="name"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Name</label
+                                        >{{ __('front.site.form.name') }}</label
                                         >
                                         <input
                                             id="name"
                                             type="text"
                                             class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         />
                                     </div>
                                 </div>
@@ -161,29 +161,29 @@
                                         <label
                                             for="email"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Email</label
+                                        >{{ __('front.site.form.email') }}</label
                                         >
                                         <input
                                             id="email"
                                             type="text"
                                             class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         />
                                     </div>
                                     <div class="relative shrink-0 lg:max-w-[180px]">
                                         <label
                                             for="nationality"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Nationality</label
+                                        >{{ __('front.site.form.nationality') }}</label
                                         >
                                         <select
                                             id="nationality"
                                             type="text"
                                             class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         >
-                                            <option hidden>Your Nationality</option>
-                                            <option>Egyption</option>
+                                            <option hidden>{{ __('front.site.form.your_nationality') }}</option>
+                                            <option>{{ __('front.site.form.egyptian') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -193,24 +193,24 @@
                                     <label
                                         for="tel"
                                         class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                    >Phone Number</label
+                                    >{{ __('front.site.form.phone_number') }}</label
                                     >
                                     <div class="flex items-center gap-3">
                                         <select
                                             name="countries"
                                             class="block border-e-2 border-gray bg-transparent pe-2"
                                         >
-                                            <option value="NL">🇳🇱</option>
-                                            <option value="DE">🇩🇪</option>
-                                            <option value="FR">🇫🇷</option>
-                                            <option value="ES">🇪🇸</option>
+                                            <option value="NL">ðŸ‡³ðŸ‡±</option>
+                                            <option value="DE">ðŸ‡©ðŸ‡ª</option>
+                                            <option value="FR">ðŸ‡«ðŸ‡·</option>
+                                            <option value="ES">ðŸ‡ªðŸ‡¸</option>
                                         </select>
 
                                         <input
                                             id="tel"
                                             type="text"
                                             class="flex-1 text-black outline-none placeholder:text-gray"
-                                            placeholder="Enter your phone number"
+                                            placeholder="{{ __('front.site.form.enter_phone_number') }}"
                                         />
                                     </div>
                                 </div>
@@ -230,7 +230,7 @@
                   >2</span
                   >
                             <span class="text-lg font-semibold text-primary lg:text-xl"
-                            >Tour Information</span
+                            >{{ __('front.site.form.tour_information') }}</span
                             >
                         </p>
 
@@ -241,7 +241,7 @@
                                         <label
                                             for="arrival-date"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Arrival Date</label
+                                        >{{ __('front.site.form.arrival_date') }}</label
                                         >
                                         <input
                                             id="arrival-date"
@@ -253,7 +253,7 @@
                                         <label
                                             for="departure-date"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Departure Date</label
+                                        >{{ __('front.site.form.departure_date') }}</label
                                         >
                                         <input
                                             id="departure-date"
@@ -267,30 +267,30 @@
                                         <label
                                             for="destination"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Your Destination</label
+                                        >{{ __('front.site.form.your_destination') }}</label
                                         >
                                         <select
                                             id="destination"
                                             type="text"
                                             class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         >
-                                            <option hidden>Your Destination</option>
+                                            <option hidden>{{ __('front.site.form.your_destination') }}</option>
                                         </select>
                                     </div>
                                     <div class="relative flex-1">
                                         <label
                                             for="accommodation"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Accommodation Choice</label
+                                        >{{ __('front.site.form.accommodation_choice') }}</label
                                         >
                                         <select
                                             id="accommodation"
                                             type="text"
                                             class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         >
-                                            <option hidden>Accommodation Choice</option>
+                                            <option hidden>{{ __('front.site.form.accommodation_choice') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -299,20 +299,20 @@
                                         <label
                                             for="age"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Age Range (Optional)</label
+                                        >{{ __('front.site.form.age_range_optional') }}</label
                                         >
                                         <select
                                             id="age"
                                             type="text"
                                             class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         >
-                                            <option hidden>Select age range</option>
+                                            <option hidden>{{ __('front.site.form.select_age_range') }}</option>
                                         </select>
                                     </div>
                                     <div class="flex w-full flex-1 justify-center gap-x-4">
                                         <div class="flex-1">
-                                            <p class="mb-2 text-center text-primary">Adults</p>
+                                            <p class="mb-2 text-center text-primary">{{ __('front.site.form.adults') }}</p>
                                             <div class="flex items-center justify-center gap-4">
                                                 <button
                                                     type="button"
@@ -330,7 +330,7 @@
                                             </div>
                                         </div>
                                         <div class="flex-1">
-                                            <p class="mb-2 text-center text-primary">Children</p>
+                                            <p class="mb-2 text-center text-primary">{{ __('front.site.form.children') }}</p>
                                             <div class="flex items-center justify-center gap-4">
                                                 <button
                                                     type="button"
@@ -353,13 +353,13 @@
                                     <label
                                         for="notes"
                                         class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                    >Extra Notes</label
+                                    >{{ __('front.site.form.extra_notes') }}</label
                                     >
                                     <textarea
                                         id="notes"
                                         type="date"
                                         class="w-full rounded-xl border border-primary px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                        placeholder="Write your note here..."
+                                        placeholder="{{ __('front.site.form.requests_placeholder') }}"
                                     ></textarea>
                                 </div>
                             </div>
@@ -379,11 +379,10 @@
                             alt=""
                         />
                         <p class="text-2xl text-primary lg:text-3xl">
-                            An Inquire Received
+                            {{ __('front.site.form.inquire_received') }}
                         </p>
                         <p class="mb-7 lg:mb-10 lg:text-lg">
-                            Your tour Inquire has been successfully recived. We look
-                            forward to contact you very soon!
+                            {{ __('front.site.form.inquire_success') }}
                         </p>
 
                         <x-social-links variant="primary" class="justify-center" />
@@ -398,14 +397,14 @@
                             data-hs-stepper-back-btn
                         >
                             <!-- data-hs-overlay="#customize-tour" -->
-                            Cancel
+                            {{ __('front.site.form.cancel') }}
                         </button>
                         <button
                             type="button"
                             class="inline-block min-w-36 rounded-lg bg-primary px-3 py-2 font-medium text-white hover:bg-opacity-75 disabled:pointer-events-none disabled:opacity-50 lg:text-xl"
                             data-hs-stepper-next-btn
                         >
-                            Next
+                            {{ __('front.site.form.next') }}
                         </button>
                         <button
                             type="button"
@@ -413,7 +412,7 @@
                             data-hs-stepper-finish-btn
                             style="display: none"
                         >
-                            Inquire Now
+                            {{ __('front.site.form.inquire_now') }}
                         </button>
                     </div>
                     <!-- End Button Group -->

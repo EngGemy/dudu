@@ -1,70 +1,23 @@
 @php
     $currentLocale = app()->getLocale();
     $topBarLangLabel = match($currentLocale) {
-        'en'      => '中文（繁體字）',
+        'en' => '??????',
         'zh-Hant' => 'English',
-        'zh'      => 'English',
-        default   => '中文（繁體字）',
+        'zh' => 'English',
+        default => '??????',
     };
     $languages = [
-        'zh-Hant' => '中文（繁體字）',
-        'zh'      => '中文（简体字）',
-        'en'      => 'English',
+        'zh-Hant' => '??????',
+        'zh' => '??????',
+        'en' => 'English',
     ];
 @endphp
         <div class="navbar">
            {{--            Yield --}}
           <div class="container">
-            @php
-                $topSocial = \App\Models\Social_setting::first();
-                $normalizeTopUrl = fn(?string $u): string => ($u = trim((string)$u)) === '' ? '' : (preg_match('/^https?:/i',$u) ? $u : 'https://'.$u);
-            @endphp
             <div class="navbar_top">
               {{-- Social icons left side --}}
-              <div class="flex items-center gap-x-2 topbar-socials max-md:hidden">
-                @if($normalizeTopUrl($topSocial?->facebook))
-                <a href="{{ $normalizeTopUrl($topSocial?->facebook) }}" target="_blank" rel="noopener" class="topbar-social-link" title="Facebook" aria-label="Facebook">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.9 2H3.1A1.1 1.1 0 002 3.1v17.8A1.1 1.1 0 003.1 22h9.58v-7.75h-2.6v-3h2.6V9a3.64 3.64 0 013.88-4 20.26 20.26 0 012.33.12v2.7H17.3c-1.26 0-1.5.6-1.5 1.47v1.93h3l-.39 3H15.8V22h5.1a1.1 1.1 0 001.1-1.1V3.1A1.1 1.1 0 0020.9 2z"/></svg>
-                </a>
-                @endif
-                @if($normalizeTopUrl($topSocial?->instagram))
-                <a href="{{ $normalizeTopUrl($topSocial?->instagram) }}" target="_blank" rel="noopener" class="topbar-social-link" title="Instagram" aria-label="Instagram">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c3.2 0 3.6.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.26.07 1.64.07 4.85 0 3.2-.01 3.6-.07 4.85-.15 3.23-1.66 4.77-4.92 4.92-1.25.06-1.63.07-4.85.07-3.2 0-3.6-.01-4.85-.07C3.67 21.52 2.15 20 2 16.85 1.94 15.6 1.93 15.2 1.93 12c0-3.2.01-3.6.07-4.85C2.15 3.92 3.67 2.48 7.15 2.07 8.4 2.01 8.8 2 12 2zm0 5.84a4.16 4.16 0 100 8.32 4.16 4.16 0 000-8.32zm0 6.86a2.7 2.7 0 110-5.4 2.7 2.7 0 010 5.4zm5.3-7.02a.97.97 0 110 1.94.97.97 0 010-1.94z"/></svg>
-                </a>
-                @endif
-                @if($normalizeTopUrl($topSocial?->youtube))
-                <a href="{{ $normalizeTopUrl($topSocial?->youtube) }}" target="_blank" rel="noopener" class="topbar-social-link" title="YouTube" aria-label="YouTube">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31.2 31.2 0 000 12a31.2 31.2 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31.2 31.2 0 0024 12a31.2 31.2 0 00-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
-                </a>
-                @endif
-                @if($normalizeTopUrl($topSocial?->tiktok))
-                <a href="{{ $normalizeTopUrl($topSocial?->tiktok) }}" target="_blank" rel="noopener" class="topbar-social-link" title="TikTok" aria-label="TikTok">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 3.3A5.1 5.1 0 0115 0h-3.9v16.4a3.1 3.1 0 01-3.1 2.6 3.1 3.1 0 01-3.1-3.1 3.1 3.1 0 013.1-3.1c.3 0 .6 0 .9.1V8.8a7 7 0 00-.9-.1 7 7 0 00-7 7 7 7 0 007 7 7 7 0 007-7V8.1a9 9 0 005.3 1.7V6a5.1 5.1 0 01-2.7-.7z"/></svg>
-                </a>
-                @endif
-                @if($normalizeTopUrl($topSocial?->twitter))
-                <a href="{{ $normalizeTopUrl($topSocial?->twitter) }}" target="_blank" rel="noopener" class="topbar-social-link" title="X / Twitter" aria-label="X Twitter">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.763l7.736-8.855L2.34 2.25H9.08l4.258 5.624L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
-                </a>
-                @endif
-                @if($normalizeTopUrl($topSocial?->wechat))
-                <a href="{{ $normalizeTopUrl($topSocial?->wechat) }}" target="_blank" rel="noopener" class="topbar-social-link" title="WeChat" aria-label="WeChat">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.7 2.2C3.9 2.2 0 5.5 0 9.5c0 2.2 1.2 4.2 3 5.6a.6.6 0 01.2.7l-.4 1.5c0 .1 0 .1 0 .2 0 .2.1.3.3.3a.3.3 0 00.2-.1l1.9-1.1a.9.9 0 01.7-.1c.9.3 1.8.4 2.8.4.3 0 .5 0 .8-.1-.9-2.6.2-5 1.9-6.4 1.7-1.4 3.9-2 5.9-1.8-.6-3.6-3.9-6.4-7.6-6.4zm-2.5 5.3a1.1 1.1 0 110 2.2 1.1 1.1 0 010-2.2zm4.9 0a1.1 1.1 0 110 2.2 1.1 1.1 0 010-2.2zm3.8 1.5c-3.1 0-5.6 2.1-5.6 4.8 0 2.6 2.5 4.8 5.6 4.8.6 0 1.2-.1 1.7-.2l1.9 1-.5-1.7a4.6 4.6 0 002-3.9c0-2.6-2.5-4.8-5.6-4.8zm-2.5 3.6a.9.9 0 110 1.8.9.9 0 010-1.8zm4.9 0a.9.9 0 110 1.8.9.9 0 010-1.8z"/></svg>
-                </a>
-                @endif
-                @if($normalizeTopUrl($topSocial?->telegram))
-                <a href="https://wa.me/{{ preg_replace('/\D/','',$topSocial->telegram) }}" target="_blank" rel="noopener" class="topbar-social-link" title="WhatsApp" aria-label="WhatsApp">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.4.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.2-.2.2-.3.3-.5.1-.2.1-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6a1 1 0 00-.8.4 3 3 0 00-.9 2.2 5.2 5.2 0 001.2 2.7 11.7 11.7 0 005.1 4.5 5 5 0 003 .8 2.6 2.6 0 001.7-1.2 2 2 0 00.1-1.2c-.1-.1-.3-.2-.6-.3m-5.4 7.4h-.1a9.9 9.9 0 01-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4a9.9 9.9 0 01-1.5-5.3C2.1 6.4 6.6 2 12 2a9.9 9.9 0 017 2.9A9.8 9.8 0 0122 12c0 5.5-4.4 9.9-9.9 9.8m8.4-18.3A11.8 11.8 0 0012.1 0C5.5 0 .2 5.3.2 11.9a11.8 11.8 0 001.6 5.9L.1 24l6.3-1.7a11.9 11.9 0 005.7 1.4h.1c6.5 0 11.9-5.3 11.9-11.9a11.8 11.8 0 00-3.5-8.4"/></svg>
-                </a>
-                @else
-                <a href="#" class="topbar-social-link" title="WhatsApp" aria-label="WhatsApp">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.4.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.2-.2.2-.3.3-.5.1-.2.1-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6a1 1 0 00-.8.4 3 3 0 00-.9 2.2 5.2 5.2 0 001.2 2.7 11.7 11.7 0 005.1 4.5 5 5 0 003 .8 2.6 2.6 0 001.7-1.2 2 2 0 00.1-1.2c-.1-.1-.3-.2-.6-.3m-5.4 7.4h-.1a9.9 9.9 0 01-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4a9.9 9.9 0 01-1.5-5.3C2.1 6.4 6.6 2 12 2a9.9 9.9 0 017 2.9A9.8 9.8 0 0122 12c0 5.5-4.4 9.9-9.9 9.8m8.4-18.3A11.8 11.8 0 0012.1 0C5.5 0 .2 5.3.2 11.9a11.8 11.8 0 001.6 5.9L.1 24l6.3-1.7a11.9 11.9 0 005.7 1.4h.1c6.5 0 11.9-5.3 11.9-11.9a11.8 11.8 0 00-3.5-8.4"/></svg>
-                </a>
-                @endif
-                <a href="mailto:info@egyptdoudou.com" class="topbar-social-link" title="Email" aria-label="Email">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
-                </a>
-              </div>
+              <x-social-links variant="white" class="topbar-socials max-md:hidden" />
 
               <div class="flex items-center gap-4 lg:gap-6">
                 <div class="flex items-center gap-2">
@@ -143,7 +96,7 @@
                 class="header-search__input flex-1 bg-transparent text-gray-800 outline-none placeholder:text-gray-500"
                 placeholder="{{ __('front.site.search.search') }} {{ strtolower(__('front.site.sections.egypt_tours')) }}, {{ strtolower(__('front.site.sections.top_egypt_destinations')) }}…"
               />
-              <button type="button" id="header-search-clear" class="header-search__clear hidden text-gray-400 hover:text-gray-600 shrink-0" aria-label="Clear">
+              <button type="button" id="header-search-clear" class="header-search__clear hidden text-gray-400 hover:text-gray-600 shrink-0" aria-label="{{ __('front.site.form.clear') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
               </button>
               <div id="header-search-results" class="header-search__results hidden"></div>
@@ -165,7 +118,7 @@
                           href="{{asset('assets/images/icons/sprite.svg#hotel')}}"
                         ></use>
                       </svg>
-                      <p id="selectedHotel">High Luxury 5 Stars</p>
+                      <p id="selectedHotel">{{ __('front.site.search.hotel_placeholder') }}</p>
                       <svg
                         class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
                         xmlns="http://www.w3.org/2000/svg"
@@ -191,35 +144,35 @@
                         aria-pressed="true"
                         data-rate="5"
                       >
-                      High Luxury 5 Stars
+                      {{ __('front.site.search.hotel_placeholder') }}
                       </button>
                       <button
                         type="button"
                         class="block font-normal text-black hover:text-primary aria-pressed:text-primary hotel-rate"
                         data-rate="4"
                       >
-                      Luxury 4 Stars
+                      {{ __('front.site.search.luxury_4_stars') }}
                       </button>
                       <button
                         type="button"
                         class="block font-normal text-black hover:text-primary aria-pressed:text-primary hotel-rate"
                         data-rate="3"
                       >
-                      Standard 3 Stars
+                      {{ __('front.site.search.standard_3_stars') }}
                       </button>
                       <button
                         type="button"
                         class="block font-normal text-black hover:text-primary aria-pressed:text-primary hotel-rate"
                         data-rate="2"
                       >
-                      Budget 2 Stars
+                      {{ __('front.site.search.budget_2_stars') }}
                       </button>
                       <button
                         type="button"
                         class="block font-normal text-black hover:text-primary aria-pressed:text-primary hotel-rate"
                         data-rate="1"
                       >
-                      Economy 1 Star
+                      {{ __('front.site.search.economy_1_star') }}
                       </button>
                     </div>
                   </div>
@@ -233,7 +186,7 @@
                     name = "checkIn_checkOut"
                     type="text"
                     class="flatpickr flatpickr-input flex-1 bg-transparent text-black outline-none placeholder:text-black"
-                    placeholder="Check in date - Check out date"
+                    placeholder="{{ __('front.site.search.date_placeholder') }}"
                   />
                   <svg
                     class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
@@ -264,7 +217,7 @@
                           href="{{asset('assets/images/icons/sprite.svg#subscription-cashflow')}}"
                         ></use>
                       </svg>
-                      Budget From - to
+                      {{ __('front.site.search.budget_from_to') }}
                       <svg
                         class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
                         xmlns="http://www.w3.org/2000/svg"
@@ -284,7 +237,7 @@
                     <div
                       class="hs-dropdown-menu duration inset-x-0 z-10 mt-2 hidden rounded-lg bg-white p-6 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
                     >
-                      <p class="mb-4 text-sm">Your Budget</p>
+                      <p class="mb-4 text-sm">{{ __('front.site.search.your_budget') }}</p>
                       <div id="slider-1">
                         <div class="slider mb-3"></div>
                         <p class="flex items-center justify-between text-sm">
@@ -303,7 +256,7 @@
                 class="rounded-br-xl rounded-tr-xl bg-primary px-5 py-3 text-white transition-colors hover:bg-opacity-80"
                 onclick="filterTable()"
               >
-                Search
+                {{ __('front.site.search.search') }}
               </button>
             </div>
             </form>
@@ -347,7 +300,7 @@
                           class="size-6"
                           alt=""
                         />
-                        Egypt Tour
+                        {{ __('front.site.sections.egypt_tour') }}
                       </a>
                       <a href="#" class="flex items-center gap-4 text-white">
                         <img
@@ -355,7 +308,7 @@
                           class="size-6"
                           alt=""
                         />
-                        Event
+                        {{ __('front.site.sections.event') }}
                       </a>
                       <a href="#" class="flex items-center gap-4 text-white">
                         <img
@@ -363,7 +316,7 @@
                           class="size-6"
                           alt=""
                         />
-                        Services
+                        {{ __('front.site.sections.services') }}
                       </a>
                       <a href="#" class="flex items-center gap-4 text-white">
                         <img
@@ -371,7 +324,7 @@
                           class="size-6"
                           alt=""
                         />
-                        Blog
+                        {{ __('front.site.sections.blog') }}
                       </a>
                       <a href="#" class="flex items-center gap-4 text-white">
                         <img
@@ -379,7 +332,7 @@
                           class="size-6"
                           alt=""
                         />
-                        Reviews
+                        {{ __('front.site.sections.reviews') }}
                       </a>
                       <a href="#" class="flex items-center gap-4 text-white">
                         <img
@@ -387,7 +340,7 @@
                           class="size-6"
                           alt=""
                         />
-                        Loyalty Program
+                        {{ __('front.site.sections.loyalty_program') }}
                       </a>
                       <a href="#" class="flex items-center gap-4 text-white">
                         <img
@@ -395,7 +348,7 @@
                           class="size-6"
                           alt=""
                         />
-                        Careers
+                        {{ __('front.site.sections.careers') }}
                       </a>
                       <a href="#" class="flex items-center gap-4 text-white">
                         <img
@@ -403,7 +356,7 @@
                           class="size-6"
                           alt=""
                         />
-                        How it works
+                        {{ __('front.site.sections.how_it_works') }}
                       </a>
                       <a href="#" class="flex items-center gap-4 text-white">
                         <img
@@ -411,7 +364,7 @@
                           class="size-6"
                           alt=""
                         />
-                        Become Our Partner
+                        {{ __('front.site.sections.become_our_partner') }}
                       </a>
                     </nav>
 
@@ -493,7 +446,7 @@
                                 href="{{asset('assets/images/icons/sprite.svg#hotel')}}"
                               ></use>
                             </svg>
-                            <p class="flex-1">High Luxury 5 Stars</p>
+                            <p class="flex-1">{{ __('front.site.search.hotel_placeholder') }}</p>
                             <svg
                               class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                               xmlns="http://www.w3.org/2000/svg"
@@ -518,43 +471,43 @@
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                               aria-pressed="true"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                           </div>
                         </div>
@@ -569,7 +522,7 @@
                           id="range"
                           type="text"
                           class="flatpickr flatpickr-input max-w-52 flex-1 shrink bg-transparent outline-none"
-                          placeholder="Check in date - Check out date"
+                          placeholder="{{ __('front.site.search.date_placeholder') }}"
                         />
                         <svg
                           class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
@@ -599,7 +552,7 @@
                                 href="{{asset('assets/images/icons/sprite.svg#subscription-cashflow')}}"
                               ></use>
                             </svg>
-                            <p class="flex-1">Budget From - to</p>
+                            <p class="flex-1">{{ __('front.site.search.budget_from_to') }}</p>
                             <svg
                               class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                               xmlns="http://www.w3.org/2000/svg"
@@ -619,7 +572,7 @@
                           <div
                             class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden rounded-lg bg-white p-6 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
                           >
-                            <p class="mb-4 text-sm">Your Budget</p>
+                            <p class="mb-4 text-sm">{{ __('front.site.search.your_budget') }}</p>
                             <div id="slider-3">
                               <div class="slider mb-3"></div>
                               <p
@@ -637,7 +590,7 @@
                       type="button"
                       class="inline-block w-full rounded-bl-xl rounded-br-xl bg-primary px-5 py-3 text-white transition-colors hover:bg-opacity-80"
                     >
-                      Search
+                      {{ __('front.site.search.search') }}
                     </button>
                   </div>
                 </div>
@@ -713,6 +666,8 @@
     const results = document.getElementById('header-search-results');
     const clearBtn = document.getElementById('header-search-clear');
     const endpoint = @json(route('search.suggest'));
+    const tNoResults = @json(__('front.site.search.no_results_for'));
+    const tSearchUnavailable = @json(__('front.site.search.search_unavailable'));
     let activeIndex = -1, hits = [], reqId = 0, debounceTimer = null;
 
     function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -741,7 +696,7 @@
     function render(data) {
         hits = [];
         if (!data.groups || data.groups.length === 0) {
-            renderEmpty('No results for "' + (data.query || '') + '"');
+            renderEmpty(tNoResults + ' "' + (data.query || '') + '"');
             return;
         }
         let html = '';
@@ -786,7 +741,7 @@
             render(data);
         } catch (e) {
             if (myReq !== reqId) return;
-            renderEmpty('Search unavailable');
+            renderEmpty(tSearchUnavailable);
         }
     }
 

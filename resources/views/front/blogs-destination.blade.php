@@ -12,7 +12,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
-    <link rel="stylesheet" href="./assets/styles/main.css" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}" />
 
     <script
       defer
@@ -22,7 +23,8 @@
       defer
       src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
     ></script>
-    <script defer src="./assets/scripts/main.js"></script>
+    <script defer src="{{ asset('assets/scripts/main.js') }}"></script>
+    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}"></script>
       <link rel="stylesheet" href="{{asset('node_modules/select2/dist/css/select2.min.css')}}">
   </head>
 
@@ -34,18 +36,7 @@
             <div class="navbar_top">
                 <?php  $site_name=\App\Models\General_setting::first() ?>
 
-                <div class="flex items-center gap-3">
-                    <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there">
-                        <svg class="size-5 text-white">
-                            <use href="{{asset('assets/images/icons/sprite.svg#whatsapp')}}"></use>
-                        </svg>
-                    </a>
-                    <a href="mailto:{{$site_name->email}}">
-                        <svg class="size-5 text-white">
-                            <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
-                        </svg>
-                    </a>
-                </div>
+                <x-social-links variant="white" class="topbar-socials max-md:hidden" />
 
                 <div class="flex items-center gap-4 lg:gap-10">
                     <div class="flex items-center gap-2">
@@ -180,7 +171,7 @@
                                 href="./assets/images/icons/sprite.svg#hotel"
                               ></use>
                             </svg>
-                            <p class="flex-1">High Luxury 5 Stars</p>
+                            <p class="flex-1">{{ __('front.site.search.hotel_placeholder') }}</p>
                             <svg
                               class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                               xmlns="http://www.w3.org/2000/svg"
@@ -256,7 +247,7 @@
                           id="range"
                           type="text"
                           class="flatpickr flatpickr-input max-w-52 flex-1 shrink bg-transparent outline-none"
-                          placeholder="Check in date - Check out date"
+                          placeholder="{{ __('front.site.search.date_placeholder') }}"
                         />
                         <svg
                           class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
@@ -286,7 +277,7 @@
                                 href="./assets/images/icons/sprite.svg#subscription-cashflow"
                               ></use>
                             </svg>
-                            <p class="flex-1">Budget From - to</p>
+                            <p class="flex-1">{{ __('front.site.search.budget_from_to') }}</p>
                             <svg
                               class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                               xmlns="http://www.w3.org/2000/svg"
@@ -306,7 +297,7 @@
                           <div
                             class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden rounded-lg bg-white p-6 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
                           >
-                            <p class="mb-4 text-sm">Your Budget</p>
+                            <p class="mb-4 text-sm">{{ __('front.site.search.your_budget') }}</p>
                             <div id="slider-3">
                               <div class="slider mb-3"></div>
                               <p
@@ -356,21 +347,21 @@
                   <menu class="tabs mb-0">
                       <li>
                           <a href="{{route('blogs')}}" class="tab"
-                          >Essential Tour Tips</a
+                          >{{ __('front.site.blog.essential_tour_tips') }}</a
                           >
                       </li>
                       <li>
                           <a href="{{route('blogs-destination')}}" class="tab"  aria-current="page"
-                          >Explore By Destination</a
+                          >{{ __('front.site.blog.explore_by_destination') }}</a
                           >
                       </li>
                       <li>
                           <a href="{{route('blogs-interest')}}" class="tab"
-                          >Explore By Interest</a
+                          >{{ __('front.site.blog.explore_by_interest') }}</a
                           >
                       </li>
                       <li>
-                          <a href="{{route('blogs-trending')}}" class="tab">Trending Now</a>
+                          <a href="{{route('blogs-trending')}}" class="tab">{{ __('front.site.blog.trending_now') }}</a>
                       </li>
                   </menu>
               </div>
@@ -412,7 +403,7 @@
                     </svg>
                   </a>
                 </li>
-                <li aria-current="page">Explore By Destination</li>
+                <li aria-current="page">{{ __('front.site.blog.explore_by_destination') }}</li>
               </ol>
 
               <div class="mb-8">
@@ -461,14 +452,14 @@
                                         type="text"
                                         name="search"
                                         class="block w-full text-sm font-normal text-black outline-none placeholder:text-gray"
-                                        placeholder="Search Blogs"
+                                        placeholder="{{ __('front.site.blog.search_blogs_placeholder') }}"
                                         required
                                     />
                                     <button
                                         type="submit"
                                         class="bg-primary px-6 py-2 text-white"
                                     >
-                                        Search
+                                        {{ __('front.site.search.search') }}
                                     </button>
                                 </div>
                             </form>
@@ -485,7 +476,7 @@
                             href="./assets/images/icons/sprite.svg#articles"
                           ></use>
                         </svg>
-                        Latest Articles
+                        {{ __('front.site.blog.latest_articles') }}
                       </button>
                       <div
                         class="hs-accordion-content accordion-content-wrapper"
@@ -503,7 +494,7 @@
                                   href="./assets/images/icons/sprite.svg#sort"
                                 ></use>
                               </svg>
-                              <span>Sort by: Recommended</span>
+                              <span>{{ __('front.site.blog.sort_by_recommended') }}</span>
                               <svg
                                 class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -718,26 +709,26 @@
                       >
                         <div class="accordion-content">
                           <p class="mb-6">
-                            Subscribe for latest Updates & promotions
+                            {{ __('front.site.blog.subscribe_for_updates') }}
                           </p>
 
                           <div class="relative mb-4 flex-1">
                             <label
                               for="email"
                               class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                              >Email</label
+                              >{{ __('front.site.contact.email') }}</label
                             >
                             <input
                               id="email"
                               type="email"
                               class="w-full rounded-xl border border-primary px-4 py-3 text-gray outline-none placeholder:text-gray"
-                              placeholder="Your Email"
+                              placeholder="{{ __('front.site.contact.your_email') }}"
                             />
                             <button
                               data-hs-overlay="#send-email"
                               class="absolute inset-y-0 end-0 rounded-br-xl rounded-tr-xl bg-primary px-5 py-2 text-white"
                             >
-                              Go
+                              {{ __('front.site.blog.go') }}
                             </button>
                           </div>
 
@@ -747,7 +738,7 @@
                                 href="./assets/images/icons/sprite.svg#lock"
                               ></use>
                             </svg>
-                            Your information is safe with us
+                            {{ __('front.site.blog.your_information_is_safe') }}
                           </p>
                         </div>
                       </div>
@@ -761,9 +752,9 @@
                   >
                     <p class="text-xl font-semibold lg:text-2xl">
                       <span class="text-primary"
-                        ><span class="text-secondary">Search</span>
-                        Results</span
-                      >: {{\App\Models\Blog\Blog::count()}} Available Tours
+                        ><span class="text-secondary">{{ __('front.site.search.search') }}</span>
+                        {{ __('front.site.blog.results') }}</span
+                      >: {{\App\Models\Blog\Blog::count()}} {{ __('front.site.blog.available_tours') }}
                     </p>
 
                     <div class="hs-dropdown relative [--strategy:absolute]">
@@ -776,7 +767,7 @@
                             href="./assets/images/icons/sprite.svg#sort"
                           ></use>
                         </svg>
-                        <span>Sort by: Recommended</span>
+                        <span>{{ __('front.site.blog.sort_by_recommended') }}</span>
                         <svg
                           class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
                           xmlns="http://www.w3.org/2000/svg"
@@ -866,7 +857,7 @@
                   >
                     <path d="m15 18-6-6 6-6" />
                   </svg>
-                  <span aria-hidden="true" class="sr-only">Previous</span>
+                  <span aria-hidden="true" class="sr-only">{{ __('pagination.previous') }}</span>
                 </button>
                 <div class="pagination__numbers">
                   <button
@@ -880,7 +871,7 @@
                   <button type="button" class="pagination__number">3</button>
                 </div>
                 <button type="button" class="pagination__arrow">
-                  <span aria-hidden="true" class="sr-only">Next</span>
+                  <span aria-hidden="true" class="sr-only">{{ __('pagination.next') }}</span>
                   <svg
                     class="pagination__icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -913,7 +904,7 @@
           <div class="container">
             <header class="section_header">
               <h2 class="section_heading text-primary">
-                <span>Frequently</span> Asked Questions
+                <span>{{ __('front.site.blog.frequently') }}</span> {{ __('front.site.blog.asked_questions') }}
               </h2>
             </header>
 
@@ -922,7 +913,7 @@
             </div>
 
             <div class="mt-6 text-center">
-              <a href="{{route('faq')}}" class="text-lg text-secondary underline">Show More</a>
+              <a href="{{route('faq')}}" class="text-lg text-secondary underline">{{ __('front.site.sections.show_more') }}</a>
             </div>
           </div>
         </section>
@@ -931,7 +922,7 @@
           <div class="container">
             <header class="section_header">
               <h2 class="section_heading text-primary">
-                <span>Doudou</span> Partners
+                <span>{{ __('front.site.sections.doudou') }}</span> {{ __('front.site.sections.partners') }}
               </h2>
             </header>
 
@@ -990,14 +981,14 @@
         <div class="flex w-full flex-col overflow-hidden rounded-3xl bg-white">
           <div class="flex items-center justify-between bg-primary px-6 py-5" style="background: linear-gradient(90deg, #005690 0%, #0071BD 100%)">
             <h3 class="text-lg font-semibold text-white lg:text-xl">
-              Email Received
+              {{ __('front.site.blog.email_received') }}
             </h3>
             <button
               type="button"
               class="flex size-7 items-center justify-center rounded-full border-2 border-white"
               data-hs-overlay="#send-email"
             >
-              <span class="sr-only">Close</span>
+              <span class="sr-only">{{ __('front.site.form.close') }}</span>
               <svg
                 class="size-5 shrink-0 text-white"
                 xmlns="http://www.w3.org/2000/svg"
@@ -1022,10 +1013,9 @@
               class="mx-auto mb-4 max-w-40"
               alt=""
             />
-            <p class="text-2xl text-primary lg:text-3xl mb-3">Your Email Received</p>
+            <p class="text-2xl text-primary lg:text-3xl mb-3">{{ __('front.site.blog.your_email_received') }}</p>
             <p class="mb-7 lg:mb-10 lg:text-lg">
-              Your tour Inquire has been successfully recived. We look forward
-              to contact you very soon!
+              {{ __('front.site.form.inquire_success') }}
             </p>
 
             <ul class="social-list primary justify-center">

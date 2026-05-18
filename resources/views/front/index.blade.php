@@ -47,7 +47,7 @@
           <div class="container">
             <div class="hero_content">
               <h1 class="txt-shadow">
-                {{ $slider->title ?? "Default slider title" }}
+                {{ $slider->title ?? __('front.site.sections.default_slider_title') }}
               </h1>
             </div>
           </div>
@@ -105,7 +105,7 @@
             class="txt-shadow max-w-3xl text-3xl text-white lg:text-5xl lg:leading-normal"
           >
             {{-- Experience A Spectacular And A Memorable Egypt Guided Tour --}}
-            {{$slider?->title ?? "Default slider title"}}
+            {{$slider?->title ?? __('front.site.sections.default_slider_title')}}
           </h2>
         </header>
 
@@ -221,7 +221,7 @@
 
                 <figcaption>
                   <h3>{{$tour->translate(app()->getLocale(), true)->name ?? ''}}</h3>
-                  <span>View All Tours</span>
+                  <span>{{ __('front.site.sections.view_all_tours') }}</span>
                 </figcaption>
               </a>
         </div>
@@ -245,11 +245,11 @@
                 class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
               >
                 <h2 class="section_heading text-primary">
-                  <span>Recommended</span> Egypt Tours
+                  <span>{{ __('front.site.sections.recommended') }}</span> {{ __('front.site.sections.egypt_tours') }}
                 </h2>
 
                 <div class="flex items-center gap-4 max-lg:ms-auto">
-                  <a href="#" class="text-secondary lg:text-lg">View All</a>
+                  <a href="#" class="text-secondary lg:text-lg">{{ __('front.site.sections.view_all') }}</a>
 
                   <menu class="flex items-center gap-2">
                     <li>
@@ -341,7 +341,7 @@
                               @endif
                             @endfor
                           </div>
-                          <p>{{ $tour->rate ?? 0 }} Wonderful <span>({{ $tour->reviews }} Reviews)</span></p>
+                          <p>{{ $tour->rate ?? 0 }} {{ __('front.site.sections.wonderful') }} <span>({{ $tour->reviews }} {{ __('front.site.sections.reviews') }})</span></p>
                         </div>
 
 
@@ -361,7 +361,7 @@
                               ></use>
                             </svg>
 
-                          {{$tour->overview_values('days') ?? 0}} Days / {{$tour->overview_values('nights') ?? 0}} Nights
+                          {{$tour->overview_values('days') ?? 0}} {{ __('front.site.sections.days') }} / {{$tour->overview_values('nights') ?? 0}} {{ __('front.site.sections.nights') }}
                           </li>
                           <li>
                             <svg class="icon">
@@ -393,14 +393,14 @@
                                 href="./assets/images/icons/sprite.svg#cancel"
                               ></use>
                             </svg>
-                            {{$tour->overview_values('cancellation')}} Cancellation
+                            {{$tour->overview_values('cancellation')}} {{ __('front.site.sections.cancellation') }}
                           </li>
                         </ul>
 
                         <div class="tour-card__footer">
-                          <a href="{{route('tour_details',$tour->slug)}}" class="tour-card__link">View Tour</a>
+                          <a href="{{route('tour_details',$tour->slug)}}" class="tour-card__link">{{ __('front.site.sections.view_tour') }}</a>
                           <p>
-                            Starting from
+                            {{ __('front.site.sections.starting_from') }}
                             <span class="price">{{$tour->price}}$</span>
                           </p>
                         </div>
@@ -425,11 +425,11 @@
               class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
             >
               <h2 class="section_heading text-primary">
-                <span>Explore</span> Egypt Tours Opportunities
+                <span>{{ __('front.site.sections.explore') }}</span> {{ __('front.site.sections.egypt_tours_opportunities') }}
               </h2>
 
               <div class="flex items-center gap-4 max-lg:ms-auto">
-                <a href="#" class="text-secondary lg:text-lg">View All</a>
+                <a href="#" class="text-secondary lg:text-lg">{{ __('front.site.sections.view_all') }}</a>
 
                 <menu class="flex items-center gap-2">
                   <li>
@@ -468,7 +468,7 @@
                       <p>
                         {!! implode(' ', array_slice(str_word_count(strip_tags($tour->translate(app()->getLocale(), true)->description ?? ''), 1), 0, 20)) !!}
                         </p>
-                      <span>View Deal</span>
+                      <span>{{ __('front.site.sections.view_deal') }}</span>
                     </figcaption>
                   </a>
                 </div>
@@ -484,7 +484,7 @@
                       <p>
                         Celebrate the moment with an unexpected Nile Cruises
                       </p>
-                      <span>View Deal</span>
+                      <span>{{ __('front.site.sections.view_deal') }}</span>
                     </figcaption>
                   </a>
                 </div>
@@ -499,7 +499,7 @@
                       <p>
                         Celebrate the moment with an unexpected Nile Cruises
                       </p>
-                      <span>View Deal</span>
+                      <span>{{ __('front.site.sections.view_deal') }}</span>
                     </figcaption>
                   </a>
                 </div>
@@ -514,7 +514,7 @@
                       <p>
                         Celebrate the moment with an unexpected Nile Cruises
                       </p>
-                      <span>View Deal</span>
+                      <span>{{ __('front.site.sections.view_deal') }}</span>
                     </figcaption>
                   </a>
                 </div> --}}
@@ -535,11 +535,11 @@
               class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
             >
               <h2 class="section_heading text-primary">
-                <span>Explore</span> Top Egypt Destinations
+                <span>{{ __('front.site.sections.explore') }}</span> {{ __('front.site.sections.top_egypt_destinations') }}
               </h2>
 
               <div class="flex items-center gap-4 max-lg:ms-auto">
-                <a href="#" class="text-secondary lg:text-lg">View All</a>
+                <a href="#" class="text-secondary lg:text-lg">{{ __('front.site.sections.view_all') }}</a>
 
                 <menu class="flex items-center gap-2">
                   <li>
@@ -630,11 +630,11 @@
               class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
             >
               <h2 class="section_heading text-primary">
-                <span>Learn</span> More About Egyptian Culture
+                <span>{{ __('front.site.sections.learn') }}</span> {{ __('front.site.sections.more_about_egyptian_culture') }}
               </h2>
 
               <div class="flex items-center gap-4 max-lg:ms-auto">
-                <a href="#" class="text-secondary lg:text-lg">View All</a>
+                <a href="#" class="text-secondary lg:text-lg">{{ __('front.site.sections.view_all') }}</a>
 
                 <menu class="flex items-center gap-2">
                   <li>
@@ -695,11 +695,11 @@
 
                       <div class="tour-card__footer">
                         <p>
-                          Published By
-                          <a href="#">Doudue Team</a>
+                          {{ __('front.site.sections.published_by') }}
+                          <a href="#">{{ __('front.site.sections.doudou_team') }}</a>
                         </p>
 
-                        <a href="{{route('blog_preview',$blog->slug)}}" class="tour-card__link">Read More</a>
+                        <a href="{{route('blog_preview',$blog->slug)}}" class="tour-card__link">{{ __('front.site.sections.read_more') }}</a>
                       </div>
                     </div>
                   </article>
@@ -722,10 +722,10 @@
               class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
             >
               <h2 class="section_heading text-primary">
-                <span>Popular</span> Videos
+                <span>{{ __('front.site.sections.popular') }}</span> {{ __('front.site.sections.videos') }}
               </h2>
 
-              <a href="#" class="text-secondary lg:text-lg">View All</a>
+              <a href="#" class="text-secondary lg:text-lg">{{ __('front.site.sections.view_all') }}</a>
             </header>
 
             <div class="items-start lg:grid lg:grid-cols-8 lg:gap-8">
@@ -755,7 +755,7 @@
                           <p
                             class="text-lg font-semibold text-white lg:text-xl"
                           >
-                            {{$popular_video->title ?? "Default video title"}}
+                            {{$popular_video->title ?? __('front.site.sections.default_video_title')}}
                           </p>
                         </div>
 
@@ -792,7 +792,7 @@
                           <p
                             class="text-lg font-semibold text-white lg:text-xl"
                           >
-                            A Great Holiday Review on Nile Cruises ...
+                            {{ __('front.site.sections.default_video_title') }}
                           </p>
                         </div>
 
@@ -829,7 +829,7 @@
                           <p
                             class="text-lg font-semibold text-white lg:text-xl"
                           >
-                            A Great Holiday Review on Nile Cruises ...
+                            {{ __('front.site.sections.default_video_title') }}
                           </p>
                         </div>
 
@@ -866,7 +866,7 @@
                           <p
                             class="text-lg font-semibold text-white lg:text-xl"
                           >
-                            A Great Holiday Review on Nile Cruises ...
+                            {{ __('front.site.sections.default_video_title') }}
                           </p>
                         </div>
 
@@ -916,7 +916,7 @@
                             />
                           </div>
                           <p class="font-semibold text-white">
-                            A Great Holiday Review on Nile Cruises ...
+                            {{ __('front.site.sections.default_video_title') }}
                           </p>
                         </div> -->
 
@@ -965,16 +965,15 @@
             <div class="grid gap-12 lg:grid-cols-3">
               <header class="lg:col-span-1">
                 <h2 class="txt-shadow mb-4 text-3xl">
-                  How Good is Egypt Doudou Travel?
+                  {{ __('front.site.about.reviews_title') }}
                 </h2>
                 <p class="mb-6 lg:mb-8">
-                  DOUDOU is about meeting others. You can get to know people
-                  online through the website or meet them in real life...
+                  {{ __('front.site.about.reviews_intro') }}
                 </p>
                 <a
                   href="#"
                   class="inline-flex h-10 items-center justify-center rounded-xl bg-primary px-5 text-center text-sm text-white transition-colors hover:bg-opacity-80"
-                  >Explore All</a
+                  >{{ __('front.site.sections.explore_all') }}</a
                 >
               </header>
 
@@ -1061,7 +1060,7 @@
 
                         </p>
                         <a href="#" class="text-primary hover:underline"
-                          >Read More</a
+                          >{{ __('front.site.sections.read_more') }}</a
                         >
                       </div>
                     </div>
@@ -1129,7 +1128,7 @@
                           officia deserunt mollit anim id est laborum...
                         </p>
                         <a href="#" class="text-primary hover:underline"
-                          >Read More</a
+                          >{{ __('front.site.sections.read_more') }}</a
                         >
                       </div>
                     </div>
@@ -1193,7 +1192,7 @@
                           officia deserunt mollit anim id est laborum...
                         </p>
                         <a href="#" class="text-primary hover:underline"
-                          >Read More</a
+                          >{{ __('front.site.sections.read_more') }}</a
                         >
                       </div>
                     </div> --}}
@@ -1226,10 +1225,10 @@
               class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
             >
               <h2 class="section_heading text-primary">
-                <span>Explore</span> Gallery packages
+                <span>{{ __('front.site.sections.explore') }}</span> {{ __('front.site.sections.gallery_packages') }}
               </h2>
 
-              <a href="#" class="text-secondary lg:text-lg">View All</a>
+              <a href="#" class="text-secondary lg:text-lg">{{ __('front.site.sections.view_all') }}</a>
             </header>
 
             <div class="swiper">
@@ -1300,7 +1299,7 @@
           <div class="container">
             <header class="section_header">
               <h2 class="section_heading text-primary">
-                <span>Frequently</span> Asked Questions
+                <span>{{ __('front.site.sections.frequently') }}</span> {{ __('front.site.sections.asked_questions') }}
               </h2>
             </header>
 
@@ -1375,7 +1374,7 @@
             </div>
 
             <div class="mt-6 text-center">
-              <a href="#" class="text-lg text-secondary underline">Show More</a>
+              <a href="#" class="text-lg text-secondary underline">{{ __('front.site.sections.show_more') }}</a>
             </div>
           </div>
         </section>
@@ -1384,7 +1383,7 @@
           <div class="container">
             <header class="section_header">
               <h2 class="section_heading text-primary">
-                <span>Doudou</span> Partners
+                <span>{{ __('front.site.sections.doudou') }}</span> {{ __('front.site.sections.partners') }}
               </h2>
             </header>
 
@@ -1432,6 +1431,11 @@
           </svg>
         </button>
 
+        @php
+          $footerSettings = \App\Models\General_setting::first();
+          $footerEmail = trim((string) $footerSettings?->email);
+          $footerPhone = trim((string) $footerSettings?->manager_phone);
+        @endphp
         <footer class="footer">
           <div class="container">
             <div class="footer__grid">
@@ -1449,21 +1453,21 @@
                         href="{{asset('assets/images/icons/sprite.svg#map-pin')}}"
                       ></use>
                     </svg>
-                    <a href="#">Put Address Here</a>
+                    <a href="#">{{ $footerSettings?->address ?: __('front.site.contact.cards.location.fallback') }}</a>
                   </li>
                   <li>
                     <svg>
-                      <use href="{{asset('assets/images/icons/sprite.svg#mail')}}')}}"></use>
+                      <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
                     </svg>
 
-                    <a href="mailto:email">Put Email Here</a>
+                    <a href="{{ $footerEmail !== '' ? 'mailto:'.$footerEmail : '#' }}">{{ $footerEmail !== '' ? $footerEmail : __('front.site.contact.cards.email.fallback') }}</a>
                   </li>
                   <li>
                     <svg>
                       <use href="{{asset('assets/images/icons/sprite.svg#phone')}}"></use>
                     </svg>
 
-                    <a href="tel:+tel">Put Phone Here</a>
+                    <a href="{{ $footerPhone !== '' ? 'tel:'.$footerPhone : '#' }}">{{ $footerPhone !== '' ? $footerPhone : __('front.site.contact.cards.phone.fallback') }}</a>
                   </li>
                 </ul>
               </div>
@@ -1551,44 +1555,7 @@
                 2024
               </p>
 
-              <ul class="social-list white">
-                <li>
-                  <a href="#">
-                    <svg>
-                      <use
-                        href="{{asset('assets/images/icons/sprite.svg#facebook')}}"
-                      ></use>
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <svg>
-                      <use
-                        href="{{asset('assets/images/icons/sprite.svg#linkedin')}}"
-                      ></use>
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <svg>
-                      <use
-                        href="{{asset('assets/images/icons/sprite.svg#youtube')}}"
-                      ></use>
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <svg>
-                      <use
-                        href="{{asset('assets/images/icons/sprite.svg#instagram')}}"
-                      ></use>
-                    </svg>
-                  </a>
-                </li>
-              </ul>
+              <x-social-links variant="white" />
             </div>
           </div>
         </footer>
@@ -1648,14 +1615,14 @@
         <div class="flex w-full flex-col overflow-hidden rounded-3xl bg-white">
           <div class="flex items-center justify-between bg-primary px-6 py-5" style="background: linear-gradient(90deg, #005690 0%, #0071BD 100%)">
             <h3 class="text-lg font-semibold text-white lg:text-xl">
-              Customize Your Own Tour
+              {{ __('front.site.form.customize_your_own_tour') }}
             </h3>
             <button
               type="button"
               class="flex size-7 items-center justify-center rounded-full border-2 border-white"
               data-hs-overlay="#customize-tour"
             >
-              <span class="sr-only">Close</span>
+              <span class="sr-only">{{ __('front.site.form.close') }}</span>
               <svg
                 class="size-5 shrink-0 text-white"
                 xmlns="http://www.w3.org/2000/svg"
@@ -1760,7 +1727,7 @@
                     >1</span
                   >
                   <span class="text-lg font-semibold text-primary lg:text-xl"
-                    >Your Information</span
+                    >{{ __('front.site.form.your_information') }}</span
                   >
                 </p>
 
@@ -1771,31 +1738,31 @@
                         <label
                           for="title"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Title</label
+                          >{{ __('front.site.form.title') }}</label
                         >
                         <select
                           id="title"
                           type="text"
                           name="title"
                           class="rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                          placeholder="Your Name"
+                          placeholder="{{ __('front.site.form.your_name') }}"
                         >
-                          <option value="0">Mr.</option>
-                          <option value="1">Ms.</option>
+                          <option value="0">{{ __('front.site.form.mr') }}</option>
+                          <option value="1">{{ __('front.site.form.ms') }}</option>
                         </select>
                       </div>
                       <div class="relative flex-1">
                         <label
                           for="name"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Name</label
+                          >{{ __('front.site.form.name') }}</label
                         >
                         <input
                           id="name"
                           type="text"
                           name="name"
                           class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                          placeholder="Your Name"
+                          placeholder="{{ __('front.site.form.your_name') }}"
                         />
                           <span class="invalid text-danger" id="name_error"></span>
                       </div>
@@ -1805,14 +1772,14 @@
                         <label
                           for="email"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Email</label
+                          >{{ __('front.site.form.email') }}</label
                         >
                         <input
                           id="email"
                           type="email"
                           name="email"
                           class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                          placeholder="Your Name"
+                          placeholder="{{ __('front.site.form.your_email') }}"
                         />
                           <span class="invalid text-danger" id="email_error"></span>
                       </div>
@@ -1820,17 +1787,17 @@
                         <label
                           for="nationality"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Nationality</label
+                          >{{ __('front.site.form.nationality') }}</label
                         >
                         <select
                           id="nationality"
                           type="text"
                           name="nationality"
                           class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                          placeholder="Your Name"
+                          placeholder="{{ __('front.site.form.your_nationality') }}"
                         >
-                          <option hidden>Your Nationality</option>
-                          <option value="0">Egyption</option>
+                          <option hidden>{{ __('front.site.form.your_nationality') }}</option>
+                          <option value="0">{{ __('front.site.form.egyptian') }}</option>
                         </select>
                           <span class="invalid text-danger" id="nationality_error"></span>
 
@@ -1842,7 +1809,7 @@
                       <label
                         for="tel"
                         class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                        >Phone Number</label
+                        >{{ __('front.site.form.phone_number') }}</label
                       >
                       <div class="flex items-center gap-3">
                         <select
@@ -1857,7 +1824,7 @@
                           type="text"
                           name="phone"
                           class="flex-1 text-black outline-none placeholder:text-gray"
-                          placeholder="Enter your phone number"
+                          placeholder="{{ __('front.site.form.enter_phone_number') }}"
                         />
                           <span class="invalid text-danger" id="tel_error"></span>
 
@@ -1880,7 +1847,7 @@
                     >2</span
                   >
                   <span class="text-lg font-semibold text-primary lg:text-xl"
-                    >Tour Information</span
+                    >{{ __('front.site.form.tour_information') }}</span
                   >
                 </p>
 
@@ -1891,7 +1858,7 @@
                         <label
                           for="arrival-date"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Arrival Date</label
+                          >{{ __('front.site.form.arrival_date') }}</label
                         >
                         <input
                           id="arrival-date"
@@ -1906,7 +1873,7 @@
                         <label
                           for="departure-date"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Departure Date</label
+                          >{{ __('front.site.form.departure_date') }}</label
                         >
                         <input
                           id="departure-date"
@@ -1924,16 +1891,16 @@
                         <label
                           for="destination"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Your Destination</label
+                          >{{ __('front.site.form.your_destination') }}</label
                         >
                         <select
                           id="destination"
                           type="text"
                           name ='city_id'
                           class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                          placeholder="Your Name"
+                          placeholder="{{ __('front.site.form.select_city') }}"
                         >
-                            <option value="" disabled selected>Select City</option>
+                            <option value="" disabled selected>{{ __('front.site.form.select_city') }}</option>
                             @foreach ($cities as $city )
                                 <option value="{{ $city->id }}">{{ $city->name }}</option>
                             @endforeach
@@ -1945,15 +1912,15 @@
                         <label
                           for="accommodation"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Accommodation Tour</label
+                          >{{ __('front.site.form.accommodation_tour') }}</label
                         >
                         <select
                           id="accommodation"
                           type="text"
                           class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                          placeholder="Your Name"
+                          placeholder="{{ __('front.site.form.select_accommodation_tour') }}"
                         >
-                            <option value="" disabled selected>Select Accommodation Tour</option>
+                            <option value="" disabled selected>{{ __('front.site.form.select_accommodation_tour') }}</option>
                             @foreach ($tours as $tour )
                                 <option value="{{ $tour->id }}">{{ $tour->translate(app()->getLocale(), true)->description ?? '' }}</option>
                             @endforeach
@@ -1967,24 +1934,24 @@
                         <label
                           for="age"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Age Range (Optional)</label
+                          >{{ __('front.site.form.age_range_optional') }}</label
                         >
                         <select
                           id="age"
                           type="text"
                           name="range_age"
                           class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                          placeholder="Your Name"
+                          placeholder="{{ __('front.site.form.select_age_range') }}"
                         >
-                            <option value="" disabled selected>Select Age Range</option>
-                            <option value="0">AGE_1_TO_10</option>
-                            <option value="1">AGE_11_TO_20</option>
-                            <option value="2">AGE_21_TO_30</option>
+                            <option value="" disabled selected>{{ __('front.site.form.select_age_range') }}</option>
+                            <option value="0">{{ __('front.site.form.age_1_to_10') }}</option>
+                            <option value="1">{{ __('front.site.form.age_11_to_20') }}</option>
+                            <option value="2">{{ __('front.site.form.age_21_to_30') }}</option>
                         </select>
                       </div>
                       <div class="flex w-full flex-1 justify-center gap-x-4">
                         <div class="flex-1">
-                          <p class="mb-2 text-center text-primary">Adults</p>
+                          <p class="mb-2 text-center text-primary">{{ __('front.site.form.adults') }}</p>
                           <div class="flex items-center justify-center gap-4">
                             <button
                               type="button"
@@ -2002,7 +1969,7 @@
                           </div>
                         </div>
                         <div class="flex-1">
-                          <p class="mb-2 text-center text-primary">Children</p>
+                          <p class="mb-2 text-center text-primary">{{ __('front.site.form.children') }}</p>
                           <div class="flex items-center justify-center gap-4">
                             <button
                               type="button"
@@ -2025,14 +1992,14 @@
                       <label
                         for="notes"
                         class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                        >Extra Notes</label
+                        >{{ __('front.site.form.extra_notes') }}</label
                       >
                       <textarea
                         id="notes"
                         type="date"
                         name="notes"
                         class="w-full rounded-xl border border-primary px-4 py-3 text-gray outline-none placeholder:text-gray"
-                        placeholder="Write your note here..."
+                        placeholder="{{ __('front.site.blog.write_your_note') }}"
                       ></textarea>
                     </div>
                   </div>
@@ -2052,51 +2019,13 @@
                   alt=""
                 />
                 <p class="text-2xl text-primary lg:text-3xl">
-                  An Inquire Received
+                  {{ __('front.site.form.inquire_received') }}
                 </p>
                 <p class="mb-7 lg:mb-10 lg:text-lg">
-                  Your tour Inquire has been successfully recived. We look
-                  forward to contact you very soon!
+                  {{ __('front.site.form.inquire_success') }}
                 </p>
 
-                <ul class="social-list primary justify-center">
-                  <li>
-                    <a href="#">
-                      <svg>
-                        <use
-                          href="{{asset('assets/images/icons/sprite.svg#facebook')}}"
-                        ></use>
-                      </svg>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <svg>
-                        <use
-                          href="{{asset('assets/images/icons/sprite.svg#linkedin')}}"
-                        ></use>
-                      </svg>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <svg>
-                        <use
-                          href="{{asset('assets/images/icons/sprite.svg#youtube')}}"
-                        ></use>
-                      </svg>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <svg>
-                        <use
-                          href="{{asset('assets/images/icons/sprite.svg#instagram')}}"
-                        ></use>
-                      </svg>
-                    </a>
-                  </li>
-                </ul>
+                <x-social-links variant="primary" class="justify-center" />
               </div>
               <!-- End Final Contnet -->
 
@@ -2108,7 +2037,7 @@
                   class="inline-block min-w-36 rounded-lg border border-primary bg-white px-3 py-2 font-medium text-primary hover:bg-primary hover:text-white disabled:pointer-events-none disabled:opacity-50 lg:text-xl"
                   data-hs-stepper-back-btn
                 >
-                  Cancel
+                  {{ __('front.site.form.cancel') }}
                 </button>
                 <button
                   type="button"
@@ -2117,7 +2046,7 @@
                   class="inline-block min-w-36 rounded-lg bg-primary px-3 py-2 font-medium text-white hover:bg-opacity-75 disabled:pointer-events-none disabled:opacity-50 lg:text-xl"
                   data-hs-stepper-next-btn
                 >
-                  Next
+                  {{ __('front.site.form.next') }}
                 </button>
                   <!-- Next Button -->
 
@@ -2130,7 +2059,7 @@
                   data-hs-stepper-finish-btn
                   style="display: none"
                 >
-                  Inquire Now
+                  {{ __('front.site.form.inquire_now') }}
                 </button>
               </div>
               <!-- End Button Group -->

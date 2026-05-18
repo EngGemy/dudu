@@ -12,7 +12,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
-    <link rel="stylesheet" href="./assets/styles/main.css" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}" />
 
     <script
       defer
@@ -23,7 +24,8 @@
       src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
     ></script>
       <link rel="stylesheet" href="{{asset('node_modules/select2/dist/css/select2.min.css')}}">
-    <script defer src="./assets/scripts/main.js"></script>
+    <script defer src="{{ asset('assets/scripts/main.js') }}"></script>
+    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}"></script>
   </head>
 
   <body>
@@ -34,18 +36,7 @@
             <div class="navbar_top">
                 <?php  $site_name=\App\Models\General_setting::first() ?>
 
-                <div class="flex items-center gap-3">
-                    <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there">
-                        <svg class="size-5 text-white">
-                            <use href="{{asset('assets/images/icons/sprite.svg#whatsapp')}}"></use>
-                        </svg>
-                    </a>
-                    <a href="mailto:{{$site_name->email}}">
-                        <svg class="size-5 text-white">
-                            <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
-                        </svg>
-                    </a>
-                </div>
+                <x-social-links variant="white" class="topbar-socials max-md:hidden" />
 
                 <div class="flex items-center gap-4 lg:gap-10">
                     <div class="flex items-center gap-2">
@@ -71,38 +62,7 @@
 
           <nav class="navbar_nav">
             <div class="container">
-              <ul class="navbar_list">
-                <li>
-                  <a href="./index.html" class="navbar_link">Home</a>
-                </li>
-                <li>
-                  <a href="./egypt-tours.html" class="navbar_link">Egypt Tours</a>
-                </li>
-                <li>
-                  <a href="./events.html" class="navbar_link">{{ __('front.site.footer.events') }}</a>
-                </li>
-                <li>
-                  <a href="./services.html" class="navbar_link">{{ __('front.site.footer.services') }}</a>
-                </li>
-                <li>
-                  <a href="./blogs.html" class="navbar_link" aria-current="page">{{ __('front.site.footer.blogs') }}</a>
-                </li>
-                <li>
-                  <a href="./about.html" class="navbar_link">About us</a>
-                </li>
-                <li>
-                  <a href="./loyalty-program.html" class="navbar_link">{{ __('front.site.meta.loyalty_program') }}</a>
-                </li>
-                <li>
-                  <a href="./careers.html" class="navbar_link">{{ __('front.site.footer.careers') }}</a>
-                </li>
-                <li>
-                  <a href="./how-it-works.html" class="navbar_link">How it works?</a>
-                </li>
-                <li>
-                  <a href="./partner.html" class="navbar_link">Become our Partner</a>
-                </li>
-              </ul>
+              @include('front.layouts.nav-list')
             </div>
           </nav>
 

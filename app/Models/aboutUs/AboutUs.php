@@ -21,10 +21,16 @@ class AboutUs extends Model
     public function getImageUrlAttribute()
     {
 
-        if ($this->image) {
+        if ($this->image && file_exists(public_path('assets/images/about_us/'.$this->image))) {
             return asset('/assets/images/about_us/'.$this->image);
 
         }
+
+        if ($this->image && file_exists(public_path('assets/images/'.$this->image))) {
+            return asset('/assets/images/'.$this->image);
+        }
+
+        return asset('/assets/images/about-bg.jpeg');
     }
 
     public function getStatus($type)

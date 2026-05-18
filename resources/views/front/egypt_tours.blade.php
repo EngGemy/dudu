@@ -191,7 +191,7 @@
                                             class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
                                             multiple
                                         >
-                                            <option value=""  >Select Hotel</option>
+                                            <option value=""  >{{ __('front.site.search.select_hotel') }}</option>
 
                                             @foreach($hotels as $hotel)
                                                 <option value="{{$hotel->id}}">{{ $hotel->name }}</option>
@@ -208,7 +208,7 @@
                                                 type="text"
                                                 name = "checkIn_checkOut"
                                                 class="flatpickr flatpickr-input max-w-52 flex-1 shrink bg-transparent text-sm text-black outline-none"
-                                                placeholder="Check in date - Check out date"
+                                                placeholder="{{ __('front.site.search.date_placeholder') }}"
                                             />
                                             <svg
                                                 class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
@@ -238,7 +238,7 @@
                                                             href="./assets/images/icons/sprite.svg#subscription-cashflow"
                                                         ></use>
                                                     </svg>
-                                                    <p class="flex-1 text-sm">Budget From - to</p>
+                                                    <p class="flex-1 text-sm">{{ __('front.site.search.budget_from_to') }}</p>
                                                     <svg
                                                         class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -258,7 +258,7 @@
                                                 <div
                                                     class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden rounded-lg bg-white p-6 text-sm text-black opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
                                                 >
-                                                    <p class="mb-4 text-sm">Your Budget</p>
+                                                    <p class="mb-4 text-sm">{{ __('front.site.search.your_budget') }}</p>
                                                     <div id="slider-1">
                                                         <div class="slider mb-3"></div>
                                                         <p
@@ -323,7 +323,7 @@
                         data-aos-delay="200"
                         data-aos-duration="600"
                     >
-                        {{ $slider->title ?? "Default slider title" }}
+                        {{ $slider->title ?? __('front.site.tours.hero_title') }}
                     </h1>
 
                 </div>
@@ -424,7 +424,7 @@
                     @endif
                     <ol class="breadcrumb" aria-label="Breadcrumb">
                         <li>
-                            <a href="#"> Home </a>
+                            <a href="{{ route('home') }}"> {{ __('front.site.nav.home') }} </a>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -441,7 +441,7 @@
                         </li>
                         <li>
                             <a href="{{route('egypt-tours')}}">
-                                Egypt Tours
+                                {{ __('front.site.sections.egypt_tours') }}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -523,7 +523,7 @@
                                     />
                                 </svg>
 
-                                Filter
+                                {{ __('front.site.tours.filter') }}
                             </button>
 
                             <button
@@ -535,7 +535,7 @@
                                     <use href="../../assets/images/icons/sprite.svg#sort"></use>
                                 </svg>
 
-                                Sort
+                                {{ __('front.site.tours.sort') }}
                             </button>
                         </div>
 
@@ -564,7 +564,7 @@
                                     />
                                 </svg>
 
-                                Filter
+                                {{ __('front.site.tours.filter') }}
                             </button>
 
                             <div
@@ -583,7 +583,7 @@
                                                 href="../../assets/images/icons/sprite.svg#clipboard-text-time"
                                             ></use>
                                         </svg>
-                                        Tours By Duration
+                                        {{ __('front.site.tours.tours_by_duration') }}
                                         <svg
                                             class="accordion-arrow shrink-0 hs-accordion-active:rotate-180"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -612,7 +612,7 @@
                                                         onchange="sort_products()" @if(!isset($day)) checked @endif name="day"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    Any
+                                                    {{ __('front.site.tours.any') }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -620,7 +620,7 @@
                                                         onchange="sort_products()" @isset($day)@if($day == 3) checked @endif @endisset name="day" value="3"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    3 Days Tour
+                                                    {{ __('front.site.tours.days_tour', ['count' => 3]) }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -628,7 +628,7 @@
                                                         onchange="sort_products()" @isset($day)@if($day == 5) checked @endif @endisset name="day" value="5"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    5 Days Tour
+                                                    {{ __('front.site.tours.days_tour', ['count' => 5]) }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -636,7 +636,7 @@
                                                         onchange="sort_products()" @isset($day)@if($day == 7) checked @endif @endisset name="day" value="7"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    7 Days Tour
+                                                    {{ __('front.site.tours.days_tour', ['count' => 7]) }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -644,7 +644,7 @@
                                                         onchange="sort_products()" @isset($day)@if($day == 10) checked @endif @endisset name="day" value="10"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    10 Days Tour
+                                                    {{ __('front.site.tours.days_tour', ['count' => 10]) }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -652,7 +652,7 @@
                                                         onchange="sort_products()" @isset($day)@if($day == 14) checked @endif @endisset name="day" value="14"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    14 Days Tour
+                                                    {{ __('front.site.tours.days_tour', ['count' => 14]) }}
                                                 </label>
                                             </div>
                                         </div>
@@ -670,7 +670,7 @@
                                                 href="../../assets/images/icons/sprite.svg#location"
                                             ></use>
                                         </svg>
-                                        Tours By Destination
+                                        {{ __('front.site.tours.tours_by_destination') }}
                                         <svg
                                             class="accordion-arrow shrink-0 hs-accordion-active:rotate-180"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -702,7 +702,7 @@
                                                         onchange="sort_products()" @if(!isset($location)) checked @endif name="location"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    All Cities
+                                                    {{ __('front.site.tours.all_cities') }}
                                                 </label>
                                                 @foreach($cities as $city)
                                                 <label class="flex items-center gap-4 font-normal">
@@ -740,7 +740,7 @@
                                                 href="../../assets/images/icons/sprite.svg#travel-card"
                                             ></use>
                                         </svg>
-                                        Tours Type
+                                        {{ __('front.site.tours.tours_type') }}
                                         <svg
                                             class="accordion-arrow shrink-0 hs-accordion-active:rotate-180"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -770,7 +770,7 @@
                                                         name="types"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    Any
+                                                    {{ __('front.site.tours.any') }}
                                                 </label>
                                                 @foreach($tour_types as $type)
                                                     <label class="flex items-center gap-4 font-normal">
@@ -803,7 +803,7 @@
                                                 href="../../assets/images/icons/sprite.svg#event-available"
                                             ></use>
                                         </svg>
-                                        Availability
+                                        {{ __('front.site.tours.availability') }}
                                         <svg
                                             class="accordion-arrow shrink-0 hs-accordion-active:rotate-180"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -833,7 +833,7 @@
                                                         name="available"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    Any
+                                                    {{ __('front.site.tours.any') }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -905,7 +905,7 @@
                                                 href="../../assets/images/icons/sprite.svg#dislike"
                                             ></use>
                                         </svg>
-                                        Rating
+                                        {{ __('front.site.tours.rating') }}
                                         <svg
                                             class="accordion-arrow shrink-0 hs-accordion-active:rotate-180"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -936,7 +936,7 @@
                                                         name="rate"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    Any
+                                                    {{ __('front.site.tours.any') }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -1090,7 +1090,7 @@
                                                 href="../../assets/images/icons/sprite.svg#offer"
                                             ></use>
                                         </svg>
-                                        Tours Opportunities
+                                        {{ __('front.site.tours.tours_opportunities') }}
                                         <svg
                                             class="accordion-arrow shrink-0 hs-accordion-active:rotate-180"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -1120,7 +1120,7 @@
                                                         name="offer"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    Any
+                                                    {{ __('front.site.tours.any') }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -1131,7 +1131,7 @@
                                                         value="10"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                 More Than 10% Discount
+                                                 {{ __('front.site.tours.more_than_discount', ['percent' => 10]) }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -1142,7 +1142,7 @@
                                                         value="30"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    More Than 30% Discount
+                                                    {{ __('front.site.tours.more_than_discount', ['percent' => 30]) }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -1153,7 +1153,7 @@
                                                         value="50"
                                                         class="size-3.5 rounded-none accent-primary"
                                                     />
-                                                    More than 50% Discount
+                                                    {{ __('front.site.tours.more_than_discount', ['percent' => 50]) }}
                                                 </label>
                                                 <label class="flex items-center gap-4 font-normal">
                                                     <input
@@ -1377,15 +1377,15 @@
                         >
                             <p class="text-xl font-semibold lg:text-2xl">
                     <span class="text-primary"
-                    ><span class="text-secondary">Egypt</span> {{$category?->translate(app()->getLocale(), true)->name ?? '' ?? 'Tours'}}</span
-                    >: {{$tours->count()}} Available Tours
+                    ><span class="text-secondary">{{ __('front.site.sections.egypt_tours') }}</span> {{$category?->translate(app()->getLocale(), true)->name ?? ''}}</span
+                    >: {{$tours->count()}} {{ __('front.site.tours.available_tours') }}
                             </p>
 
                             <button
                                 type="button"
                                 class="text-lg font-medium text-primary underline"
                             >
-                                Clear All Filters
+                                {{ __('front.site.tours.clear_all_filters') }}
                             </button>
                         </div>
 
@@ -1414,7 +1414,7 @@
                                     />
                                 </svg>
 
-                                Sort
+                                {{ __('front.site.tours.sort') }}
                             </button>
                             <div
                                 class="mb-8 flex flex-col flex-nowrap gap-2 pb-2 lg:mb-10 lg:flex-row"
@@ -1424,7 +1424,7 @@
                                     name="selectedHotel"
                                     data-hs-select='{
                           "wrapperClasses": "hs-select min-w-52 flex-1 relative",
-                          "placeholder": "Sort by: Our Hotels",
+                          "placeholder": "{{ __('front.site.tours.sort_by_hotels') }}",
                           "toggleTag": "<button type=\"button\" aria-expanded=\"false\"><svg class=\"size-5 text-primary\"><use href=\"./assets/images/icons/sprite.svg#sort\"></use></svg></button>",
                           "toggleClasses": "hs-select-disabled:pointer-events-none lg:text-xs 2xl:text-sm border border-primary p-2 h-full text-sm xl:px-4 text-black hs-select-disabled:opacity-50 relative flex items-center gap-x-2 text-nowrap w-full flex-1 cursor-pointer bg-white rounded-lg text-start text-sm focus:outline-none",
                           "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
@@ -1437,7 +1437,7 @@
                                 >
                                     <option value="any"
 
-                                    >Select Hotel</option>
+                                    >{{ __('front.site.search.select_hotel') }}</option>
 
                                     @foreach($hotels as $hotel)
                                         <option
@@ -1462,7 +1462,7 @@
 
                                             name="checkin_check_out"
                                             class="flatpickr flatpickr-input inline bg-transparent text-base outline-none lg:text-xs 2xl:text-sm"
-                                            placeholder="Check in date - Check out date"
+                                            placeholder="{{ __('front.site.search.date_placeholder') }}"
                                         />
                                         <svg
                                             class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
@@ -1495,7 +1495,7 @@
                                                 href="./assets/images/icons/sprite.svg#subscription-cashflow"
                                             ></use>
                                         </svg>
-                                        Budget From - to
+                                        {{ __('front.site.search.budget_from_to') }}
                                         <svg
                                             class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -1515,7 +1515,7 @@
                                     <div
                                         class="hs-dropdown-menu duration inset-x-0 z-10 mt-2 hidden rounded-lg bg-white p-6 text-base opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100 lg:text-xs 2xl:text-sm"
                                     >
-                                        <p class="mb-4">Your Budget</p>
+                                        <p class="mb-4">{{ __('front.site.search.your_budget') }}</p>
                                         <div id="slider-2">
                                             <div class="slider mb-3"></div>
                                             <p class="flex items-center justify-between">
@@ -1580,7 +1580,7 @@
                                                         @endif
                                                     @endfor
                                                 </div>
-                                                <p>{{ $tour->rate ?? 0 }} Wonderful <span>({{ $tour->reviews }} Reviews)</span></p>
+                                                <p>{{ $tour->rate ?? 0 }} {{ __('front.site.tours.wonderful') }} <span>({{ $tour->reviews }} {{ __('front.site.tours.reviews') }})</span></p>
                                             </div>
 
                                             <ul class="tour-card__features">
@@ -1598,7 +1598,7 @@
                                                             href="{{asset('assets/images/icons/sprite.svg#clipboard-text-time')}}"
                                                         ></use>
                                                     </svg>
-                                                    {{$tour->overview_values('days') ?? 0}} Days / {{$tour->overview_values('nights') ?? 0}} Nights
+                                                    {{$tour->overview_values('days') ?? 0}} {{ __('front.site.tours.days') }} / {{$tour->overview_values('nights') ?? 0}} {{ __('front.site.tours.nights') }}
                                                 </li>
                                                 <li>
                                                     <svg class="icon">
@@ -1630,7 +1630,7 @@
                                                             href="{{asset('assets/images/icons/sprite.svg#cancel')}}"
                                                         ></use>
                                                     </svg>
-                                                    {{$tour->overview_values('cancellation')}} Cancellation
+                                                    {{$tour->overview_values('cancellation')}} {{ __('front.site.tours.cancellation') }}
                                                 </li>
                                             </ul>
 
@@ -1640,7 +1640,7 @@
 
                                             <div class="tour-card__footer">
                                                 <a href="{{route('tour_details',$tour->slug)}}" class="tour-card__link"
-                                                >View Tour</a
+                                                >{{ __('front.site.tours.view_tour') }}</a
                                                 >
                                                 <p>
                                                     <span class="price old">{{$tour->price}} {{currency()}}</span>
@@ -1685,7 +1685,7 @@
 {{--                                <button type="button" class="pagination__number">3</button>--}}
 {{--                            </div>--}}
 {{--                            <button type="button" class="pagination__arrow">--}}
-{{--                                <span aria-hidden="true" class="sr-only">Next</span>--}}
+{{--                                <span aria-hidden="true" class="sr-only">{{ __('front.site.form.next') }}</span>--}}
 {{--                                <svg--}}
 {{--                                    class="pagination__icon"--}}
 {{--                                    xmlns="http://www.w3.org/2000/svg"--}}
@@ -1752,10 +1752,10 @@
                                 @endfor
                             </div>
 
-                            <!-- Next Page Link -->
+                            <!-- {{ __('front.site.form.next') }} Page Link -->
                             @if ($tours->hasMorePages())
                                 <a href="{{ $tours->nextPageUrl() }}" class="pagination__arrow">
-                                    <span aria-hidden="true" class="sr-only">Next</span>
+                                    <span aria-hidden="true" class="sr-only">{{ __('front.site.form.next') }}</span>
                                     <svg
                                         class="pagination__icon"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -1773,7 +1773,7 @@
                                 </a>
                             @else
                                 <button type="button" class="pagination__arrow" disabled>
-                                    <span aria-hidden="true" class="sr-only">Next</span>
+                                    <span aria-hidden="true" class="sr-only">{{ __('front.site.form.next') }}</span>
                                     <svg
                                         class="pagination__icon"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -1883,11 +1883,11 @@
 
                                         <div class="tour-card__footer">
                                             <p>
-                                                Published By
-                                                <a href="#">Doudue Team</a>
+                                                {{ __('front.site.sections.published_by') }}
+                                                <a href="#">{{ __('front.site.sections.doudou_team') }}</a>
                                             </p>
 
-                                            <a href="#" class="tour-card__link">Read More</a>
+                                            <a href="#" class="tour-card__link">{{ __('front.site.sections.read_more') }}</a>
                                         </div>
                                     </div>
                                 </article>
@@ -1910,7 +1910,7 @@
                     class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
                 >
                     <h2 class="section_heading text-primary">
-                        <span>Recommended</span> Egypt Tours
+                        <span>{{ __('front.site.sections.recommended') }}</span> {{ __('front.site.sections.egypt_tours') }}
                     </h2>
 
                     <div class="flex items-center gap-4 max-lg:ms-auto">
@@ -2006,7 +2006,7 @@
                                                     @endif
                                                 @endfor
                                             </div>
-                                            <p>{{ $tour->rate ?? 0 }} Wonderful <span>({{ $tour->reviews }} Reviews)</span></p>
+                                            <p>{{ $tour->rate ?? 0 }} {{ __('front.site.tours.wonderful') }} <span>({{ $tour->reviews }} {{ __('front.site.tours.reviews') }})</span></p>
                                         </div>
 
 
@@ -2026,7 +2026,7 @@
                                                     ></use>
                                                 </svg>
 
-                                                {{$tour->overview_values('days') ?? 0}} Days / {{$tour->overview_values('nights') ?? 0}} Nights
+                                                {{$tour->overview_values('days') ?? 0}} {{ __('front.site.tours.days') }} / {{$tour->overview_values('nights') ?? 0}} {{ __('front.site.tours.nights') }}
                                             </li>
                                             <li>
                                                 <svg class="icon">
@@ -2058,12 +2058,12 @@
                                                         href="../../assets/images/icons/sprite.svg#cancel"
                                                     ></use>
                                                 </svg>
-                                                {{$tour->overview_values('cancellation')}} Cancellation
+                                                {{$tour->overview_values('cancellation')}} {{ __('front.site.tours.cancellation') }}
                                             </li>
                                         </ul>
 
                                         <div class="tour-card__footer">
-                                            <a href="{{route('tour_details',$tour->slug)}}" class="tour-card__link">View Tour</a>
+                                            <a href="{{route('tour_details',$tour->slug)}}" class="tour-card__link">{{ __('front.site.tours.view_tour') }}</a>
                                             <p>
                                                 Starting from
                                                 <span class="price">{{$tour->price}}$</span>
@@ -2133,7 +2133,7 @@
                                             <p
                                                 class="text-lg font-semibold text-white lg:text-xl"
                                             >
-                                                {{$popular_video->title ?? "Default video title"}}
+                                                {{ $popular_video->title ?? __('front.site.tours.hero_title') }}
                                             </p>
                                         </div>
 
@@ -2356,7 +2356,7 @@
                 <div class="grid gap-12 lg:grid-cols-3">
                     <header class="lg:col-span-1">
                         <h2 class="txt-shadow mb-4 text-3xl">
-                            How Good is Egypt Doudou Travel?
+                            {{ __('front.site.tours.how_good') }}
                         </h2>
                         <p class="mb-6 lg:mb-8">
                             DOUDOU is about meeting others. You can get to know people
@@ -2442,7 +2442,7 @@
                                             officia deserunt mollit anim id est laborum...
                                         </p>
                                         <a href="#" class="text-primary hover:underline"
-                                        >Read More</a
+                                        >{{ __('front.site.sections.read_more') }}</a
                                         >
                                     </div>
                                 </div>
@@ -2506,7 +2506,7 @@
                                             officia deserunt mollit anim id est laborum...
                                         </p>
                                         <a href="#" class="text-primary hover:underline"
-                                        >Read More</a
+                                        >{{ __('front.site.sections.read_more') }}</a
                                         >
                                     </div>
                                 </div>
@@ -2570,7 +2570,7 @@
                                             officia deserunt mollit anim id est laborum...
                                         </p>
                                         <a href="#" class="text-primary hover:underline"
-                                        >Read More</a
+                                        >{{ __('front.site.sections.read_more') }}</a
                                         >
                                     </div>
                                 </div>
@@ -2677,7 +2677,7 @@
             <div class="container">
                 <header class="section_header">
                     <h2 class="section_heading text-primary">
-                        <span>Frequently</span> Asked Questions
+                        <span>{{ __('front.site.sections.frequently') }}</span> {{ __('front.site.sections.asked_questions') }}
                     </h2>
                 </header>
 
@@ -2752,7 +2752,7 @@
                 </div>
 
                 <div class="mt-6 text-center">
-                    <a href="#" class="text-lg text-secondary underline">Show More</a>
+                    <a href="#" class="text-lg text-secondary underline">{{ __('front.site.sections.show_more') }}</a>
                 </div>
             </div>
         </section>
@@ -2761,7 +2761,7 @@
             <div class="container">
                 <header class="section_header">
                     <h2 class="section_heading text-primary">
-                        <span>Doudou</span> Partners
+                        <span>{{ __('front.site.sections.doudou') }}</span> {{ __('front.site.sections.partners') }}
                     </h2>
                 </header>
 
@@ -2801,7 +2801,7 @@
     <x-footer-component/>
     <button
         type="button"
-        id="BackToTop"
+        id="{{ __('front.site.form.back') }}ToTop"
         class="back-to-top start"
         onclick="lenis.scrollTo('body')"
     >
@@ -2825,14 +2825,14 @@
                 style="background: linear-gradient(90deg, #005690 0%, #0071bd 100%)"
             >
                 <h3 class="text-lg font-semibold text-white lg:text-xl">
-                    Customize Your Own Tour
+                    {{ __('front.site.form.customize_your_own_tour') }}
                 </h3>
                 <button
                     type="button"
                     class="flex size-7 items-center justify-center rounded-full border-2 border-white"
                     data-hs-overlay="#customize-tour"
                 >
-                    <span class="sr-only">Close</span>
+                    <span class="sr-only">{{ __('front.site.form.close') }}</span>
                     <svg
                         class="size-5 shrink-0 text-white"
                         xmlns="http://www.w3.org/2000/svg"
@@ -2936,7 +2936,7 @@
                   >1</span
                   >
                             <span class="text-lg font-semibold text-primary lg:text-xl"
-                            >Your Information</span
+                            >{{ __('front.site.form.your_information') }}</span
                             >
                         </p>
 
@@ -2948,7 +2948,7 @@
 
                                             for="title"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Title</label
+                                        >{{ __('front.site.form.title') }}</label
                                         >
                                         <select
                                             onchange="checkInputs()"
@@ -2957,7 +2957,7 @@
                                             type="text"
                                             name="title"
                                             class="rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         >
                                             <option value="0">Mr.</option>
                                             <option value="1">Ms.</option>
@@ -2968,7 +2968,7 @@
 
                                             for="name"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Name</label
+                                        >{{ __('front.site.form.name') }}</label
                                         >
                                         <input
                                             oninput="checkInputs()"
@@ -2977,7 +2977,7 @@
                                             name="name"
                                             type="text"
                                             class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         />
                                         <span class="invalid text-danger" id="name_error"></span>
 
@@ -2988,7 +2988,7 @@
                                         <label
                                             for="email"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Email</label
+                                        >{{ __('front.site.form.email') }}</label
                                         >
                                         <input
                                             oninput="checkInputs()"
@@ -2997,7 +2997,7 @@
                                             type="text"
                                             name="email"
                                             class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                            placeholder="Your Email"
+                                            placeholder="{{ __('front.site.form.your_email') }}"
 
                                         />
                                         <span class="invalid text-danger" id="email_error"></span>
@@ -3006,7 +3006,7 @@
                                         <label
                                             for="nationality"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Nationality</label
+                                        >{{ __('front.site.form.nationality') }}</label
                                         >
                                         <select
                                             onchange="checkInputs()"
@@ -3015,9 +3015,9 @@
                                             type="text"
                                             name="nationality"
                                             class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         >
-                                            <option hidden>Your Nationality</option>
+                                            <option hidden>{{ __('front.site.form.your_nationality') }}</option>
                                             @foreach($nationalities as $nationality)
                                                 <option value="{{$nationality->id}}">{{$nationality->title}}</option>
                                             @endforeach
@@ -3032,7 +3032,7 @@
                                     <label
                                         for="tel"
                                         class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                    >Phone Number</label
+                                    >{{ __('front.site.form.phone_number') }}</label
                                     >
                                     <div class="flex items-center gap-3">
                                         <select
@@ -3050,7 +3050,7 @@
                                             type="text"
                                             name="phone"
                                             class="flex-1 text-black outline-none placeholder:text-gray"
-                                            placeholder="Enter your phone number"
+                                            placeholder="{{ __('front.site.form.enter_phone_number') }}"
                                         /><br>
 
 
@@ -3116,7 +3116,7 @@
                                         <!-- <label
                                             for="destination"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Your Destination</label
+                                        >{{ __('front.site.form.your_destination') }}</label
                                         >
                                         <select
                                             id="destination"
@@ -3132,11 +3132,11 @@
                                         </select> -->
                                         <div class="relative" >
                                             <div class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base">
-                                                <label for="destination" class="">Your Destination</label>
+                                                <label for="destination" class="">{{ __('front.site.form.your_destination') }}</label>
                                             </div>
                                             <div id="selected-options" style="padding-bottom: 0px" class="flex flex-wrap gap-2 p-2 w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray">
                                                 <select style="width: 100%;margin-bottom: 2px" id="destination" name="city_id" multiple >
-                                                    <option value="" disabled>Select Destination</option>
+                                                    <option value="" disabled>{{ __('front.site.form.select_destination') }}</option>
                                                     @foreach ($cities as $city)
                                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
                                                     @endforeach
@@ -3157,16 +3157,16 @@
                                         <label
                                             for="accommodation"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Accommodation Tour</label
+                                        >{{ __('front.site.form.accommodation_tour') }}</label
                                         >
                                         <select
                                             id="accommodation"
                                             type="text"
 
                                             class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         >
-                                            <option value="" disabled selected>Select Accommodation Tour</option>
+                                            <option value="" disabled selected>Select {{ __('front.site.form.accommodation_tour') }}</option>
                                             @foreach ($tours as $tour )
                                                 <option value="{{ $tour->id }}">{{ $tour->name }}</option>
                                             @endforeach
@@ -3180,23 +3180,23 @@
                                         <label
                                             for="age"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Age Range (Optional)</label
+                                        >{{ __('front.site.form.age_range_optional') }}</label
                                         >
                                         <select
                                             id="age"
                                             type="text"
                                             name="range_age"
                                             class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                            placeholder="Your Name"
+                                            placeholder="{{ __('front.site.form.your_name') }}"
                                         >
-                                            <option value="" disabled selected>Select Age Range</option>
+                                            <option value="" disabled selected>{{ __('front.site.form.select_age_range') }}</option>
                                             <option value="0">AGE_1_TO_10</option>
                                             <option value="1">AGE_11_TO_20</option>
                                             <option value="2">AGE_21_TO_30</option>                                        </select>
                                     </div>
                                     <div class="flex w-full flex-1 justify-center gap-x-4">
                                         <div class="flex-1">
-                                            <p class="mb-2 text-center text-primary">Adults</p>
+                                            <p class="mb-2 text-center text-primary">{{ __('front.site.form.adults') }}</p>
                                             <div class="flex items-center justify-center gap-4">
                                                 <button
                                                     type="button"
@@ -3216,7 +3216,7 @@
                                             </div>
                                         </div>
                                         <div class="flex-1">
-                                            <p class="mb-2 text-center text-primary">Children</p>
+                                            <p class="mb-2 text-center text-primary">{{ __('front.site.form.children') }}</p>
                                             <div class="flex items-center justify-center gap-4">
                                                 <button
                                                     type="button"
@@ -3241,14 +3241,14 @@
                                     <label
                                         for="notes"
                                         class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                    >Requests</label
+                                    >{{ __('front.site.form.requests') }}</label
                                     >
                                     <textarea
                                         id="notes"
                                         type="date"
                                         name="notes"
                                         class="w-full rounded-xl border border-primary px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                        placeholder="Write your requests here..."
+                                        placeholder="{{ __('front.site.form.requests_placeholder') }}"
                                         rows="4"
                                     ></textarea>
                                 </div>
@@ -3257,7 +3257,7 @@
                                     <label
                                         for="file"
                                         class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                    >Your Tour Program <span class="text-gray text-xs">(Optional)</span></label
+                                    >{{ __('front.site.form.your_tour_program') }} <span class="text-gray text-xs">({{ __('front.site.form.optional') }})</span></label
                                     >
                                     <input
                                         id="file"
@@ -3284,7 +3284,7 @@
                             alt=""
                         />
                         <p class="text-2xl text-primary lg:text-3xl">
-                            An Inquire Received
+                            {{ __('front.site.form.inquire_received') }}
                         </p>
                         <p class="mb-7 lg:mb-10 lg:text-lg">
                             Your tour Inquire has been successfully recived. We look
@@ -3340,7 +3340,7 @@
                             data-hs-stepper-back-btn
                             id="backButton"
                         >
-                            Back
+                            {{ __('front.site.form.back') }}
                         </button>
                         <button
                             type="button"
@@ -3349,7 +3349,7 @@
                             id="nextButton"
                             disabled
                         >
-                            Next
+                            {{ __('front.site.form.next') }}
                         </button>
                         <button
                             type="button"
@@ -3359,7 +3359,7 @@
                             id="Inquire"
                             style="display: none"
                         >
-                            Inquire Now
+                            {{ __('front.site.form.inquire_now') }}
                         </button>
                     </div>
                     <!-- End Button Group -->
@@ -3389,14 +3389,14 @@
                 style="background: linear-gradient(90deg, #005690 0%, #0071bd 100%)"
             >
                 <h3 class="text-lg font-semibold text-white lg:text-xl">
-                    Contact us
+                    {{ __('front.site.footer.contact_us') }}
                 </h3>
                 <button
                     type="button"
                     class="flex size-7 items-center justify-center rounded-full border-2 border-white"
                     data-hs-overlay="#customer-service"
                 >
-                    <span class="sr-only">Close</span>
+                    <span class="sr-only">{{ __('front.site.form.close') }}</span>
                     <svg
                         class="size-5 shrink-0 text-white"
                         xmlns="http://www.w3.org/2000/svg"
@@ -3417,8 +3417,8 @@
             <div class="px-6 py-8">
                 <div>
                     <p class="mb-2 text-center text-sm">
-                        Do you face any issue sending a Request?
-                        <span class="text-primary">Please contact directly by</span>
+                        {{ __('front.site.contact.contact_issue') }}
+                        <span class="text-primary">{{ __('front.site.contact.contact_directly_by') }}</span>
                     </p>
                     <div
                         class="mb-6 flex flex-col items-center justify-center gap-x-4 gap-y-2 lg:flex-row"
@@ -3884,16 +3884,16 @@
                     console.log(response);
                     console.log('Form submitted successfully');
 
-                    // Enable the "Next" button
+                    // Enable the "{{ __('front.site.form.next') }}" button
                     // var stepper = new Stepper(document.querySelector('#stepper'));
                     stepper.goToNext();
-                    // Enable the "Next" button
+                    // Enable the "{{ __('front.site.form.next') }}" button
                     // nextButton.setAttribute('data-hs-stepper-next-btn', '');
                     // nextButton.classList.remove('pointer-events-none');
                 } else {
                     console.log(response);
                     console.log('Form submission failed');
-                    // Disable the "Next" button
+                    // Disable the "{{ __('front.site.form.next') }}" button
                     // nextButton.removeAttribute('data-hs-stepper-next-btn');
                     // nextButton.classList.add('pointer-events-none');
                     nextButton.disabled = true;
@@ -3911,7 +3911,7 @@
                         $('#' + key + '_error').text(value[0]);
                     });
 
-                    // Disable the "Next" button
+                    // Disable the "{{ __('front.site.form.next') }}" button
                     nextButton.removeAttribute('data-hs-stepper-next-btn');
                     nextButton.classList.add('pointer-events-none');
                 }
@@ -4088,7 +4088,7 @@
         }
         formData.append('file', document.getElementById('file').files[0]);
 
-        // Optionally, you can validate formData here before sending it via AJAX
+        // {{ __('front.site.form.optional') }}ly, you can validate formData here before sending it via AJAX
 
         $.ajax({
             url: "{{ route('bookings.store') }}", // Replace with your route URL
@@ -4124,7 +4124,7 @@
             error: function(xhr, status, error) {
                 alert('no')
                 console.error(xhr.responseText); // Log error response
-                // Optionally, show an error message to the user
+                // {{ __('front.site.form.optional') }}ly, show an error message to the user
             }
         });
     }
@@ -4236,16 +4236,16 @@
                     console.log(response);
                     console.log('Form submitted successfully');
 
-                    // Enable the "Next" button
+                    // Enable the "{{ __('front.site.form.next') }}" button
                     // var stepper = new Stepper(document.querySelector('#stepper'));
                     stepper.goToNext();
-                    // Enable the "Next" button
+                    // Enable the "{{ __('front.site.form.next') }}" button
                     // nextButton.setAttribute('data-hs-stepper-next-btn', '');
                     // nextButton.classList.remove('pointer-events-none');
                 } else {
                     console.log(response);
                     console.log('Form submission failed');
-                    // Disable the "Next" button
+                    // Disable the "{{ __('front.site.form.next') }}" button
                     // nextButton.removeAttribute('data-hs-stepper-next-btn');
                     // nextButton.classList.add('pointer-events-none');
                     nextButton.disabled = true;
@@ -4263,7 +4263,7 @@
                         $('#' + key + '_error').text(value[0]);
                     });
 
-                    // Disable the "Next" button
+                    // Disable the "{{ __('front.site.form.next') }}" button
                     nextButton.removeAttribute('data-hs-stepper-next-btn');
                     nextButton.classList.add('pointer-events-none');
                 }

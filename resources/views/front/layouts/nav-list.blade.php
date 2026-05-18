@@ -2,7 +2,7 @@
     $locale = app()->getLocale();
 @endphp
 
-<ul class="navbar_list" style="display:flex;align-items:center;list-style:none;margin:0;padding:0">
+<ul class="navbar_list doudou-main-nav">
     <li>
         <a href="{{ route('home') }}" class="navbar_link"
            @if(request()->routeIs('home')) aria-current="page" @endif>
@@ -16,9 +16,8 @@
         </a>
     </li>
 
-    {{-- Dream itineraries — CSS-only hover dropdown (no JS dependency) --}}
     <li class="dd-parent">
-        <button type="button" class="navbar_link dd-trigger">
+        <button type="button" class="navbar_link dd-trigger" aria-expanded="false" aria-haspopup="true">
             {{ __('front.site.nav.dream') }}
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
                  viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -27,14 +26,14 @@
                 <path d="m6 9 6 6 6-6"/>
             </svg>
         </button>
-        <div class="dd-menu">
-            <a href="{{ route('egypt-tours') }}" class="dd-item">
+        <div class="dd-menu" role="menu">
+            <a href="{{ route('egypt-tours') }}" class="dd-item" role="menuitem">
                 {{ __('front.site.nav.economy') }}
             </a>
-            <a href="{{ route('egypt-tours') }}" class="dd-item">
+            <a href="{{ route('egypt-tours') }}" class="dd-item" role="menuitem">
                 {{ __('front.site.nav.business') }}
             </a>
-            <a href="{{ route('egypt-tours') }}" class="dd-item">
+            <a href="{{ route('egypt-tours') }}" class="dd-item" role="menuitem">
                 {{ __('front.site.nav.first') }}
             </a>
         </div>
@@ -60,15 +59,44 @@
 </ul>
 
 <style>
-/* ── CSS-only nav dropdown ─────────────────────────────── */
+.doudou-main-nav {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+}
+.doudou-main-nav > li {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+}
+.doudou-main-nav .navbar_link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    white-space: nowrap;
+}
+.doudou-main-nav .navbar_link:hover,
+.doudou-main-nav .navbar_link[aria-current="page"],
+.dd-parent.is-open > .dd-trigger {
+    background-color: rgb(0 113 189 / 1);
+}
+
 .dd-parent {
     position: relative;
     list-style: none;
+    z-index: 200;
 }
 .dd-trigger {
-    display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
@@ -78,60 +106,80 @@
     flex-shrink: 0;
 }
 .dd-parent:hover .dd-arrow,
-.dd-parent:focus-within .dd-arrow {
+.dd-parent:focus-within .dd-arrow,
+.dd-parent.is-open .dd-arrow {
     transform: rotate(180deg);
 }
 
-/* The menu itself */
 .dd-menu {
     position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    z-index: 9999;
-    min-width: 190px;
+    top: 100%;
+    left: 50%;
+    z-index: 10050;
+    width: max-content;
+    min-width: 238px;
     background: #fff;
-    border-radius: 12px;
-    padding: 6px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.18), 0 4px 12px rgba(0,0,0,.08);
-    /* hidden by default */
+    border: 1px solid rgba(15, 23, 42, .08);
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 24px 70px rgba(0,0,0,.2), 0 6px 18px rgba(0,0,0,.10);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-8px);
+    transform: translate(-50%, 8px) scale(.98);
+    transform-origin: top center;
     transition: opacity .22s cubic-bezier(.16,1,.3,1),
                 transform .22s cubic-bezier(.16,1,.3,1),
                 visibility .22s;
     pointer-events: none;
 }
-
-/* Show on hover or keyboard focus */
 .dd-parent:hover .dd-menu,
-.dd-parent:focus-within .dd-menu {
+.dd-parent:focus-within .dd-menu,
+.dd-parent.is-open .dd-menu {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translate(-50%, 0) scale(1);
     pointer-events: auto;
 }
 
+.navbar_nav {
+    position: relative;
+    z-index: 9001;
+    overflow: visible;
+}
+.navbar_nav .container {
+    overflow: visible;
+}
+.promo-bar {
+    position: relative;
+    z-index: 1;
+}
+
 .dd-item {
-    display: block;
-    padding: 11px 16px;
-    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 10px 18px;
+    border-radius: 10px;
     font-size: 14px;
-    font-weight: 500;
-    color: #1f2937 !important;
+    font-weight: 600;
+    color: #0f172a !important;
     text-decoration: none;
-    transition: background .15s ease, color .15s ease, padding-left .15s ease;
+    transition: background .16s ease, color .16s ease, transform .16s ease;
     white-space: nowrap;
 }
 .dd-item + .dd-item {
     border-top: 1px solid rgba(0,0,0,.05);
 }
-.dd-item:hover {
-    background: rgba(0,113,189,.08);
+.dd-item:hover,
+.dd-item:focus-visible {
+    background: rgba(0,113,189,.10);
     color: #0071bd !important;
-    padding-left: 22px;
+    transform: translateX(3px);
+    outline: none;
 }
-.dd-item:first-child { border-radius: 8px 8px 0 0; }
-.dd-item:last-child  { border-radius: 0 0 8px 8px; }
-.dd-item:only-child  { border-radius: 8px; }
+@media (max-width: 1023px) {
+    .doudou-main-nav {
+        display: none;
+    }
+}
 </style>

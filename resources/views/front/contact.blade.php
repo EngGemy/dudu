@@ -45,7 +45,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/spotlight.js@0.7.8/dist/css/spotlight.min.css"
     />
-    <link rel="stylesheet" href="./assets/styles/main.css" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}" />
 
     <script
       defer
@@ -56,7 +57,37 @@
       src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
     ></script>
       <link rel="stylesheet" href="{{asset('node_modules/select2/dist/css/select2.min.css')}}">
-    <script defer src="./assets/scripts/main.js"></script>
+    <style>
+      .contact-reveal {
+        opacity: 0;
+        transform: translateY(22px);
+        animation: contactReveal .75s ease forwards;
+      }
+
+      .contact-float {
+        transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+      }
+
+      .contact-float:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
+      }
+
+      .contact-shell {
+        background:
+          radial-gradient(circle at top left, rgba(202, 156, 84, .16), transparent 34%),
+          linear-gradient(135deg, rgba(255, 255, 255, .98), rgba(255, 255, 255, .9));
+      }
+
+      @keyframes contactReveal {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+    <script defer src="{{ asset('assets/scripts/main.js') }}"></script>
+    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}"></script>
   </head>
 
   <body>
@@ -67,18 +98,7 @@
             <div class="navbar_top">
                 <?php  $site_name=\App\Models\General_setting::first() ?>
 
-                <div class="flex items-center gap-3">
-                    <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there">
-                        <svg class="size-5 text-white">
-                            <use href="{{asset('assets/images/icons/sprite.svg#whatsapp')}}"></use>
-                        </svg>
-                    </a>
-                    <a href="mailto:{{$site_name->email}}">
-                        <svg class="size-5 text-white">
-                            <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
-                        </svg>
-                    </a>
-                </div>
+                <x-social-links variant="white" class="topbar-socials max-md:hidden" />
 
                 <div class="flex items-center gap-4 lg:gap-10">
                     <div class="flex items-center gap-2">
@@ -175,7 +195,7 @@
                                 href="./assets/images/icons/sprite.svg#hotel"
                               ></use>
                             </svg>
-                            <p class="flex-1">High Luxury 5 Stars</p>
+                            <p class="flex-1">{{ __('front.site.search.hotel_placeholder') }}</p>
                             <svg
                               class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                               xmlns="http://www.w3.org/2000/svg"
@@ -200,43 +220,43 @@
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                               aria-pressed="true"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                             <button
                               type="button"
                               class="block font-normal text-black hover:text-primary aria-pressed:text-primary"
                             >
-                              Hotel Name
+                              {{ __('front.site.search.hotel_name') }}
                             </button>
                           </div>
                         </div>
@@ -251,7 +271,7 @@
                           id="range"
                           type="text"
                           class="flatpickr flatpickr-input max-w-52 flex-1 shrink bg-transparent outline-none"
-                          placeholder="Check in date - Check out date"
+                          placeholder="{{ __('front.site.search.date_placeholder') }}"
                         />
                         <svg
                           class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
@@ -281,7 +301,7 @@
                                 href="./assets/images/icons/sprite.svg#subscription-cashflow"
                               ></use>
                             </svg>
-                            <p class="flex-1">Budget From - to</p>
+                            <p class="flex-1">{{ __('front.site.search.budget_from_to') }}</p>
                             <svg
                               class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                               xmlns="http://www.w3.org/2000/svg"
@@ -301,7 +321,7 @@
                           <div
                             class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden rounded-lg bg-white p-6 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
                           >
-                            <p class="mb-4 text-sm">Your Budget</p>
+                            <p class="mb-4 text-sm">{{ __('front.site.search.your_budget') }}</p>
                             <div id="slider-3">
                               <div class="slider mb-3"></div>
                               <p
@@ -319,7 +339,7 @@
                       type="button"
                       class="inline-block w-full rounded-bl-xl rounded-br-xl bg-primary px-5 py-3 text-white transition-colors hover:bg-opacity-80"
                     >
-                      Search
+                      {{ __('front.site.search.search') }}
                     </button>
                   </div>
                 </div>
@@ -394,8 +414,8 @@
                   </div>
 
                   <div>
-                    <p class="text-lg font-semibold">Location</p>
-                    <p class="text-gray">Lorem ipsum dolor sit amet cons</p>
+                    <p class="text-lg font-semibold">{{ $contactCards[0]['title'] ?? __('front.site.contact.cards.location.title') }}</p>
+                    <p class="text-gray">{{ $contactCards[0]['value'] ?? __('front.site.contact.cards.location.fallback') }}</p>
                   </div>
                 </div>
                 <div
@@ -410,8 +430,8 @@
                   </div>
 
                   <div>
-                    <p class="text-lg font-semibold">Email</p>
-                    <p class="text-gray">Lorem ipsum dolor sit amet cons</p>
+                    <p class="text-lg font-semibold">{{ $contactCards[1]['title'] ?? __('front.site.contact.cards.email.title') }}</p>
+                    <p class="text-gray">{{ $contactCards[1]['value'] ?? __('front.site.contact.cards.email.fallback') }}</p>
                   </div>
                 </div>
                 <div
@@ -426,25 +446,23 @@
                   </div>
 
                   <div>
-                    <p class="text-lg font-semibold">Phone</p>
-                    <p class="text-gray">(+20) 0123 456 4567</p>
+                    <p class="text-lg font-semibold">{{ $contactCards[2]['title'] ?? __('front.site.contact.cards.phone.title') }}</p>
+                    <p class="text-gray">{{ $contactCards[2]['value'] ?? __('front.site.contact.cards.phone.fallback') }}</p>
                   </div>
                 </div>
               </div>
 
-              <p class="my-6 text-lg">
-                Are you thinking about going on a trip soon? Do you need a
-                custom itinerary complete with information on how to get around
-                and local etiquette as well as budget-friendly tips? We are here
-                to help you.Ã‚Â 
+              <p class="contact-reveal my-6 text-lg">
+                {{ __('front.site.contact.intro') }}
               </p>
 
-              <div class="rounded-xl border border-primary p-8 lg:p-12">
+              <div class="contact-reveal contact-shell rounded-xl border border-primary p-8 lg:p-12">
                 <p class="mb-8">
-                  Please send us a massage and weÃ¢â‚¬â„¢ll respond as soon as possible
+                  {{ __('front.site.contact.form_intro') }}
                 </p>
 
-                <form>
+                <form id="contact-form">
+                  @csrf
                   <div
                     class="flex flex-col gap-8 lg:grid-cols-2 lg:flex-row lg:gap-16"
                   >
@@ -454,29 +472,31 @@
                           <label
                             for="title"
                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                            >Title</label
+                            >{{ __('front.site.contact.title') }}</label
                           >
                           <select
                             id="title"
+                            name="title"
                             type="text"
                             class="rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                            placeholder="Your Name"
+                            placeholder="{{ __('front.site.form.your_name') }}"
                           >
-                            <option value="mr">Mr.</option>
-                            <option value="ms">Ms.</option>
+                            <option value="0">{{ __('front.site.contact.mr') }}</option>
+                            <option value="1">{{ __('front.site.contact.ms') }}</option>
                           </select>
                         </div>
                         <div class="relative flex-1">
                           <label
                             for="name"
                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                            >Name</label
+                            >{{ __('front.site.contact.name') }}</label
                           >
                           <input
                             id="names"
+                            name="name"
                             type="text"
                             class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                            placeholder="Your Name"
+                            placeholder="{{ __('front.site.contact.your_name') }}"
                           />
                         </div>
                       </div>
@@ -487,33 +507,34 @@
                         <label
                           for="tel"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Phone Number</label
+                          >{{ __('front.site.contact.phone_number') }}</label
                         >
                         <div class="flex items-center gap-3">
                           <select
-                            name="countries"
+                            name="code"
                             class="block border-e-2 border-gray bg-transparent text-center"
                           >
-                            <option value="NL">Ã°Å¸â€¡Â³Ã°Å¸â€¡Â±</option>
-                            <option value="DE">Ã°Å¸â€¡Â©Ã°Å¸â€¡Âª</option>
-                            <option value="FR">Ã°Å¸â€¡Â«Ã°Å¸â€¡Â·</option>
-                            <option value="ES">Ã°Å¸â€¡ÂªÃ°Å¸â€¡Â¸</option>
+                            <option value="+20">EG +20</option>
+                            <option value="+86">CN +86</option>
+                            <option value="+852">HK +852</option>
+                            <option value="+966">SA +966</option>
                           </select>
 
                           <input
                             id="tels"
+                            name="phone"
                             type="text"
                             class="block w-full flex-1 text-black outline-none placeholder:text-gray"
-                            placeholder="Enter your phone number"
+                            placeholder="{{ __('front.site.contact.enter_phone_number') }}"
                           />
                         </div>
                       </div>
 
                       <div>
                         <p class="mb-2 text-center text-sm">
-                          Do you face any issue sending a Request?
+                          {{ __('front.site.contact.contact_issue') }}
                           <span class="text-primary"
-                            >Please contact directly by</span
+                            >{{ __('front.site.contact.contact_directly_by') }}</span
                           >
                         </p>
                           <div
@@ -547,29 +568,34 @@
                         <label
                           for="email"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Email</label
+                          >{{ __('front.site.contact.email') }}</label
                         >
                         <input
                           id="emails"
+                          name="email"
                           type="email"
                           class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                          placeholder="Your Email"
+                          placeholder="{{ __('front.site.contact.your_email') }}"
                         />
                       </div>
 
                       <div class="relative flex-1">
                         <label
-                          for="nationality"
+                          for="city_id"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Nationality</label
+                          >{{ __('front.site.contact.city') }}</label
                         >
                         <select
-                          id="nationality"
+                          id="city_id"
+                          name="city_id"
                           type="text"
                           class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                          placeholder="Your Nationality"
+                          placeholder="{{ __('front.site.contact.your_city') }}"
                         >
-                          <option hidden>Your City</option>
+                          <option value="" hidden>{{ __('front.site.contact.your_city') }}</option>
+                          @foreach($cities as $city)
+                            <option value="{{ $city->id }}">{{ $city->name ?? $city->translate(app()->getLocale())?->name ?? $city->translate('en')?->name }}</option>
+                          @endforeach
                         </select>
                       </div>
 
@@ -577,21 +603,22 @@
                         <label
                           for="message"
                           class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                          >Message</label
+                          >{{ __('front.site.contact.message') }}</label
                         >
                         <textarea
                           id="message"
+                          name="message"
                           class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                          placeholder="Write your Message here..."
+                          placeholder="{{ __('front.site.contact.message_placeholder') }}"
                         ></textarea>
                       </div>
 
                       <button
-                        type="button"
+                        type="submit"
                         data-hs-overlay="#data-sent"
                         class="ms-auto block w-fit rounded-xl bg-primary px-6 py-3 text-lg text-white transition-colors hover:bg-secondary"
                       >
-                        Send
+                        {{ __('front.site.contact.send') }}
                       </button>
                     </div>
                   </div>
@@ -613,7 +640,7 @@
           <div class="container">
             <header class="section_header">
               <h2 class="section_heading text-primary">
-                <span>Frequently</span> Asked Questions
+                <span>{{ __('front.site.sections.frequently') }}</span> {{ __('front.site.sections.asked_questions') }}
               </h2>
             </header>
 
@@ -633,7 +660,7 @@
                       ></use>
                     </svg>
 
-                    Question Title Here?
+                    {{ $questions->get(0)?->title ?? __('front.site.sections.asked_questions') }}
                   </span>
 
                   <svg
@@ -676,11 +703,7 @@
                       class="rounded-bl-xl rounded-br-xl bg-white p-8 shadow-lg"
                     >
                       <p class="text-black">
-                        <em>This is the third item's accordion body.</em> It is
-                        hidden by default, until the collapse plugin adds the
-                        appropriate classes that we use to style each element.
-                        These classes control the overall appearance, as well as
-                        the showing and hiding via CSS transitions.
+                        {!! $questions->get(0)?->description ?? '' !!}
                       </p>
                     </div>
                   </div>
@@ -702,7 +725,7 @@
                       ></use>
                     </svg>
 
-                    Question Title Here?
+                    {{ $questions->get(1)?->title ?? __('front.site.sections.asked_questions') }}
                   </span>
 
                   <svg
@@ -745,11 +768,7 @@
                       class="rounded-bl-xl rounded-br-xl bg-white p-8 shadow-lg"
                     >
                       <p class="text-black">
-                        <em>This is the third item's accordion body.</em> It is
-                        hidden by default, until the collapse plugin adds the
-                        appropriate classes that we use to style each element.
-                        These classes control the overall appearance, as well as
-                        the showing and hiding via CSS transitions.
+                        {!! $questions->get(1)?->description ?? '' !!}
                       </p>
                     </div>
                   </div>
@@ -771,7 +790,7 @@
                       ></use>
                     </svg>
 
-                    Question Title Here?
+                    {{ $questions->get(2)?->title ?? __('front.site.sections.asked_questions') }}
                   </span>
 
                   <svg
@@ -814,11 +833,7 @@
                       class="rounded-bl-xl rounded-br-xl bg-white p-8 shadow-lg"
                     >
                       <p class="text-black">
-                        <em>This is the third item's accordion body.</em> It is
-                        hidden by default, until the collapse plugin adds the
-                        appropriate classes that we use to style each element.
-                        These classes control the overall appearance, as well as
-                        the showing and hiding via CSS transitions.
+                        {!! $questions->get(2)?->description ?? '' !!}
                       </p>
                     </div>
                   </div>
@@ -827,7 +842,7 @@
             </div>
 
             <div class="mt-6 text-center">
-              <a href="#" class="text-lg text-secondary underline">Show More</a>
+              <a href="{{ route('faq') }}" class="text-lg text-secondary underline">{{ __('front.site.sections.show_more') }}</a>
             </div>
           </div>
         </section>
@@ -836,7 +851,7 @@
           <div class="container">
             <header class="section_header">
               <h2 class="section_heading text-primary">
-                <span>Doudou</span> Partners
+                <span>{{ __('front.site.sections.doudou') }}</span> {{ __('front.site.sections.partners') }}
               </h2>
             </header>
 
@@ -853,78 +868,17 @@
 
               <div class="swiper flex-1">
                 <div class="swiper-wrapper">
-                  <div class="swiper-slide w-auto p-2">
-                    <div class="img-shadow rounded-xl p-3">
-                      <img
-                        src="./assets/images/egyptair.png"
-                        class="size-28 object-contain object-center lg:size-40"
-                        alt=""
-                      />
+                  @foreach($partners as $partner)
+                    <div class="swiper-slide w-auto p-2">
+                      <div class="img-shadow rounded-xl p-3">
+                        <img
+                          src="{{ $partner->image_url }}"
+                          class="size-28 object-contain object-center lg:size-40"
+                          alt="{{ __('front.site.sections.doudou') }} {{ __('front.site.sections.partners') }}"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div class="swiper-slide w-auto p-2">
-                    <div class="img-shadow rounded-xl p-3">
-                      <img
-                        src="./assets/images/egyptair.png"
-                        class="size-28 object-contain object-center lg:size-40"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="swiper-slide w-auto p-2">
-                    <div class="img-shadow rounded-xl p-3">
-                      <img
-                        src="./assets/images/egyptair.png"
-                        class="size-28 object-contain object-center lg:size-40"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="swiper-slide w-auto p-2">
-                    <div class="img-shadow rounded-xl p-3">
-                      <img
-                        src="./assets/images/egyptair.png"
-                        class="size-28 object-contain object-center lg:size-40"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="swiper-slide w-auto p-2">
-                    <div class="img-shadow rounded-xl p-3">
-                      <img
-                        src="./assets/images/egyptair.png"
-                        class="size-28 object-contain object-center lg:size-40"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="swiper-slide w-auto p-2">
-                    <div class="img-shadow rounded-xl p-3">
-                      <img
-                        src="./assets/images/egyptair.png"
-                        class="size-28 object-contain object-center lg:size-40"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="swiper-slide w-auto p-2">
-                    <div class="img-shadow rounded-xl p-3">
-                      <img
-                        src="./assets/images/egyptair.png"
-                        class="size-28 object-contain object-center lg:size-40"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="swiper-slide w-auto p-2">
-                    <div class="img-shadow rounded-xl p-3">
-                      <img
-                        src="./assets/images/egyptair.png"
-                        class="size-28 object-contain object-center lg:size-40"
-                        alt=""
-                      />
-                    </div>
-                  </div>
+                  @endforeach
                 </div>
               </div>
 
@@ -1118,6 +1072,8 @@
         </button>
 
     </div>
+
+    @include('front.layouts.floating-contact')
 
     <!-- modals -->
     <div
@@ -1339,7 +1295,7 @@
                   >1</span
                   >
                                 <span class="text-lg font-semibold text-primary lg:text-xl"
-                                >Your Information</span
+                                >{{ __('front.site.form.your_information') }}</span
                                 >
                             </p>
 
@@ -1351,7 +1307,7 @@
 
                                                 for="title"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Title</label
+                                            >{{ __('front.site.form.title') }}</label
                                             >
                                             <select
                                                 onchange="checkInputs()"
@@ -1360,7 +1316,7 @@
                                                 type="text"
                                                 name="title"
                                                 class="rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                                                placeholder="Your Name"
+                                                placeholder="{{ __('front.site.form.your_name') }}"
                                             >
                                                 <option value="0">Mr.</option>
                                                 <option value="1">Ms.</option>
@@ -1371,7 +1327,7 @@
 
                                                 for="name"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Name</label
+                                            >{{ __('front.site.form.name') }}</label
                                             >
                                             <input
                                                 oninput="checkInputs()"
@@ -1380,7 +1336,7 @@
                                                 name="name"
                                                 type="text"
                                                 class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                                placeholder="Your Name"
+                                                placeholder="{{ __('front.site.form.your_name') }}"
                                             />
                                             <span class="invalid text-danger" id="name_error"></span>
 
@@ -1391,7 +1347,7 @@
                                             <label
                                                 for="email"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Email</label
+                                            >{{ __('front.site.form.email') }}</label
                                             >
                                             <input
                                                 oninput="checkInputs()"
@@ -1400,7 +1356,7 @@
                                                 type="text"
                                                 name="email"
                                                 class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                                placeholder="Your Email"
+                                                placeholder="{{ __('front.site.form.your_email') }}"
 
                                             />
                                             <span class="invalid text-danger" id="email_error"></span>
@@ -1409,7 +1365,7 @@
                                             <label
                                                 for="nationality"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Nationality</label
+                                            >{{ __('front.site.form.nationality') }}</label
                                             >
                                             <select
                                                 onchange="checkInputs()"
@@ -1418,9 +1374,9 @@
                                                 type="text"
                                                 name="nationality"
                                                 class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                                                placeholder="Your Name"
+                                                placeholder="{{ __('front.site.form.your_name') }}"
                                             >
-                                                <option hidden>Your Nationality</option>
+                                                <option hidden>{{ __('front.site.form.your_nationality') }}</option>
                                                 @foreach($nationalities as $nationality)
                                                     <option value="{{$nationality->id}}">{{$nationality->title}}</option>
                                                 @endforeach
@@ -1435,7 +1391,7 @@
                                         <label
                                             for="tel"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Phone Number</label
+                                        >{{ __('front.site.form.phone_number') }}</label
                                         >
                                         <div class="flex items-center gap-3">
                                             <select
@@ -1453,7 +1409,7 @@
                                                 type="text"
                                                 name="phone"
                                                 class="flex-1 text-black outline-none placeholder:text-gray"
-                                                placeholder="Enter your phone number"
+                                                placeholder="{{ __('front.site.form.enter_phone_number') }}"
                                             /><br>
 
 
@@ -1477,7 +1433,7 @@
                   >2</span
                   >
                                 <span class="text-lg font-semibold text-primary lg:text-xl"
-                                >Tour Information</span
+                                >{{ __('front.site.form.tour_information') }}</span
                                 >
                             </p>
 
@@ -1488,7 +1444,7 @@
                                             <label
                                                 for="arrival-date"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Arrival Date</label
+                                            >{{ __('front.site.form.arrival_date') }}</label
                                             >
                                             <input
                                                 id="arrival-date"
@@ -1502,7 +1458,7 @@
                                             <label
                                                 for="departure-date"
                                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                            >Departure Date</label
+                                            >{{ __('front.site.form.departure_date') }}</label
                                             >
                                             <input
                                                 id="departure-date"
@@ -1519,7 +1475,7 @@
                                             <!-- <label
                                             for="destination"
                                             class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                        >Your Destination</label
+                                        >{{ __('front.site.form.your_destination') }}</label
                                         >
                                         <select
                                             id="destination"
@@ -1535,7 +1491,7 @@
                                             </select> -->
                                             <div class="relative" >
                                                 <div class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base">
-                                                    <label for="destination" class="">Your Destination</label>
+                                                    <label for="destination" class="">{{ __('front.site.form.your_destination') }}</label>
                                                 </div>
                                                 <div id="selected-options" style="padding-bottom: 0px" class="flex flex-wrap gap-2 p-2 w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray">
                                                     <select style="width: 100%;margin-bottom: 2px" id="destination" name="city_id" multiple >
@@ -1567,7 +1523,7 @@
                                                 type="text"
 
                                                 class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                                placeholder="Your Name"
+                                                placeholder="{{ __('front.site.form.your_name') }}"
                                             >
                                                 <option value="" disabled selected>Select Accommodation Tour</option>
                                                 @foreach ($tours as $tour )
@@ -1590,7 +1546,7 @@
                                                 type="text"
                                                 name="range_age"
                                                 class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                                placeholder="Your Name"
+                                                placeholder="{{ __('front.site.form.your_name') }}"
                                             >
                                                 <option value="" disabled selected>Select Age Range</option>
                                                 <option value="0">AGE_1_TO_10</option>
@@ -1792,7 +1748,7 @@
                     style="background: linear-gradient(90deg, #005690 0%, #0071bd 100%)"
                 >
                     <h3 class="text-lg font-semibold text-white lg:text-xl">
-                        Contact us
+                        {{ __('front.site.footer.contact_us') }}
                     </h3>
                     <button
                         type="button"
@@ -1819,71 +1775,11 @@
                 </div>
                 <div class="px-6 py-8">
                     <div>
-                        <p class="mb-2 text-center text-sm">
-                            Do you face any issue sending a Request?
-                            <span class="text-primary">Please contact directly by</span>
+                        <p class="mb-6 text-center text-sm text-gray">
+                            {{ __('front.site.contact.contact_issue') }}
+                            <span class="font-semibold text-primary">{{ __('front.site.contact.contact_directly_by') }}</span>
                         </p>
-                        <div
-                            class="mb-6 flex flex-col items-center justify-center gap-x-4 gap-y-2 lg:flex-row"
-                        >
-                            <?php  $site_name=\App\Models\General_setting::first() ?>
-                            <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there" target="_blank"
-                               class="flex items-center gap-1 text-sm"
-                            >
-                                <svg class="size-5 text-primary">
-                                    <use href="./assets/images/icons/sprite.svg#whatsapp"></use>
-                                </svg>
-                                {{$site_name->manager_phone}}
-                            </a>
-                            <a
-                                href="mailto:{{$site_name->email}}"
-                                class="flex items-center gap-1 text-sm"
-                            >
-                                <svg class="size-5 text-primary">
-                                    <use href="./assets/images/icons/sprite.svg#mail"></use>
-                                </svg>
-                                {{$site_name->email}}
-                            </a>
-                        </div>
-                        <?php  $social=\App\Models\Social_setting::first() ?>
-                        <ul class="social-list primary justify-center">
-                            <li>
-                                <a href="{{$social->facebook}}">
-                                    <svg>
-                                        <use
-                                            href="./assets/images/icons/sprite.svg#facebook"
-                                        ></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{$social->twitter}}">
-                                    <svg>
-                                        <use
-                                            href="./assets/images/icons/sprite.svg#linkedin"
-                                        ></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{$social->youtube}}">
-                                    <svg>
-                                        <use
-                                            href="./assets/images/icons/sprite.svg#youtube"
-                                        ></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{$social->instagram}}">
-                                    <svg>
-                                        <use
-                                            href="./assets/images/icons/sprite.svg#instagram"
-                                        ></use>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
+                        <x-contact-channel-actions mode="cards" />
                     </div>
                 </div>
 
@@ -2162,28 +2058,28 @@
             // Validate Name
             const nameInput = document.getElementById('name');
             if (nameInput.value.trim() === '') {
-                document.getElementById('name_error').textContent = 'Please enter your name';
+                document.getElementById('name_error').textContent = @json(__('front.site.form.validation_name_required'));
                 isValid = false;
             }
 
             // Validate Email
             const emailInput = document.getElementById('email');
             if (emailInput.value.trim() === '') {
-                document.getElementById('email_error').textContent = 'Please enter your email';
+                document.getElementById('email_error').textContent = @json(__('front.site.form.validation_email_required'));
                 isValid = false;
             }
 
             // Validate Nationality
             const nationalityInput = document.getElementById('nationality');
             if (nationalityInput.value === '0' || nationalityInput.value.trim() === '') {
-                document.getElementById('nationality_error').textContent = 'Please select your nationality';
+                document.getElementById('nationality_error').textContent = @json(__('front.site.form.validation_nationality_required'));
                 isValid = false;
             }
 
             // Validate Phone Number
             const telInput = document.getElementById('tel');
             if (telInput.value.trim() === '') {
-                document.getElementById('tel_error').textContent = 'Please enter your phone number';
+                document.getElementById('tel_error').textContent = @json(__('front.site.form.validation_phone_required'));
                 isValid = false;
             }
 
@@ -2306,70 +2202,70 @@
             // Validate Name
             const nameInput = document.getElementById('name');
             if (nameInput.value.trim() === '') {
-                document.getElementById('name_error').textContent = 'Please enter your name';
+                document.getElementById('name_error').textContent = @json(__('front.site.form.validation_name_required'));
                 isValid = false;
             }
 
             // Validate Email
             const emailInput = document.getElementById('email');
             if (emailInput.value.trim() === '') {
-                document.getElementById('email_error').textContent = 'Please enter your email';
+                document.getElementById('email_error').textContent = @json(__('front.site.form.validation_email_required'));
                 isValid = false;
             }
 
             // Validate Nationality
             const nationalityInput = document.getElementById('nationality');
             if (nationalityInput.value === '0' || nationalityInput.value.trim() === '') {
-                document.getElementById('nationality_error').textContent = 'Please select your nationality';
+                document.getElementById('nationality_error').textContent = @json(__('front.site.form.validation_nationality_required'));
                 isValid = false;
             }
 
             // Validate Phone Number
             const telInput = document.getElementById('tel');
             if (telInput.value.trim() === '') {
-                document.getElementById('tel_error').textContent = 'Please enter your phone number';
+                document.getElementById('tel_error').textContent = @json(__('front.site.form.validation_phone_required'));
                 isValid = false;
             }
             const departure_date = document.getElementById('departure-date');
             if (departure_date.value.trim() === '') {
-                document.getElementById('departure-date').textContent = 'Please enter your departure date';
+                document.getElementById('departure-date').textContent = @json(__('front.site.form.validation_departure_required'));
                 isValid = false;
             }
 
             const arrival_date = document.getElementById('arrival-date');
             if (arrival_date.value.trim() === '') {
-                document.getElementById('arrival-date_error').textContent = 'Please enter your arrival date';
+                document.getElementById('arrival-date_error').textContent = @json(__('front.site.form.validation_arrival_required'));
                 isValid = false;
             }
             const city_id = document.getElementById('destination');
             if (city_id.value === '') {
-                document.getElementById('destination_error').textContent = 'Please enter your Destination';
+                document.getElementById('destination_error').textContent = @json(__('front.site.form.validation_destination_required'));
 
                 isValid = false;
             }
             const tour_id = document.getElementById('accommodation');
             if (tour_id.value.trim() === '') {
-                document.getElementById('accommodation_error').textContent = 'Please enter your Accommodation';
+                document.getElementById('accommodation_error').textContent = @json(__('front.site.form.validation_accommodation_required'));
                 isValid = false;
             }
             const range_age = document.getElementById('age');
             if (range_age.value.trim() === '') {
-                document.getElementById('age_error').textContent = 'Please enter your Age';
+                document.getElementById('age_error').textContent = @json(__('front.site.form.validation_age_required'));
                 isValid = false;
             }
             const notes = document.getElementById('notes');
             if (range_age.value.trim() === '') {
-                document.getElementById('notes_error').textContent = 'Please enter your notes';
+                document.getElementById('notes_error').textContent = @json(__('front.site.form.validation_notes_required'));
                 isValid = false;
             }
             const adt = document.getElementById('adults-count');
             if (adt.value === '') {
-                document.getElementById('adults-count_error').textContent = 'Please enter your adults count';
+                document.getElementById('adults-count_error').textContent = @json(__('front.site.form.validation_adults_required'));
                 isValid = false;
             }
             const chd = document.getElementById('children-count');
             if (chd.value === '') {
-                document.getElementById('children-count_error').textContent = 'Please enter your children count';
+                document.getElementById('children-count_error').textContent = @json(__('front.site.form.validation_children_required'));
                 isValid = false;
             }
             return isValid;
@@ -2456,7 +2352,7 @@
     <script>
         $(document).ready(function() {
             $('#selectedHotel').select2({
-                placeholder: 'choose Hotels',
+                placeholder: @json(__('front.site.form.choose_hotels')),
                 allowClear: true, // Adds a clear button
 
 
@@ -2483,19 +2379,58 @@
     <script>
         $(document).ready(function() {
             $('#destination').select2({
-                placeholder: 'choose Cities',
+                placeholder: @json(__('front.site.form.choose_cities')),
                 allowClear: true, // Adds a clear button
 
 
             });
             $('#selectedHotels').select2({
-                placeholder: 'choose Hotels',
+                placeholder: @json(__('front.site.form.choose_hotels')),
                 allowClear: true, // Adds a clear button
 
 
             });
 
         });
+    </script>
+    <script>
+      document.getElementById('contact-form')?.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = '...';
+
+        try {
+          const response = await fetch("{{ route('message') }}", {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
+            },
+            body: new FormData(form),
+          });
+
+          const data = await response.json();
+          if (!response.ok) {
+            throw data;
+          }
+
+          document.querySelector('#data-sent .text-primary').textContent = data.res || @json(__('front.site.blog.message_sent_successfully'));
+          document.querySelector('#data-sent .full-message').textContent = data.full_message || '';
+          document.querySelector('#data-sent .message-header').textContent = data.message_header || '';
+          window.HSOverlay?.open('#data-sent');
+          form.reset();
+        } catch (error) {
+          const message = error?.message || Object.values(error?.errors || {})?.[0]?.[0] || 'Please check the form and try again.';
+          alert(message);
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+      });
     </script>
   </body>
 </html>

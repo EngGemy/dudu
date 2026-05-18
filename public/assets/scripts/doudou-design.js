@@ -50,3 +50,43 @@
     }
   }, { passive: true });
 })();
+
+(function () {
+  'use strict';
+
+  if (window.__doudouNavDropdownReady) return;
+  window.__doudouNavDropdownReady = true;
+
+  function closeAll(except) {
+    document.querySelectorAll('.dd-parent.is-open').forEach(function (parent) {
+      if (parent === except) return;
+      parent.classList.remove('is-open');
+      var trigger = parent.querySelector('.dd-trigger');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  document.addEventListener('click', function (event) {
+    var trigger = event.target.closest('.dd-trigger');
+
+    if (trigger) {
+      var parent = trigger.closest('.dd-parent');
+      if (!parent) return;
+
+      event.preventDefault();
+      var willOpen = !parent.classList.contains('is-open');
+      closeAll(parent);
+      parent.classList.toggle('is-open', willOpen);
+      trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      return;
+    }
+
+    if (!event.target.closest('.dd-parent')) {
+      closeAll();
+    }
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') closeAll();
+  });
+})();

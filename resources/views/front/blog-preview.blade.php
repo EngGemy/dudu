@@ -20,7 +20,8 @@
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/spotlight.js@0.7.8/dist/css/spotlight.min.css"
     />
-    <link rel="stylesheet" href="../../assets/styles/main.css" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}" />
 
     <script
         defer
@@ -31,7 +32,8 @@
         src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
     ></script>
     <link rel="stylesheet" href="{{asset('node_modules/select2/dist/css/select2.min.css')}}">
-    <script defer src="../../assets/scripts/main.js"></script>
+    <script defer src="{{ asset('assets/scripts/main.js') }}"></script>
+    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}"></script>
 </head>
 
 <body>
@@ -42,18 +44,7 @@
                 <div class="navbar_top">
                     <?php  $site_name=\App\Models\General_setting::first() ?>
 
-                    <div class="flex items-center gap-3">
-                        <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there">
-                            <svg class="size-5 text-white">
-                                <use href="{{asset('assets/images/icons/sprite.svg#whatsapp')}}"></use>
-                            </svg>
-                        </a>
-                        <a href="mailto:{{$site_name->email}}">
-                            <svg class="size-5 text-white">
-                                <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
-                            </svg>
-                        </a>
-                    </div>
+                    <x-social-links variant="white" class="topbar-socials max-md:hidden" />
 
                     <div class="flex items-center gap-4 lg:gap-10">
                         <div class="flex items-center gap-2">
@@ -107,7 +98,7 @@
                                             href="../../assets/images/icons/sprite.svg#hotel"
                                         ></use>
                                     </svg>
-                                    <p>High Luxury 5 Stars</p>
+                                    <p>{{ __('front.site.search.hotel_placeholder') }}</p>
                                     <svg
                                         class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +172,7 @@
                                 id="range"
                                 type="text"
                                 class="flatpickr flatpickr-input flex-1 bg-transparent outline-none"
-                                placeholder="Check in date - Check out date"
+                                placeholder="{{ __('front.site.search.date_placeholder') }}"
                             />
                             <svg
                                 class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
@@ -231,7 +222,7 @@
                                 <div
                                     class="hs-dropdown-menu duration inset-x-0 z-10 mt-2 hidden rounded-lg bg-white p-6 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
                                 >
-                                    <p class="mb-4 text-sm">Your Budget</p>
+                                    <p class="mb-4 text-sm">{{ __('front.site.search.your_budget') }}</p>
                                     <div id="slider-1">
                                         <div class="slider mb-3"></div>
                                         <p class="flex items-center justify-between text-sm">
@@ -434,7 +425,7 @@
                                                         href="../../assets/images/icons/sprite.svg#hotel"
                                                     ></use>
                                                 </svg>
-                                                <p class="flex-1">High Luxury 5 Stars</p>
+                                                <p class="flex-1">{{ __('front.site.search.hotel_placeholder') }}</p>
                                                 <svg
                                                     class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -510,7 +501,7 @@
                                             id="range"
                                             type="text"
                                             class="flatpickr flatpickr-input max-w-52 flex-1 shrink bg-transparent outline-none"
-                                            placeholder="Check in date - Check out date"
+                                            placeholder="{{ __('front.site.search.date_placeholder') }}"
                                         />
                                         <svg
                                             class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
@@ -540,7 +531,7 @@
                                                         href="../../assets/images/icons/sprite.svg#subscription-cashflow"
                                                     ></use>
                                                 </svg>
-                                                <p class="flex-1">Budget From - to</p>
+                                                <p class="flex-1">{{ __('front.site.search.budget_from_to') }}</p>
                                                 <svg
                                                     class="accordion-arrow ms-auto shrink-0 hs-dropdown-open:rotate-180"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -560,7 +551,7 @@
                                             <div
                                                 class="hs-dropdown-menu duration inset-x-0 top-0 z-10 mt-2 hidden rounded-lg bg-white p-6 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100"
                                             >
-                                                <p class="mb-4 text-sm">Your Budget</p>
+                                                <p class="mb-4 text-sm">{{ __('front.site.search.your_budget') }}</p>
                                                 <div id="slider-3">
                                                     <div class="slider mb-3"></div>
                                                     <p
@@ -884,7 +875,7 @@
                                                 <input
                                                     type="text"
                                                     class="block w-full text-sm font-normal text-black outline-none placeholder:text-gray"
-                                                    placeholder="Search Destinations"
+                                                    placeholder="{{ __('front.site.blog.search_blogs_placeholder') }}"
                                                 />
                                                 <button
                                                     type="button"
@@ -924,7 +915,7 @@
                                                             href="../../assets/images/icons/sprite.svg#sort"
                                                         ></use>
                                                     </svg>
-                                                    <span>Sort by: Recommended</span>
+                                                    <span>{{ __('front.site.blog.sort_by_recommended') }}</span>
                                                     <svg
                                                         class="accordion-arrow ms-auto hs-dropdown-open:rotate-180"
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -1266,19 +1257,19 @@
                                                 <label
                                                     for="email"
                                                     class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                                >Email</label
+                                                >{{ __('front.site.form.email') }}</label
                                                 >
                                                 <input
                                                     id="email"
                                                     type="email"
                                                     class="w-full rounded-xl border border-primary px-4 py-3 text-gray outline-none placeholder:text-gray"
-                                                    placeholder="Your Email"
+                                                    placeholder="{{ __('front.site.contact.your_email') }}"
                                                 />
                                                 <button
                                                     data-hs-overlay="#send-email"
                                                     class="absolute inset-y-0 end-0 rounded-br-xl rounded-tr-xl bg-primary px-5 py-2 text-white"
                                                 >
-                                                    Go
+                                                    {{ __('front.site.blog.go') }}
                                                 </button>
                                             </div>
 
@@ -1329,13 +1320,13 @@
 
                             <div class="mb-5 flex flex-wrap gap-x-6 gap-y-2">
                     <span class="text-sm font-medium"
-                    ><span class="text-primary">By:</span> Doudou Team</span
+                    ><span class="text-primary">{{ __('front.site.blog.by') }}</span> {{ __('front.site.sections.doudou_team') }}</span
                     >
                                 <span class="text-sm font-medium"
-                                ><span class="text-primary">Published:</span> {{$blog->getFormattedDate()}}</span
+                                ><span class="text-primary">{{ __('front.site.blog.published') }}</span> {{$blog->getFormattedDate()}}</span
                                 >
                                 <span class="text-sm font-medium"
-                                ><span class="text-primary">Updated:</span> {{$blog->getUpdatedDate()}}</span
+                                ><span class="text-primary">{{ __('front.site.blog.updated') }}</span> {{$blog->getUpdatedDate()}}</span
                                 >
                             </div>
 
@@ -1426,7 +1417,7 @@
                                     </div>
 
                                     <p class="mb-4 text-lg font-normal lg:text-xl">
-                                        <span class="font-semibold text-primary">Head</span>
+                                        <span class="font-semibold text-primary">{{ __('front.site.blog.head') }}</span>
                                       {!!  $blog->description !!}
                                     </p>
 {{--                                    <ul class="list-disc space-y-2 ps-4 marker:text-primary">--}}
@@ -1687,13 +1678,13 @@
                                         <div
                                             class="flex items-center justify-between border-b border-gray px-6 py-4 lg:px-8 lg:py-6"
                                         >
-                                            <p class="lg:text-lg">Comments ({{$blog->comments->count()}})</p>
+                                            <p class="lg:text-lg">{{ __('front.site.blog.comments') }} ({{$blog->comments->count()}})</p>
 
                                             <div class="hs-dropdown relative flex">
                                                 <button
                                                     class="hs-dropdown inline-flex items-center gap-2 text-sm"
                                                 >
-                                                    Top Comments
+                                                    {{ __('front.site.blog.top_comments') }}
                                                     <svg
                                                         width="11"
                                                         height="6"
@@ -1915,11 +1906,11 @@
                     class="section_header flex flex-col justify-between gap-6 lg:flex-row lg:items-center"
                 >
                     <h2 class="section_heading text-primary">
-                        <span>Recommended</span> Egypt Tours
+                        <span>{{ __('front.site.sections.recommended') }}</span> {{ __('front.site.sections.egypt_tours') }}
                     </h2>
 
                     <div class="flex items-center gap-4 max-lg:ms-auto">
-                        <a href="#" class="text-secondary lg:text-lg">View All</a>
+                        <a href="#" class="text-secondary lg:text-lg">{{ __('front.site.sections.view_all') }}</a>
 
                         <menu class="flex items-center gap-2">
                             <li>
@@ -2068,7 +2059,7 @@
                                         </ul>
 
                                         <div class="tour-card__footer">
-                                            <a href="#" class="tour-card__link">View Tour</a>
+                                            <a href="#" class="tour-card__link">{{ __('front.site.sections.view_tour') }}</a>
                                             <p>
                                                 Starting from
                                                 <span class="price">{{$tour->price}} {{currency()}}</span>
@@ -2305,7 +2296,7 @@
                         <a
                             href="#"
                             class="inline-flex h-10 items-center justify-center rounded-xl bg-primary px-5 text-center text-sm text-white transition-colors hover:bg-opacity-80"
-                        >Explore All</a
+                        >{{ __('front.site.sections.explore_all') }}</a
                         >
                     </header>
 
@@ -2392,7 +2383,7 @@
 
                                                 </p>
                                                 <a href="#" class="text-primary hover:underline"
-                                                >Read More</a
+                                                >{{ __('front.site.sections.read_more') }}</a
                                                 >
                                             </div>
                                         </div>
@@ -2426,7 +2417,7 @@
             <div class="container">
                 <header class="section_header">
                     <h2 class="section_heading text-primary">
-                        <span>Frequently</span> Asked Questions
+                        <span>{{ __('front.site.blog.frequently') }}</span> {{ __('front.site.blog.asked_questions') }}
                     </h2>
                 </header>
 
@@ -2435,7 +2426,7 @@
                 </div>
 
                 <div class="mt-6 text-center">
-                    <a href="#" class="text-lg text-secondary underline">Show More</a>
+                    <a href="#" class="text-lg text-secondary underline">{{ __('front.site.sections.show_more') }}</a>
                 </div>
             </div>
         </section>
@@ -2444,7 +2435,7 @@
             <div class="container">
                 <header class="section_header">
                     <h2 class="section_heading text-primary">
-                        <span>Doudou</span> Partners
+                        <span>{{ __('front.site.sections.doudou') }}</span> {{ __('front.site.sections.partners') }}
                     </h2>
                 </header>
 
@@ -2509,21 +2500,21 @@
                                         href="../../assets/images/icons/sprite.svg#map-pin"
                                     ></use>
                                 </svg>
-                                <a href="#">Put Address Here</a>
+                                <a href="#">{{$site_name->address}}</a>
                             </li>
                             <li>
                                 <svg>
                                     <use href="../../assets/images/icons/sprite.svg#mail"></use>
                                 </svg>
 
-                                <a href="mailto:email">Put Email Here</a>
+                                <a href="mailto:{{$site_name->email}}">{{$site_name->email}}</a>
                             </li>
                             <li>
                                 <svg>
                                     <use href="../../assets/images/icons/sprite.svg#phone"></use>
                                 </svg>
 
-                                <a href="tel:+tel">Put Phone Here</a>
+                                <a href="tel:{{$site_name->manager_phone}}">{{$site_name->manager_phone}}</a>
                             </li>
                         </ul>
                     </div>
@@ -2676,7 +2667,7 @@
                     class="flex size-7 items-center justify-center rounded-full border-2 border-white"
                     data-hs-overlay="#share-article"
                 >
-                    <span class="sr-only">Close</span>
+                    <span class="sr-only">{{ __('front.site.form.close') }}</span>
                     <svg
                         class="size-5 shrink-0 text-white"
                         xmlns="http://www.w3.org/2000/svg"
@@ -2703,16 +2694,16 @@
                                 <label
                                     for="title"
                                     class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                >Title</label
+                                >{{ __('front.site.form.title') }}</label
                                 >
                                 <select
                                     id="title"
                                     type="text"
                                     class="rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                                    placeholder="Your Name"
+                                    placeholder="{{ __('front.site.form.your_name') }}"
                                 >
-                                    <option value="mr">Mr.</option>
-                                    <option value="ms">Ms.</option>
+                                    <option value="mr">{{ __('front.site.form.mr') }}</option>
+                                    <option value="ms">{{ __('front.site.form.ms') }}</option>
                                 </select>
                             </div>
 
@@ -2720,13 +2711,13 @@
                                 <label
                                     for="name"
                                     class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                >Name</label
+                                >{{ __('front.site.form.name') }}</label
                                 >
                                 <input
                                     id="name"
                                     type="text"
                                     class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                    placeholder="Your Name"
+                                    placeholder="{{ __('front.site.form.your_name') }}"
                                 />
                             </div>
                         </div>
@@ -2735,13 +2726,13 @@
                             <label
                                 for="email"
                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                            >Email</label
+                            >{{ __('front.site.form.email') }}</label
                             >
                             <input
                                 id="email"
                                 type="text"
                                 class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                placeholder="Your Name"
+                                placeholder="{{ __('front.site.form.your_name') }}"
                             />
                         </div>
 
@@ -2750,16 +2741,16 @@
                                 <label
                                     for="title"
                                     class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                >Title</label
+                                >{{ __('front.site.form.title') }}</label
                                 >
                                 <select
                                     id="title"
                                     type="text"
                                     class="rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
-                                    placeholder="Your Name"
+                                    placeholder="{{ __('front.site.form.your_name') }}"
                                 >
-                                    <option value="mr">Mr.</option>
-                                    <option value="ms">Ms.</option>
+                                    <option value="mr">{{ __('front.site.form.mr') }}</option>
+                                    <option value="ms">{{ __('front.site.form.ms') }}</option>
                                 </select>
                             </div>
 
@@ -2767,13 +2758,13 @@
                                 <label
                                     for="name"
                                     class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                                >Friend Name</label
+                                >{{ __('front.site.blog.friend_name') }}</label
                                 >
                                 <input
                                     id="name"
                                     type="text"
                                     class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                    placeholder="Your FriendÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s Name"
+                                    placeholder="{{ __('front.site.blog.friend_name_placeholder') }}"
                                 />
                             </div>
                         </div>
@@ -2782,13 +2773,13 @@
                             <label
                                 for="email"
                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                            >Your FriendÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s Email</label
+                            >{{ __('front.site.blog.friend_email') }}</label
                             >
                             <input
                                 id="email"
                                 type="text"
                                 class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                placeholder="Your FriendÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s Email"
+                                placeholder="{{ __('front.site.blog.friend_email') }}"
                             />
                         </div>
 
@@ -2796,12 +2787,12 @@
                             <label
                                 for="email"
                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
-                            >Message (Optional)</label
+                            >{{ __('front.site.blog.message_optional') }}</label
                             >
                             <textarea
                                 type="text"
                                 class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                placeholder="Write your Message here..."
+                                placeholder="{{ __('front.site.blog.write_your_message') }}"
                             ></textarea>
                         </div>
                     </div>
@@ -2847,14 +2838,14 @@
                 style="background: linear-gradient(90deg, #005690 0%, #0071bd 100%)"
             >
                 <h3 class="text-lg font-semibold text-white lg:text-xl">
-                    Message received
+                    {{ __('front.site.blog.message_received') }}
                 </h3>
                 <button
                     type="button"
                     class="flex size-7 items-center justify-center rounded-full border-2 border-white"
                     data-hs-overlay="#message-sent"
                 >
-                    <span class="sr-only">Close</span>
+                    <span class="sr-only">{{ __('front.site.form.close') }}</span>
                     <svg
                         class="size-5 shrink-0 text-white"
                         xmlns="http://www.w3.org/2000/svg"
@@ -2949,7 +2940,7 @@
 {{--                    class="flex size-7 items-center justify-center rounded-full border-2 border-white"--}}
 {{--                    data-hs-overlay="#send-feedback"--}}
 {{--                >--}}
-{{--                    <span class="sr-only">Close</span>--}}
+{{--                    <span class="sr-only">{{ __('front.site.form.close') }}</span>--}}
 {{--                    <svg--}}
 {{--                        class="size-5 shrink-0 text-white"--}}
 {{--                        xmlns="http://www.w3.org/2000/svg"--}}
@@ -3158,7 +3149,7 @@
                     class="flex size-7 items-center justify-center rounded-full border-2 border-white"
                     data-hs-overlay="#feedback-sent"
                 >
-                    <span class="sr-only">Close</span>
+                    <span class="sr-only">{{ __('front.site.form.close') }}</span>
                     <svg
                         class="size-5 shrink-0 text-white"
                         xmlns="http://www.w3.org/2000/svg"

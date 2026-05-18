@@ -2,7 +2,7 @@
 
  @foreach($blogs as $blog)
 
-    <article class="tour-card">
+    <article class="tour-card blog-reveal-card" data-aos="fade-up" data-aos-delay="{{ min($loop->index * 70, 280) }}">
         <div class="tour-card__thumbnail-wrapper">
             <a href="{{route('blog_preview', $blog->slug)}}" > <img
                 src="{{$blog->image_url}}"
@@ -31,12 +31,12 @@
 
             <div class="tour-card__footer">
                 <p>
-                    Published By
-                    <a href="#">Doudue Team</a>
+                    {{ __('front.site.sections.published_by') }}
+                    <a href="#">{{ __('front.site.sections.doudou_team') }}</a>
                 </p>
 
                 <a href="{{route('blog_preview',$blog->slug)}}" class="tour-card__link"
-                >Read More</a
+                >{{ __('front.site.sections.read_more') }}</a
                 >
             </div>
         </div>

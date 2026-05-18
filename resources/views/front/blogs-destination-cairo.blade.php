@@ -12,7 +12,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
-    <link rel="stylesheet" href="./assets/styles/main.css" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}" />
 
     <script
       defer
@@ -22,7 +23,8 @@
       defer
       src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
     ></script>
-    <script defer src="./assets/scripts/main.js"></script>
+    <script defer src="{{ asset('assets/scripts/main.js') }}"></script>
+    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}"></script>
       <link rel="stylesheet" href="{{asset('node_modules/select2/dist/css/select2.min.css')}}">
   </head>
 
@@ -34,18 +36,7 @@
             <div class="navbar_top">
                 <?php  $site_name=\App\Models\General_setting::first() ?>
 
-                <div class="flex items-center gap-3">
-                    <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there">
-                        <svg class="size-5 text-white">
-                            <use href="{{asset('assets/images/icons/sprite.svg#whatsapp')}}"></use>
-                        </svg>
-                    </a>
-                    <a href="mailto:{{$site_name->email}}">
-                        <svg class="size-5 text-white">
-                            <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
-                        </svg>
-                    </a>
-                </div>
+                <x-social-links variant="white" class="topbar-socials max-md:hidden" />
 
                 <div class="flex items-center gap-4 lg:gap-10">
                     <div class="flex items-center gap-2">

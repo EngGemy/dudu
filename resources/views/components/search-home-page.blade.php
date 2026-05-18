@@ -83,7 +83,7 @@
             @endif
           @endfor
         </div>
-        <p>{{ $tour->rate ?? 0 }} Wonderful <span>({{ $tour->reviews }} Reviews)</span></p>
+        <p>{{ $tour->rate ?? 0 }} {{ __('front.site.sections.wonderful') }} <span>({{ $tour->reviews }} {{ __('front.site.sections.reviews') }})</span></p>
       </div>
       
 
@@ -103,7 +103,7 @@
             ></use>
           </svg>
          
-        {{$tour->overview_values('days') ?? 0}} Days / {{$tour->overview_values('nights') ?? 0}} Nights
+        {{$tour->overview_values('days') ?? 0}} {{ __('front.site.sections.days') }} / {{$tour->overview_values('nights') ?? 0}} {{ __('front.site.sections.nights') }}
         </li>
         <li>
           <svg class="icon">
@@ -135,14 +135,14 @@
               href="./assets/images/icons/sprite.svg#cancel"
             ></use>
           </svg>
-          {{$tour->overview_values('cancellation')}} Cancellation
+          {{$tour->overview_values('cancellation')}} {{ __('front.site.sections.cancellation') }}
         </li>
       </ul>
 
       <div class="tour-card__footer">
-        <a href="#" class="tour-card__link">View Tour</a>
+        <a href="#" class="tour-card__link">{{ __('front.site.sections.view_tour') }}</a>
         <p>
-          Starting from
+          {{ __('front.site.sections.starting_from') }}
           <span class="price">{{$tour->price}}$</span>
         </p>
       </div>

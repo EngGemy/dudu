@@ -45,9 +45,9 @@
         </div>
 
         <h2 id="community-heading" class="community-v2__title">
-            <span class="community-v2__title-line">Real travelers.</span>
+            <span class="community-v2__title-line">{{ __('front.site.community.real_travelers') }}</span>
             <span class="community-v2__title-line community-v2__title-line--accent">
-                <em>Real moments.</em>
+                <em>{{ __('front.site.community.real_moments') }}</em>
                 <svg class="community-v2__underline" viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true">
                     <path d="M2 9 C 60 1, 120 1, 238 8" stroke="#f7931e" stroke-width="4" stroke-linecap="round" fill="none"/>
                 </svg>
@@ -55,31 +55,31 @@
         </h2>
 
         <p class="community-v2__lede">
-            Snapshots from Doudou travellers across Egypt. Tag <strong>#EgyptDoudou</strong> on Instagram or TikTok to be featured here next.
+            {!! __('front.site.community.lede') !!}
         </p>
 
         <div class="community-v2__stats">
             <div class="community-v2__stat">
                 <span class="community-v2__stat-num" data-count="{{ $posts->count() }}">{{ $posts->count() }}</span>
-                <span class="community-v2__stat-label">stories shared</span>
+                <span class="community-v2__stat-label">{{ __('front.site.community.stories_shared') }}</span>
             </div>
             <span class="community-v2__stat-sep" aria-hidden="true"></span>
             <div class="community-v2__stat">
                 <span class="community-v2__stat-num" data-count="{{ $platformsCount }}">{{ $platformsCount }}</span>
-                <span class="community-v2__stat-label">platforms</span>
+                <span class="community-v2__stat-label">{{ __('front.site.community.platforms') }}</span>
             </div>
             <span class="community-v2__stat-sep" aria-hidden="true"></span>
             <div class="community-v2__stat">
                 <span class="community-v2__stat-num">∞</span>
-                <span class="community-v2__stat-label">memories</span>
+                <span class="community-v2__stat-label">{{ __('front.site.community.memories') }}</span>
             </div>
         </div>
 
         <div class="community-v2__nav">
-            <button type="button" @click="prevSlide()" class="community-v2__nav-btn" aria-label="Previous">
+            <button type="button" @click="prevSlide()" class="community-v2__nav-btn" aria-label="{{ __('front.site.community.previous') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
             </button>
-            <button type="button" @click="nextSlide()" class="community-v2__nav-btn" aria-label="Next">
+            <button type="button" @click="nextSlide()" class="community-v2__nav-btn" aria-label="{{ __('front.site.community.next') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
             </button>
         </div>
@@ -139,7 +139,7 @@
                         </span>
                         <span class="community-v2__view-hint">
                             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1"/></svg>
-                            View
+                            {{ __('front.site.community.view') }}
                         </span>
                     </div>
                     <div class="community-v2__meta">
@@ -182,7 +182,7 @@
              x-transition:leave-start="opacity-100 scale-100"
              x-transition:leave-end="opacity-0 scale-95"
              class="community-v2__modal-panel">
-            <button type="button" @click="closeModal()" class="community-v2__modal-close" aria-label="Close">
+            <button type="button" @click="closeModal()" class="community-v2__modal-close" aria-label="{{ __('front.site.community.close') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
             </button>
 
@@ -213,23 +213,23 @@
                     <template x-if="activePost.instagram_post_url">
                         <a :href="activePost.instagram_post_url" target="_blank" rel="noopener noreferrer" class="community-v2__cta community-v2__cta--instagram">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8 0 3.2 0 3.6-.1 4.8-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.2-4.8-1.7-4.9-4.9-.1-1.3-.1-1.6-.1-4.8 0-3.2 0-3.6.1-4.8.1-3.2 1.7-4.8 4.9-4.9 1.2-.1 1.6-.1 4.8-.1zm0 5.6a4.2 4.2 0 1 0 0 8.4 4.2 4.2 0 0 0 0-8.4zm6.4-1.7a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM12 14.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>
-                            View on Instagram
+                            {{ __('front.site.community.view_on_instagram') }}
                         </a>
                     </template>
                     <button type="button" @click="sharePost()" class="community-v2__cta community-v2__cta--ghost">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
-                        Share
+                        {{ __('front.site.community.share') }}
                     </button>
                 </div>
 
                 <div class="community-v2__modal-nav">
                     <button type="button" @click="prevPost()" class="community-v2__modal-nav-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                        Previous
+                        {{ __('front.site.community.previous') }}
                     </button>
                     <span class="community-v2__modal-counter" x-text="`${activeIndex + 1} / ${posts.length}`"></span>
                     <button type="button" @click="nextPost()" class="community-v2__modal-nav-btn">
-                        Next
+                        {{ __('front.site.community.next') }}
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                     </button>
                 </div>

@@ -25,7 +25,7 @@
         href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css"
     />
     <link rel="stylesheet" href="{{asset('assets/styles/main.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/styles/doudou-design.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}?v={{ filemtime(public_path('assets/styles/doudou-design.css')) }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" integrity="sha512-8RxmFOVaKQe/xtg6lbscU9DU0IRhURWEuiI0tXevv+lXbAHfkpamD4VKFQRto9WgfOJDwOZ74c/s9Yesv3VvIjA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script
@@ -37,7 +37,7 @@
         src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
     ></script>
     <script defer src="{{asset('assets/scripts/main.js')}}"></script>
-    <script defer src="{{asset('assets/scripts/doudou-design.js')}}"></script>
+    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}?v={{ filemtime(public_path('assets/scripts/doudou-design.js')) }}"></script>
     <script
         defer
         src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"

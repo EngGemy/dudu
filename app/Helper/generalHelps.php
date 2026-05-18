@@ -78,9 +78,17 @@ function getYoutubeId($url)
 }
 function getYoutubeThumbnail($link)
 {
+    if (app()->environment('local')) {
+        return asset('assets/images/video-poster.jpeg');
+    }
+
     $pattern = '%(?:youtu\.be/|youtube(?:-nocookie)?\.com/(?:[^/\n\r]+/)?(?:v/|e(?:mbed)?/|.*[?&]v=|.*[?&]vi=))([\w-]{11})%x';
 
     $url = preg_match($pattern, $link, $matches);
+
+    if (! isset($matches[1])) {
+        return asset('assets/images/video-poster.jpeg');
+    }
 
     $thumbnailUrl = "https://img.youtube.com/vi/{$matches[1]}/maxresdefault.jpg";
 

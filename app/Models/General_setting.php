@@ -20,17 +20,41 @@ class General_setting extends Model
 
     public function getSitelogoheaderAttribute($value)
     {
-        return ($value !== null) ? asset('assets/images/settings/'.$value) : '';
+        if ($value && file_exists(public_path('assets/images/settings/'.$value))) {
+            return asset('assets/images/settings/'.$value);
+        }
+
+        if ($value && file_exists(public_path('assets/images/'.$value))) {
+            return asset('assets/images/'.$value);
+        }
+
+        return asset('assets/images/logo.png');
     }
 
     public function getSitelogofooterAttribute($value)
     {
-        return ($value !== null) ? asset('assets/images/settings/'.$value) : '';
+        if ($value && file_exists(public_path('assets/images/settings/'.$value))) {
+            return asset('assets/images/settings/'.$value);
+        }
+
+        if ($value && file_exists(public_path('assets/images/'.$value))) {
+            return asset('assets/images/'.$value);
+        }
+
+        return asset('assets/images/logo-footer.png');
     }
 
     public function getSitelogoIconAttribute($value)
     {
-        return ($value !== null) ? asset('assets/images/settings/'.$value) : '';
+        if ($value && file_exists(public_path('assets/images/settings/'.$value))) {
+            return asset('assets/images/settings/'.$value);
+        }
+
+        if ($value && file_exists(public_path('assets/images/'.$value))) {
+            return asset('assets/images/'.$value);
+        }
+
+        return asset('assets/images/logo-sm.png');
     }
 
     public function general_setting_translations()

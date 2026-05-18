@@ -21,10 +21,16 @@ class Slider extends Model
     public function getImageUrlAttribute()
     {
 
-        if ($this->image) {
+        if ($this->image && file_exists(public_path('assets/images/slider/'.$this->image))) {
             return asset('/assets/images/slider/'.$this->image);
 
         }
+
+        if ($this->image && file_exists(public_path('assets/images/'.$this->image))) {
+            return asset('/assets/images/'.$this->image);
+        }
+
+        return asset('/assets/images/home-hero.jpeg');
     }
 
     public function getStatus($type)

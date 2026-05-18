@@ -236,11 +236,11 @@
 
 <div class="language-modal" id="language-modal" aria-hidden="true">
     <div class="language-modal__panel" role="dialog" aria-modal="true" aria-labelledby="language-modal-title">
-        <button class="language-modal__close" type="button" data-language-close aria-label="Close language selector">&times;</button>
+        <button class="language-modal__close" type="button" data-language-close aria-label="{{ __('front.site.language_modal.close') }}">&times;</button>
         <h2 id="language-modal-title" class="language-modal__title">
-            <span>歡迎來到埃及豆豆中文站</span>，請選擇語言站點
+            {{ __('front.site.language_modal.title') }}
         </h2>
-        <p class="language-modal__subtitle">Welcome to Egyptdoudou, please select your preferred language</p>
+        <p class="language-modal__subtitle">{{ __('front.site.language_modal.subtitle') }}</p>
         <div class="language-modal__actions">
             @foreach($languageOptions as $code => $option)
                 <a href="{{ route('language.switch', $code) }}" data-language-choice class="{{ $locale === $code ? 'is-active' : '' }}">

@@ -37,10 +37,10 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Tiktok</span>
+                                                                <span>TikTok</span>
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input value="{{$setting->tiktok}}" type="text" id="first-name-vertical" class="form-control" name="tiktok" >
+                                                                <input value="{{$setting->tiktok}}" type="text" class="form-control" name="tiktok" placeholder="TikTok URL">
                                                                 @error('tiktok')
                                                                 <span class="text-danger">{{$message}}</span>
                                                                 @enderror
@@ -50,7 +50,7 @@
                                                     <div class="col-12">
                                                         <div class="form-group row">
                                                             <div class="col-md-4">
-                                                                <span>Douyin</span>
+                                                                <span>Douyin (used by TikTok + Douyin icon if TikTok URL is empty)</span>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <input value="{{$setting->douyin}}" type="text" class="form-control" name="douyin" placeholder="Douyin URL">
