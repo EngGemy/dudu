@@ -1,0 +1,42 @@
+# Never deploy secrets or VCS metadata
+.env
+.env.*
+.git/
+.gitattributes
+.github/
+
+# Build tooling (assets are pre-built into public/build)
+node_modules/
+package.json
+package-lock.json
+vite.config.js
+
+# Dev / test only
+tests/
+phpunit.xml
+.phpunit.result.cache
+.editorconfig
+*.md
+!storage/**/*.md
+
+# Split deploy: public web root is synced separately
+public/
+
+# Legacy root front controller (monolithic hosting); use public/ + deploy template instead
+index.php
+
+# Preserve server-generated / writable paths (destination keeps existing content)
+storage/logs/
+storage/framework/cache/data/
+storage/framework/sessions/
+storage/framework/views/
+storage/app/public/
+bootstrap/cache/*.php
+
+# Optional local / cPanel artifacts
+.idea/
+dumps/
+cgi-bin/
+error_log
+install.cmd
+tbtx/

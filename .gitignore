@@ -10,3 +10,4 @@
 /storage/framework/views/*
 /error_log
 /install.cmd
+/public/index.php.cpanel
