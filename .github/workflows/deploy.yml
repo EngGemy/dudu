@@ -184,7 +184,7 @@ jobs:
           CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
         run: |
           set -euo pipefail
-          PORT="${CPANEL_PORT:-22}"
+          PORT="${CPANEL_PORT:-6802}"
           mkdir -p ~/.ssh
           ssh-keyscan -p "${PORT}" -H "${CPANEL_HOST}" >> ~/.ssh/known_hosts
 
@@ -197,13 +197,13 @@ jobs:
           CPANEL_PUBLIC_PATH: ${{ secrets.CPANEL_PUBLIC_PATH }}
         run: |
           set -euo pipefail
-          PORT="${CPANEL_PORT:-22}"
+          PORT="${CPANEL_PORT:-6802}"
           APP_PATH="${CPANEL_APP_PATH:-$DEFAULT_CPANEL_APP_PATH}"
           PUBLIC_PATH="${CPANEL_PUBLIC_PATH:-$DEFAULT_CPANEL_PUBLIC_PATH}"
           ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
             "mkdir -p '${APP_PATH}' '${PUBLIC_PATH}' '${APP_PATH}/storage' '${APP_PATH}/bootstrap/cache'"
 
-      - name: Rsync application to cPanel (excluding public/)
+      - name: Deploy application to cPanel via SCP
         env:
           CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
           CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
@@ -211,15 +211,23 @@ jobs:
           CPANEL_APP_PATH: ${{ secrets.CPANEL_APP_PATH }}
         run: |
           set -euo pipefail
-          PORT="${CPANEL_PORT:-22}"
+          PORT="${CPANEL_PORT:-6802}"
           APP_PATH="${CPANEL_APP_PATH:-$DEFAULT_CPANEL_APP_PATH}"
-          RSYNC_SSH="ssh -p ${PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
-          rsync -az --delete --human-readable \
-            --exclude-from=.rsyncignore \
-            -e "${RSYNC_SSH}" \
-            ./ "${CPANEL_USER}@${CPANEL_HOST}:${APP_PATH}/"
+          tar --exclude='.git' \
+              --exclude='node_modules' \
+              --exclude='.env' \
+              --exclude='storage/framework/cache' \
+              --exclude='storage/framework/sessions' \
+              --exclude='storage/framework/views' \
+              --exclude='storage/logs' \
+              --exclude='public/storage' \
+              -czf /tmp/app.tar.gz .
+          scp -P "${PORT}" -o BatchMode=yes /tmp/app.tar.gz \
+            "${CPANEL_USER}@${CPANEL_HOST}:/tmp/dudu-app.tar.gz"
+          ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
+            "mkdir -p '${APP_PATH}' && tar -xzf /tmp/dudu-app.tar.gz -C '${APP_PATH}' && rm -f /tmp/dudu-app.tar.gz"
 
-      - name: Rsync public assets to public_html
+      - name: Deploy public assets to public_html via SCP
         env:
           CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
           CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
@@ -227,13 +235,14 @@ jobs:
           CPANEL_PUBLIC_PATH: ${{ secrets.CPANEL_PUBLIC_PATH }}
         run: |
           set -euo pipefail
-          PORT="${CPANEL_PORT:-22}"
+          PORT="${CPANEL_PORT:-6802}"
           PUBLIC_PATH="${CPANEL_PUBLIC_PATH:-$DEFAULT_CPANEL_PUBLIC_PATH}"
-          RSYNC_SSH="ssh -p ${PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
-          rsync -az --delete --human-readable \
-            --exclude 'storage/' \
-            -e "${RSYNC_SSH}" \
-            public/ "${CPANEL_USER}@${CPANEL_HOST}:${PUBLIC_PATH}/"
+          tar --exclude='storage/' \
+              -czf /tmp/public.tar.gz -C public .
+          scp -P "${PORT}" -o BatchMode=yes /tmp/public.tar.gz \
+            "${CPANEL_USER}@${CPANEL_HOST}:/tmp/dudu-public.tar.gz"
+          ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
+            "mkdir -p '${PUBLIC_PATH}' && tar -xzf /tmp/dudu-public.tar.gz -C '${PUBLIC_PATH}' && rm -f /tmp/dudu-public.tar.gz"
 
       - name: Deploy split-deployment index.php
         env:
@@ -243,7 +252,7 @@ jobs:
           CPANEL_PUBLIC_PATH: ${{ secrets.CPANEL_PUBLIC_PATH }}
         run: |
           set -euo pipefail
-          PORT="${CPANEL_PORT:-22}"
+          PORT="${CPANEL_PORT:-6802}"
           PUBLIC_PATH="${CPANEL_PUBLIC_PATH:-$DEFAULT_CPANEL_PUBLIC_PATH}"
           scp -P "${PORT}" -o BatchMode=yes public/index.php.cpanel \
             "${CPANEL_USER}@${CPANEL_HOST}:${PUBLIC_PATH}/index.php"
@@ -257,7 +266,7 @@ jobs:
           CPANEL_PUBLIC_PATH: ${{ secrets.CPANEL_PUBLIC_PATH }}
         run: |
           set -euo pipefail
-          PORT="${CPANEL_PORT:-22}"
+          PORT="${CPANEL_PORT:-6802}"
           APP_PATH="${CPANEL_APP_PATH:-$DEFAULT_CPANEL_APP_PATH}"
           PUBLIC_PATH="${CPANEL_PUBLIC_PATH:-$DEFAULT_CPANEL_PUBLIC_PATH}"
           scp -P "${PORT}" -o BatchMode=yes deploy/scripts/post-deploy.sh \
