@@ -28,4 +28,11 @@ php artisan view:cache
 # route:cache is intentionally skipped: routes/web.php contains closures
 # (/set-language, /blogs-destination-cairo, etc.) which cannot be serialized.
 
+echo "==> Syncing search indexes"
+if php artisan search:sync; then
+  echo "Search indexes synced"
+else
+  echo "Search index sync skipped or failed; database fallback remains active"
+fi
+
 echo "==> Post-deploy complete"

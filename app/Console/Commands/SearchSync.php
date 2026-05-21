@@ -44,7 +44,11 @@ class SearchSync extends Command
             foreach ($locales as $locale) {
                 $uid = $resource.'_'.str_replace('-', '_', $locale);
                 $this->info("Configuring index {$uid}");
-                $client->createIndex($uid, ['primaryKey' => 'id']);
+                try {
+                    $client->createIndex($uid, ['primaryKey' => 'id']);
+                } catch (\Throwable) {
+                    // Index already exists or is being created; settings update below is idempotent.
+                }
                 $index = $client->index($uid);
                 $index->updateSettings([
                     'searchableAttributes' => ['title', 'description'],
@@ -79,7 +83,7 @@ class SearchSync extends Command
             $class::reindexAllLocales();
         }
 
-        $this->info('Done. Open http://localhost:7700 to inspect.');
+        $this->info('Done. Search indexes are synced.');
 
         return self::SUCCESS;
     }
