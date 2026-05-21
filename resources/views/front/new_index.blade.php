@@ -117,8 +117,8 @@
     ])
 {{--    <title>  <?php $site_name=\App\Models\General_setting::select('site_name')->first() ?> {{ $site_name->site_name}} </title>--}}
     <!-- Bootstrap font-aweasome css -->
-    <link rel="icon" <?php  $site_name=\App\Models\General_setting::select('site_logo_icon')->first() ?> href="{{$site_name->site_logo_icon}}"  type="image/png">
-    <meta name="keywords" <?php  $site_name=\App\Models\General_setting::select('opening_words')->first() ?>  content=" {{$site_name->opening_words}}">
+    <link rel="icon" href="{{ $generalSetting?->site_logo_icon ?? asset('assets/images/logo.png') }}" type="image/png">
+    <meta name="keywords" content="{{ $generalSetting?->opening_words ?? __('front.site.meta.default_title') }}">
 
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link
@@ -213,6 +213,7 @@
 </head>
 
 <body>
+@include('front.layouts.page-loader')
 <div class="app">
     <header class="page-header">
         @include('front.layouts.header')
@@ -1376,24 +1377,23 @@
                     <div
                         class="mb-6 flex flex-col items-center justify-center gap-x-4 gap-y-2 lg:flex-row"
                     >
-                        <?php  $site_name=\App\Models\General_setting::first() ?>
-                        <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there" target="_blank"
+                        <a href="{{ $whatsappPhone ? 'https://wa.me/'.$whatsappPhone.'?text=Hello%20there' : route('contact') }}" target="_blank"
                            class="flex items-center gap-1 text-sm"
                         >
                             <svg class="size-5 text-primary">
                                 <use href="./assets/images/icons/sprite.svg#whatsapp"></use>
                             </svg>
-                            {{$site_name->manager_phone}}
+                            {{ $generalSetting?->manager_phone ?? __('front.site.footer.contact_us') }}
                         </a>
                         <a
-                            href="mailto:{{$site_name->email}}"
+                            href="{{ $emailValue ? 'mailto:'.$emailValue : route('contact') }}"
 
                             class="flex items-center gap-1 text-sm"
                         >
                             <svg class="size-5 text-primary">
                                 <use href="./assets/images/icons/sprite.svg#mail"></use>
                             </svg>
-                            {{$site_name->email}}
+                            {{ $emailValue ?: __('front.site.footer.contact_us') }}
                         </a>
                     </div>
                     <x-social-links variant="primary" class="justify-center" />

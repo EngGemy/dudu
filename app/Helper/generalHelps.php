@@ -28,7 +28,7 @@ function getCurrentTemperature()
 function header_logo()
 {
     $site_name = \App\Models\General_setting::select('id', 'site_logo_header')->first();
-    $logo_header = $site_name->site_logo_header;
+    $logo_header = $site_name?->site_logo_header ?? asset('assets/images/logo.png');
 
     return $logo_header;
 
@@ -36,7 +36,7 @@ function header_logo()
 function currency()
 {
     $site_name = \App\Models\General_setting::select('id', 'currency')->first();
-    $logo_header = $site_name->currency;
+    $logo_header = $site_name?->currency ?? '$';
 
     return $logo_header;
 
@@ -44,7 +44,7 @@ function currency()
 function footer_logo()
 {
     $site_name = \App\Models\General_setting::select('id', 'site_logo_footer')->first();
-    $logo_header = $site_name->site_logo_footer;
+    $logo_header = $site_name?->site_logo_footer ?? asset('assets/images/logo.png');
 
     return $logo_header;
 

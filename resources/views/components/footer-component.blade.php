@@ -32,21 +32,21 @@
                                 ></use>
                             </svg>
                             <?php  $site_name=\App\Models\General_setting::first() ?>
-                            <span>{{$site_name->address}}</span>
+                            <span>{{ $site_name?->address ?? __('front.site.footer.brand') }}</span>
                         </li>
                         <li>
                             <svg>
                                 <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
                             </svg>
 
-                            <span >{{$site_name->email}}</span>
+                            <span>{{ $site_name?->email ?? '' }}</span>
                         </li>
                         <li>
                             <svg>
                                 <use href="{{asset('assets/images/icons/sprite.svg#phone')}}"></use>
                             </svg>
 
-                            <a href="tel:+tel">{{$site_name->manager_phone}}</a>
+                            <a href="{{ $site_name?->manager_phone ? 'tel:'.$site_name->manager_phone : route('contact') }}">{{ $site_name?->manager_phone ?? __('front.site.footer.contact_us') }}</a>
                         </li>
                     </ul>
                 </div>

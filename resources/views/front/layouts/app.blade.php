@@ -54,6 +54,7 @@
 <!-- BEGIN: Body-->
 
 <body>
+@include('front.layouts.page-loader')
 <div class="app">
 
     @yield('headroom')
