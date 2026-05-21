@@ -96,12 +96,13 @@ class TourController extends Controller
         $hotels = Hotel::query()->orderBy('id')->get();
 
         $tour = Tour::with('galleries', 'tour_comments')->where('publish', 1)->orderBy('id', 'desc')->where('slug', $slug)->first();
+        if (! $tour) {
+            abort(404);
+        }
+
         $blogs = $tour->blogs()->take(4)->get();
         $slider = Slider::query()->first();
         $services = Service::query()->orderBy('id', 'desc')->take(4)->get();
-        if (! $tour) {
-            return redirect()->back();
-        }
         $tours = Tour::with('galleries', 'tour_comments')->where('is_active', 1)->orderBy('id', 'desc')->take(4)->get();
         $popular_video = PopularVideo::query()
             ->where('status', PopularVideoStatus::ACTIVE->value)
