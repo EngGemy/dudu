@@ -244,4 +244,4 @@ jobs:
           scp -P "${PORT}" -o BatchMode=yes deploy/scripts/post-deploy.sh \
             "${CPANEL_USER}@${CPANEL_HOST}:/tmp/dudu-post-deploy.sh"
           ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
-            "chmod +x /tmp/dudu-post-deploy.sh && /tmp/dudu-post-deploy.sh '${APP_PATH}' '${PUBLIC_PATH}' && rm -f /tmp/dudu-post-deploy.sh"
+            "bash /tmp/dudu-post-deploy.sh '${APP_PATH}' '${PUBLIC_PATH}' && rm -f /tmp/dudu-post-deploy.sh"
