@@ -213,13 +213,10 @@ jobs:
           set -euo pipefail
           PORT="${CPANEL_PORT:-6802}"
           APP_PATH="${CPANEL_APP_PATH:-$DEFAULT_CPANEL_APP_PATH}"
-          tar -czf /tmp/vendor.tar.gz vendor/
-          scp -P "${PORT}" -o BatchMode=yes /tmp/vendor.tar.gz \
-            "${CPANEL_USER}@${CPANEL_HOST}:/tmp/dudu-vendor.tar.gz"
-          ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
-            "tar -xzf /tmp/dudu-vendor.tar.gz -C '${APP_PATH}' && rm -f /tmp/dudu-vendor.tar.gz"
+          tar -czf - vendor/ | ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
+            "tar -xzf - -C '${APP_PATH}'"
 
-      - name: Deploy application code (excluding vendor)
+      - name: Deploy application code (excluding vendor and public)
         env:
           CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
           CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
@@ -237,13 +234,9 @@ jobs:
               --exclude='storage/framework/sessions' \
               --exclude='storage/framework/views' \
               --exclude='storage/logs' \
-              --exclude='public/storage' \
               --exclude='public' \
-              -czf /tmp/app.tar.gz .
-          scp -P "${PORT}" -o BatchMode=yes /tmp/app.tar.gz \
-            "${CPANEL_USER}@${CPANEL_HOST}:/tmp/dudu-app.tar.gz"
-          ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
-            "tar -xzf /tmp/dudu-app.tar.gz -C '${APP_PATH}' && rm -f /tmp/dudu-app.tar.gz"
+              -czf - . | ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
+            "tar -xzf - -C '${APP_PATH}'"
 
       - name: Deploy public assets to public_html
         env:
@@ -256,11 +249,8 @@ jobs:
           PORT="${CPANEL_PORT:-6802}"
           PUBLIC_PATH="${CPANEL_PUBLIC_PATH:-$DEFAULT_CPANEL_PUBLIC_PATH}"
           tar --exclude='storage/' \
-              -czf /tmp/public.tar.gz -C public .
-          scp -P "${PORT}" -o BatchMode=yes /tmp/public.tar.gz \
-            "${CPANEL_USER}@${CPANEL_HOST}:/tmp/dudu-public.tar.gz"
-          ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
-            "tar -xzf /tmp/dudu-public.tar.gz -C '${PUBLIC_PATH}' && rm -f /tmp/dudu-public.tar.gz"
+              -czf - -C public . | ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
+            "tar -xzf - -C '${PUBLIC_PATH}'"
 
       - name: Deploy split-deployment index.php
         env:
