@@ -418,6 +418,7 @@
                                                             <div class="col-md-5">
                                                                 <input  type="file"
                                                                         class="form-control" name="photo" >
+                                                                <small class="text-muted d-block mt-1">Used as the tour detail hero/background image. Recommended: 1920x900 or larger, JPG/WebP.</small>
                                                                 @error('photo')
                                                                 <span class="text-danger">{{$message}}</span>
                                                                 @enderror
@@ -624,6 +625,7 @@
                                                             <div class="col-md-5">
                                                                 <input type="file" class="form-control" name="meta_img"
                                                                        placeholder="Meta Image">
+                                                                <small class="text-muted d-block mt-1">Optional SEO/social share image. If empty, the main photo is used.</small>
                                                                 @error('meta_img')
                                                                 <span class="text-danger">{{$message}}</span>
                                                                 @enderror

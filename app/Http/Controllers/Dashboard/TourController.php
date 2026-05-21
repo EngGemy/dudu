@@ -71,7 +71,8 @@ class TourController extends Controller
             'meta_title.*' => 'nullable|string|max:255',
             'meta_description' => 'nullable|array',
             'meta_description.*' => 'nullable|string',
-            'photo' => 'required',
+            'photo' => 'required|image|mimes:jpeg,jpg,png,webp|max:5120',
+            'meta_img' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
             'price' => 'required|numeric',
             'days' => 'required|numeric',
             'nights' => 'required|numeric',
@@ -89,6 +90,8 @@ class TourController extends Controller
             'name.en.required' => 'The English name is required',
             'description.en.required' => 'The English description is required',
             'tip_info.en.required' => 'The English tip info is required',
+            'photo.required' => 'The main tour photo is required because it is used as the tour detail hero image.',
+            'photo.image' => 'The main tour photo must be a valid image.',
 
         ]);
         //        return $request;
@@ -115,8 +118,11 @@ class TourController extends Controller
         $values['cancellation'] = $request->cancellation;
         $filename = uploadimage('tours', $request->photo);
 
-        $data = $request->except('photo');
+        $data = $request->except('photo', 'meta_img');
         $data['photo'] = $filename;
+        if ($request->hasFile('meta_img')) {
+            $data['meta_img'] = uploadimage('tours', $request->meta_img);
+        }
         $data = $this->injectTranslations($data, ['name', 'description', 'tip_info', 'meta_title', 'meta_description']);
 
         $tour = Tour::create($data);
@@ -132,12 +138,17 @@ class TourController extends Controller
             $highlight->name = $value;
             $highlight->values = json_encode($request->highlight_values[$key]);
             $highlight->save();
+            $this->syncTranslatedFields($highlight, [
+                'name' => $highlight->name,
+                'values' => $highlight->values,
+            ]);
         }
 
         $feature = new TourFeature();
         $feature->tour_id = $tour->id;
         $feature->values = json_encode($request->features);
         $feature->save();
+        $this->syncTranslatedFields($feature, ['values' => $feature->values]);
 
         $tip = new TourTip();
         $tip->tour_id = $tour->id;
@@ -158,6 +169,7 @@ class TourController extends Controller
         $overview->tour_id = $tour->id;
         $overview->values = json_encode($values);
         $overview->save();
+        $this->syncTranslatedFields($overview, ['values' => $overview->values]);
 
         return redirect()->route('tours.index')->with(['success' => 'Create Successful']);
 
@@ -207,6 +219,8 @@ class TourController extends Controller
             'meta_title.*' => 'nullable|string|max:255',
             'meta_description' => 'nullable|array',
             'meta_description.*' => 'nullable|string',
+            'photo' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+            'meta_img' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
             'price' => 'required|numeric',
             'days' => 'required|numeric',
             'nights' => 'required|numeric',
@@ -224,6 +238,7 @@ class TourController extends Controller
             'name.en.required' => 'The English name is required',
             'description.en.required' => 'The English description is required',
             'tip_info.en.required' => 'The English tip info is required',
+            'photo.image' => 'The main tour photo must be a valid image.',
 
         ]);
         //        return $request;
@@ -255,11 +270,19 @@ class TourController extends Controller
         $tour = Tour::find($id);
 
         $overview = TourOverview::where('tour_id', $id)->first();
+        if (! $overview) {
+            $overview = new TourOverview();
+            $overview->tour_id = $id;
+        }
         $overview->values = json_encode($values);
         $overview->save();
+        $this->syncTranslatedFields($overview, ['values' => $overview->values]);
         if ($request->has('photo')) {
             $filename = uploadimage('tours', $request->photo);
             $tour->photo = $filename;
+        }
+        if ($request->hasFile('meta_img')) {
+            $tour->meta_img = uploadimage('tours', $request->meta_img);
         }
         if ($request->has('services')) {
             $tour->services()->sync($request->services);
@@ -268,7 +291,7 @@ class TourController extends Controller
             $tour->categories()->sync($request->categories);
         }
 
-        $data = $request->all();
+        $data = $request->except('photo', 'meta_img');
         $data = $this->injectTranslations($data, ['name', 'description', 'tip_info', 'meta_title', 'meta_description']);
         $tour->fill($data)->save();
         $tourHighlightsIds = $request->input('tour_highlights_id', []);
@@ -295,6 +318,10 @@ class TourController extends Controller
             $highlight->values = json_encode($values);
 
             $highlight->save();
+            $this->syncTranslatedFields($highlight, [
+                'name' => $highlight->name,
+                'values' => $highlight->values,
+            ]);
 
             $tourHighlights[] = $highlight;
         }
@@ -304,16 +331,17 @@ class TourController extends Controller
         $tourFeature = $tour->tour_features()->firstOrNew([]);
         $tourFeature->values = json_encode($featureValues);
         $tourFeature->save();
+        $this->syncTranslatedFields($tourFeature, ['values' => $tourFeature->values]);
 
-        $tip = TourTip::where('tour_id', $id)->first();
+        $tip = TourTip::firstOrNew(['tour_id' => $id]);
         $tip->values = json_encode($request->tour_tips);
         $tip->save();
 
-        $Inclusion = TourInclusion::where('tour_id', $id)->first();
+        $Inclusion = TourInclusion::firstOrNew(['tour_id' => $id]);
         $Inclusion->values = json_encode($request->inclusions);
         $Inclusion->save();
 
-        $Exclusion = TourExclusion::where('tour_id', $id)->first();
+        $Exclusion = TourExclusion::firstOrNew(['tour_id' => $id]);
         $Exclusion->values = json_encode($request->exclusions);
         $Exclusion->save();
 
@@ -451,6 +479,11 @@ class TourController extends Controller
                     $iteration->content = $request->big_content[$key];
                     $iteration->description = $request->big_description[$key];
                     $iteration->save();
+                    $this->syncTranslatedFields($iteration, [
+                        'title' => $iteration->title,
+                        'content' => $iteration->content,
+                        'description' => $iteration->description,
+                    ]);
                     if (array_key_exists($key, $small_title)) {
                         foreach ($small_title[$key] as $k => $val) {
 
@@ -471,6 +504,10 @@ class TourController extends Controller
 
                                     $IterationAttribute->description = $request->small_description[$key][$k];
                                     $IterationAttribute->save();
+                                    $this->syncTranslatedFields($IterationAttribute, [
+                                        'title' => $IterationAttribute->title,
+                                        'description' => $IterationAttribute->description,
+                                    ]);
 
                                 } else {
 
@@ -484,6 +521,10 @@ class TourController extends Controller
 
                                     $IterationAttribute->description = $request->small_description[$key][$k];
                                     $IterationAttribute->save();
+                                    $this->syncTranslatedFields($IterationAttribute, [
+                                        'title' => $IterationAttribute->title,
+                                        'description' => $IterationAttribute->description,
+                                    ]);
 
                                 }
                             } else {
@@ -498,6 +539,10 @@ class TourController extends Controller
 
                                 $IterationAttribute->description = $request->small_description[$key][$k];
                                 $IterationAttribute->save();
+                                $this->syncTranslatedFields($IterationAttribute, [
+                                    'title' => $IterationAttribute->title,
+                                    'description' => $IterationAttribute->description,
+                                ]);
                             }
                         }
                     } else {
@@ -517,6 +562,11 @@ class TourController extends Controller
                     $iteration->content = $request->big_content[$key];
                     $iteration->description = $request->big_description[$key];
                     $iteration->save();
+                    $this->syncTranslatedFields($iteration, [
+                        'title' => $iteration->title,
+                        'content' => $iteration->content,
+                        'description' => $iteration->description,
+                    ]);
 
                     if (array_key_exists($key, $small_title)) {
                         foreach ($small_title[$key] as $k => $val) {
@@ -558,5 +608,16 @@ class TourController extends Controller
         }
 
         return $data;
+    }
+
+    private function syncTranslatedFields($model, array $fields): void
+    {
+        foreach (['en', 'zh', 'zh-Hant'] as $locale) {
+            foreach ($fields as $field => $value) {
+                $model->translateOrNew($locale)->{$field} = $value;
+            }
+        }
+
+        $model->save();
     }
 }
