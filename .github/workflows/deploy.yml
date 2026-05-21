@@ -201,9 +201,25 @@ jobs:
           APP_PATH="${CPANEL_APP_PATH:-$DEFAULT_CPANEL_APP_PATH}"
           PUBLIC_PATH="${CPANEL_PUBLIC_PATH:-$DEFAULT_CPANEL_PUBLIC_PATH}"
           ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
-            "mkdir -p '${APP_PATH}' '${PUBLIC_PATH}' '${APP_PATH}/storage' '${APP_PATH}/bootstrap/cache'"
+            "mkdir -p '${APP_PATH}' '${PUBLIC_PATH}' '${APP_PATH}/storage' '${APP_PATH}/bootstrap/cache' '${APP_PATH}/vendor'"
 
-      - name: Deploy application to cPanel via SCP
+      - name: Deploy vendor (composer packages)
+        env:
+          CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
+          CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
+          CPANEL_USER: ${{ secrets.CPANEL_USER }}
+          CPANEL_APP_PATH: ${{ secrets.CPANEL_APP_PATH }}
+        run: |
+          set -euo pipefail
+          PORT="${CPANEL_PORT:-6802}"
+          APP_PATH="${CPANEL_APP_PATH:-$DEFAULT_CPANEL_APP_PATH}"
+          tar -czf /tmp/vendor.tar.gz vendor/
+          scp -P "${PORT}" -o BatchMode=yes /tmp/vendor.tar.gz \
+            "${CPANEL_USER}@${CPANEL_HOST}:/tmp/dudu-vendor.tar.gz"
+          ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
+            "tar -xzf /tmp/dudu-vendor.tar.gz -C '${APP_PATH}' && rm -f /tmp/dudu-vendor.tar.gz"
+
+      - name: Deploy application code (excluding vendor)
         env:
           CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
           CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
@@ -214,6 +230,7 @@ jobs:
           PORT="${CPANEL_PORT:-6802}"
           APP_PATH="${CPANEL_APP_PATH:-$DEFAULT_CPANEL_APP_PATH}"
           tar --exclude='.git' \
+              --exclude='vendor' \
               --exclude='node_modules' \
               --exclude='.env' \
               --exclude='storage/framework/cache' \
@@ -221,13 +238,14 @@ jobs:
               --exclude='storage/framework/views' \
               --exclude='storage/logs' \
               --exclude='public/storage' \
+              --exclude='public' \
               -czf /tmp/app.tar.gz .
           scp -P "${PORT}" -o BatchMode=yes /tmp/app.tar.gz \
             "${CPANEL_USER}@${CPANEL_HOST}:/tmp/dudu-app.tar.gz"
           ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
-            "mkdir -p '${APP_PATH}' && tar -xzf /tmp/dudu-app.tar.gz -C '${APP_PATH}' && rm -f /tmp/dudu-app.tar.gz"
+            "tar -xzf /tmp/dudu-app.tar.gz -C '${APP_PATH}' && rm -f /tmp/dudu-app.tar.gz"
 
-      - name: Deploy public assets to public_html via SCP
+      - name: Deploy public assets to public_html
         env:
           CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
           CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
@@ -242,7 +260,7 @@ jobs:
           scp -P "${PORT}" -o BatchMode=yes /tmp/public.tar.gz \
             "${CPANEL_USER}@${CPANEL_HOST}:/tmp/dudu-public.tar.gz"
           ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
-            "mkdir -p '${PUBLIC_PATH}' && tar -xzf /tmp/dudu-public.tar.gz -C '${PUBLIC_PATH}' && rm -f /tmp/dudu-public.tar.gz"
+            "tar -xzf /tmp/dudu-public.tar.gz -C '${PUBLIC_PATH}' && rm -f /tmp/dudu-public.tar.gz"
 
       - name: Deploy split-deployment index.php
         env:
