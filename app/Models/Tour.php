@@ -52,6 +52,19 @@ class Tour extends Model
         return ($value !== null) ? asset('assets/images/tours/'.$value) : '';
     }
 
+    public function getMetaImgAttribute($value)
+    {
+        if (! $value) {
+            return null;
+        }
+
+        if (str_starts_with($value, 'http://') || str_starts_with($value, 'https://')) {
+            return $value;
+        }
+
+        return asset('assets/images/tours/'.$value);
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -157,10 +170,14 @@ class Tour extends Model
             $data = match ($type) {
                 'days' => $values->days ?? null,
                 'nights' => $values->nights ?? null,
-                'cancellation' => $values->cancellation ?? null,
-                'availability' => $values->availability ?? null,
-                'type' => TourType::findOrFail($values->tour_type)->name ?? null,
-                'group' => TourGroup::findOrFail($values->tour_group)->name ?? null,
+                'cancellation' => isset($values->cancellation)
+                    ? $this->translatedOverviewOption('cancellation', $values->cancellation)
+                    : null,
+                'availability' => isset($values->availability)
+                    ? $this->translatedOverviewOption('availability', $values->availability)
+                    : null,
+                'type' => isset($values->tour_type) ? TourType::find($values->tour_type)?->translate(app()->getLocale(), true)?->name : null,
+                'group' => isset($values->tour_group) ? TourGroup::find($values->tour_group)?->translate(app()->getLocale(), true)?->name : null,
                 'location_from' => $location_from ?? null,
                 'location_to' => $location_to ?? null,
                 default => null,
@@ -170,6 +187,21 @@ class Tour extends Model
         }
 
         return null;
+    }
+
+    private function translatedOverviewOption(string $type, string $value): string
+    {
+        $normalized = strtolower(trim($value));
+        $normalized = match ($normalized) {
+            'daily' => 'everyday',
+            'free cancellation' => 'free',
+            default => $normalized,
+        };
+        $group = $type === 'availability' ? 'availability_values' : 'cancellation_values';
+        $key = "front.site.tour_detail.{$group}.{$normalized}";
+        $translated = __($key);
+
+        return $translated === $key ? \Illuminate\Support\Str::headline($value) : $translated;
     }
 
     public function include_values()
