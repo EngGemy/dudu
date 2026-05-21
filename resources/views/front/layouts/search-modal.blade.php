@@ -89,12 +89,15 @@
 
     function render(data) {
         hits = [];
-        if (!data.groups || data.groups.length === 0) {
+        const groups = Array.isArray(data.groups)
+            ? data.groups.filter(group => Array.isArray(group.hits) && group.hits.length > 0)
+            : [];
+        if (groups.length === 0) {
             renderEmpty(_i18n.noResults + (data.query ? ' "' + data.query + '"' : ''));
             return;
         }
         let html = '';
-        for (const group of data.groups) {
+        for (const group of groups) {
             html += '<div class="search-modal__group">';
             html += '<div class="search-modal__group-label">' + escapeHtml(group.label) + '</div>';
             for (const hit of group.hits) {

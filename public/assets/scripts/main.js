@@ -70,7 +70,25 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   localizeCountryDialOptions();
+  initLegacyStickyHeaders();
 });
+
+function initLegacyStickyHeaders() {
+  var headers = document.querySelectorAll(".navbar:not(.site-header)");
+  if (!headers.length) return;
+
+  function sync() {
+    var y = window.scrollY || document.documentElement.scrollTop || 0;
+    headers.forEach(function (header) {
+      header.classList.add("legacy-sticky-header");
+      header.classList.toggle("is-sticky", y > 44);
+    });
+  }
+
+  sync();
+  window.addEventListener("scroll", sync, { passive: true });
+  window.addEventListener("resize", sync);
+}
 
 function localizeCountryDialOptions() {
   if (!("Intl" in window) || typeof Intl.DisplayNames !== "function") return;
