@@ -22,7 +22,7 @@
       href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css"
     />
     <link rel="stylesheet" href="{{asset('assets/styles/main.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/styles/doudou-design.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}?v={{ filemtime(public_path('assets/styles/doudou-design.css')) }}" />
 
     <script
       defer
@@ -33,7 +33,7 @@
       src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
     ></script>
     <script defer src="{{asset('assets/scripts/main.js')}}"></script>
-    <script defer src="{{asset('assets/scripts/doudou-design.js')}}"></script>
+    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}?v={{ filemtime(public_path('assets/scripts/doudou-design.js')) }}"></script>
   </head>
 
   <body>

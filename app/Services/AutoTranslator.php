@@ -21,7 +21,7 @@ class AutoTranslator
     /**
      * Translate all missing keys in a target locale by comparing with the source locale.
      */
-    public function translateMissing(string $sourceLocale, string $targetLocale): array
+    public function translateMissing(string $sourceLocale, string $targetLocale, ?string $onlyFile = null): array
     {
         $results = [
             'created' => 0,
@@ -41,14 +41,22 @@ class AutoTranslator
             File::makeDirectory($targetPath, 0755, true);
         }
 
-        $sourceFiles = File::allFiles($sourcePath);
+        $sourceFiles = $onlyFile
+            ? collect([$sourcePath.DIRECTORY_SEPARATOR.str_replace('/', DIRECTORY_SEPARATOR, $onlyFile).'.php'])
+            : collect(File::allFiles($sourcePath));
 
         foreach ($sourceFiles as $file) {
-            if ($file->getExtension() !== 'php') {
+            $sourceFilePath = is_string($file) ? $file : $file->getPathname();
+
+            if (! File::exists($sourceFilePath) || pathinfo($sourceFilePath, PATHINFO_EXTENSION) !== 'php') {
                 continue;
             }
 
-            $relativePath = str_replace(['\\', '.php'], ['/', ''], $file->getRelativePathname());
+            $relativePath = $onlyFile ?: str_replace(
+                ['\\', '.php'],
+                ['/', ''],
+                $file->getRelativePathname()
+            );
             $targetFilePath = "{$targetPath}/{$relativePath}.php";
             $targetDir = dirname($targetFilePath);
 
@@ -56,7 +64,7 @@ class AutoTranslator
                 File::makeDirectory($targetDir, 0755, true);
             }
 
-            $sourceArray = File::exists($file->getPathname()) ? include $file->getPathname() : [];
+            $sourceArray = File::exists($sourceFilePath) ? include $sourceFilePath : [];
             $targetArray = File::exists($targetFilePath) ? include $targetFilePath : [];
 
             $newTarget = $this->fillArray($sourceArray, $targetArray, $targetLocale, $sourceLocale, $results);

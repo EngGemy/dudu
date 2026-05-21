@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use App\Support\Seo\HasSeoMetadata;
 
 class Post extends Model
 {
-    use Translatable;
+    use HasSeoMetadata, Translatable;
 
     protected $fillable = ['user_id', 'post_category_id', 'slug', 'is_published', 'published_at', 'meta_description'];
 

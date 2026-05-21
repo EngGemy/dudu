@@ -126,15 +126,27 @@
                                     <div class="d-flex align-items-center">
                                         <span class="file-icon"><i class="feather icon-file-text"></i></span>
                                         <div>
+                                            @php
+                                                $localeClass = preg_replace('/[^A-Za-z0-9]/', '', $locale);
+                                            @endphp
                                             <div class="file-name">
                                                 {{ basename($item['file']) }}
-                                                <span class="locale-badge locale-badge-{{ str_replace('-','Hant',$locale) }} ml-2">{{ $locale }}</span>
+                                                <span class="locale-badge locale-badge-{{ $localeClass }} ml-2">{{ $locale }}</span>
+                                                @if(! $item['exists'])
+                                                    <span class="badge badge-light-warning ml-1">missing file</span>
+                                                @endif
                                             </div>
                                             <div class="file-path">lang/{{ $locale }}/{{ $item['file'] }}.php</div>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <span class="key-badge"><i class="feather icon-key" style="font-size:.75rem"></i> {{ $item['count'] }} keys</span>
+                                        <span class="key-badge">
+                                            <i class="feather icon-key" style="font-size:.75rem"></i>
+                                            {{ $item['count'] }} / {{ $item['source_count'] }} keys
+                                        </span>
+                                        @if(($item['missing'] ?? 0) > 0)
+                                            <span class="badge badge-light-danger mr-1">{{ $item['missing'] }} missing</span>
+                                        @endif
                                         <a href="{{ route('translations.edit', ['locale' => $locale, 'file' => $item['file']]) }}"
                                            class="btn btn-primary btn-sm waves-effect waves-light">
                                             <i class="feather icon-edit-2 mr-1"></i> Edit

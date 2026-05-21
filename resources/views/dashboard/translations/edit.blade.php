@@ -161,6 +161,16 @@
                 </div>
             @endif
 
+            @if($locale !== 'en')
+                <form id="translation-auto-fill-form"
+                      method="POST"
+                      action="{{ route('translations.auto-fill', ['locale' => $locale, 'file' => $currentFile]) }}"
+                      class="d-none">
+                    @csrf
+                    <input type="hidden" name="source" value="en">
+                </form>
+            @endif
+
             <form id="translation-form"
                   action="{{ route('translations.update', ['locale' => $locale, 'file' => $file]) }}"
                   method="POST">
@@ -199,19 +209,18 @@
 
                             {{-- Auto-fill --}}
                             @if($locale !== 'en')
-                            <form method="POST" action="{{ route('translations.auto-fill', ['locale' => $locale, 'file' => $currentFile]) }}" class="d-inline">
-                                @csrf
-                                <input type="hidden" name="source" value="en">
-                                <button type="submit" class="btn btn-sm btn-outline-success" onclick="return confirm('This will overwrite empty values with DeepL translations from English. Continue?')">
+                                <button type="submit"
+                                        form="translation-auto-fill-form"
+                                        class="btn btn-sm btn-outline-success"
+                                        onclick="return confirm('This will fill empty values with DeepL translations from English. Continue?')">
                                     <i class="feather icon-zap mr-1"></i> Auto-fill from EN
                                 </button>
-                            </form>
                             @endif
 
                             {{-- Search --}}
                             <div class="translation-search">
                                 <span class="search-icon"><i class="feather icon-search"></i></span>
-                                <input type="text" id="searchInput" placeholder="Search keys or values…" autocomplete="off">
+                                <input type="text" id="searchInput" placeholder="Search keys or values..." autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -246,7 +255,7 @@
                                     @foreach($rows as $row)
                                         @php
                                             // Build the pretty key label with segments coloured
-                                            $segments = explode(' › ', $row['display_path']);
+                                            $segments = explode($separator ?? ' > ', $row['display_path']);
                                             $lastSeg  = array_pop($segments);
                                         @endphp
                                         <tr class="trans-row"
@@ -256,7 +265,7 @@
                                                 <div class="key-label">
                                                     @foreach($segments as $seg)
                                                         <span class="key-segment">{{ $seg }}</span>
-                                                        <span class="key-sep">›</span>
+                                                        <span class="key-sep">&rsaquo;</span>
                                                     @endforeach
                                                     <strong style="color:#3d3d4e;">{{ $lastSeg }}</strong>
                                                 </div>
@@ -317,6 +326,8 @@
 @section('scripts')
 <script>
 (function () {
+    var separator = @json($separator ?? ' > ');
+
     // Track changes
     var originalValues = {};
     var changedCount   = 0;
@@ -353,7 +364,7 @@
             row.classList.toggle('hidden-row', !match);
             if (match) {
                 // Extract the group: first segment of the key
-                var groupLabel = (row.dataset.key || '').split(' › ')[0];
+                var groupLabel = (row.dataset.key || '').split(separator)[0];
                 visibleMap[groupLabel] = true;
             }
         });

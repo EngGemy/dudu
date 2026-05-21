@@ -75,6 +75,24 @@
         ['name' => 'WhatsApp', 'url' => $whatsappPhone ? 'https://wa.me/'.$whatsappPhone.'?text=Hello%20Doudou%20Travel' : route('contact'), 'icon' => 'whatsapp', 'letter' => null, 'data' => $whatsappPhone ?: 'Add WhatsApp phone in General Settings'],
         ['name' => 'E-mail', 'url' => $emailValue ? 'mailto:'.$emailValue : route('contact'), 'icon' => 'mail', 'letter' => null, 'data' => $emailValue ?: 'Add email in General Settings'],
     ];
+    $heroSlides = [
+        [
+            'title' => $slider->title ?? __('front.site.sections.default_slider_title'),
+            'image' => $slider->image_url ?? asset('assets/images/home-hero.jpeg'),
+            'eyebrow' => __('front.site.sections.doudou'),
+        ],
+        [
+            'title' => __('front.site.sections.dream_egypt_tour'),
+            'image' => asset('assets/images/hero-bg.jpeg'),
+            'eyebrow' => __('front.site.sections.egypt_tours'),
+        ],
+        [
+            'title' => __('front.site.sections.top_egypt_destinations'),
+            'image' => asset('assets/images/sub-hero-bg.jpeg'),
+            'eyebrow' => __('front.site.sections.explore'),
+        ],
+    ];
+    $serviceIconIds = ['customer-service-2', 'travel-card', 'map-pin', 'clipboard-text'];
 @endphp
 <!doctype html>
 <html lang="{{ app()->getLocale() }}" dir="{{ in_array(app()->getLocale(), ['ar','he']) ? 'rtl' : 'ltr' }}">
@@ -82,9 +100,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ __('front.site.meta.default_title') }}</title>
+    <title>{{ $generalSetting?->site_name ?? __('front.site.meta.default_title') }}</title>
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
 
     @include('front.layouts.hreflang')
+    @include('front.layouts.seo', [
+        'settings' => $generalSetting,
+        'seoTitle' => $generalSetting?->site_name ?? __('front.site.meta.default_title'),
+        'seoDescription' => $generalSetting?->opening_words ?? __('front.site.meta.default_title'),
+        'seoImage' => $generalSetting?->site_logo_header ?? asset('assets/images/logo.png'),
+        'seoUrl' => route('home'),
+    ])
 {{--    <title>  <?php $site_name=\App\Models\General_setting::select('site_name')->first() ?> {{ $site_name->site_name}} </title>--}}
     <!-- Bootstrap font-aweasome css -->
     <link rel="icon" <?php  $site_name=\App\Models\General_setting::select('site_logo_icon')->first() ?> href="{{$site_name->site_logo_icon}}"  type="image/png">
@@ -144,12 +174,41 @@
         .navbar_submenu a:hover{background:#0071bd;color:#fff}
         .navbar_desktop>form,.navbar_mobile .hs-dropdown.group{display:none!important}
         .navbar_desktop{justify-content:space-between}
-        .hero{position:relative;overflow:hidden}
-        .hero:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.52),rgba(0,0,0,.16) 45%,rgba(0,0,0,.28));pointer-events:none}
-        .hero .container{position:relative;z-index:2}
-        .hero_content h1{max-width:760px;font-size:clamp(38px,4vw,68px);line-height:1.05}
-        .hero__bg{filter:saturate(1.08) contrast(1.04)}
-        @media (max-width: 767px){.hero_content h1{font-size:38px}}
+        .hero{position:relative;overflow:hidden;isolation:isolate}
+        .hero:before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,rgba(0,26,44,.76),rgba(0,40,70,.28) 48%,rgba(0,26,44,.48));pointer-events:none}
+        .hero:after{content:"";position:absolute;left:0;right:0;bottom:0;z-index:3;height:32%;background:linear-gradient(0deg,rgba(0,0,0,.28),transparent);pointer-events:none}
+        .hero .container{position:relative;z-index:4}
+        .hero_content{position:relative;min-height:220px;max-width:820px}
+        .hero-copy{position:absolute;left:0;right:0;bottom:0;opacity:0;transform:translateY(24px);animation:heroCopy 18s infinite}
+        .hero-copy:nth-child(2){animation-delay:6s}
+        .hero-copy:nth-child(3){animation-delay:12s}
+        .hero-kicker{display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);padding:8px 14px;color:#fff;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+        .hero-kicker:before{content:"";width:8px;height:8px;border-radius:50%;background:#f7931e;box-shadow:0 0 0 6px rgba(247,147,30,.22)}
+        .hero_content h1,.hero_content .hero-copy p{max-width:760px;font-size:clamp(38px,4vw,68px);line-height:1.05;font-weight:600}
+        .hero-slider{position:absolute;inset:0;z-index:1;overflow:hidden;background:#0d2230}
+        .hero-slide{position:absolute;inset:0;opacity:0;animation:heroFade 18s infinite}
+        .hero-slide:nth-child(2){animation-delay:6s}
+        .hero-slide:nth-child(3){animation-delay:12s}
+        .hero-slide img{width:100%;height:100%;object-fit:cover;filter:saturate(1.08) contrast(1.05);transform:scale(1.08);animation:heroZoom 18s infinite}
+        .hero-slide:nth-child(2) img{animation-delay:6s}
+        .hero-slide:nth-child(3) img{animation-delay:12s}
+        .hero-progress{position:absolute;left:50%;bottom:36px;z-index:5;display:flex;width:min(420px,calc(100% - 40px));transform:translateX(-50%);gap:8px}
+        .hero-progress span{position:relative;height:3px;flex:1;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.28)}
+        .hero-progress span:before{content:"";position:absolute;inset:0;background:#f7931e;transform-origin:left;transform:scaleX(0);animation:heroProgress 18s infinite}
+        .hero-progress span:nth-child(2):before{animation-delay:6s}
+        .hero-progress span:nth-child(3):before{animation-delay:12s}
+        .hero:hover .hero-slide,.hero:hover .hero-slide img,.hero:hover .hero-copy,.hero:hover .hero-progress span:before,
+        .hero:focus-within .hero-slide,.hero:focus-within .hero-slide img,.hero:focus-within .hero-copy,.hero:focus-within .hero-progress span:before{animation-play-state:paused}
+        @keyframes heroFade{0%,27%{opacity:1}33%,100%{opacity:0}}
+        @keyframes heroZoom{0%{transform:scale(1.08)}33%,100%{transform:scale(1)}}
+        @keyframes heroCopy{0%,4%{opacity:0;transform:translateY(24px)}8%,27%{opacity:1;transform:translateY(0)}33%,100%{opacity:0;transform:translateY(-14px)}}
+        @keyframes heroProgress{0%{transform:scaleX(0)}27%{transform:scaleX(1)}33%,100%{transform:scaleX(0)}}
+        .doudou-service-card{text-align:center}
+        .doudou-service-icon{display:inline-flex;width:58px;height:58px;align-items:center;justify-content:center;margin:0 auto 14px;border-radius:18px;background:linear-gradient(135deg,#0071bd,#0d2230);color:#fff;box-shadow:0 16px 34px rgba(0,40,70,.2);transition:transform .22s ease,box-shadow .22s ease,background .22s ease}
+        .doudou-service-icon svg{width:30px;height:30px;display:block;fill:currentColor}
+        .doudou-service-card:hover .doudou-service-icon{transform:translateY(-4px);background:linear-gradient(135deg,#f7931e,#0071bd);box-shadow:0 18px 38px rgba(0,40,70,.25)}
+        @media (prefers-reduced-motion: reduce){.hero-slide,.hero-slide img,.hero-progress span:before,.hero-copy{animation:none}.hero-slide:first-child,.hero-copy:first-child{opacity:1;transform:none}.hero-progress{display:none}}
+        @media (max-width: 767px){.hero{min-height:62vh;padding-top:9.5rem}.hero_content{min-height:180px}.hero_content h1,.hero_content .hero-copy p{font-size:38px}.hero-kicker{font-size:11px;margin-bottom:14px}.hero-progress{bottom:22px;width:calc(100% - 32px)}}
     </style>
 </head>
 
@@ -159,20 +218,33 @@
         @include('front.layouts.header')
 
         <div class="hero">
+            <div class="hero-slider" aria-hidden="true">
+                @foreach($heroSlides as $slide)
+                    <div class="hero-slide">
+                        <img src="{{ $slide['image'] }}" alt="" />
+                    </div>
+                @endforeach
+            </div>
             <div class="container">
                 <div class="hero_content">
-                    <h1 class="txt-shadow">
-                        {{ $slider->title ?? __('front.site.meta.default_title') }}
-                    </h1>
+                    @foreach($heroSlides as $slide)
+                        <div class="hero-copy">
+                            <span class="hero-kicker">{{ $slide['eyebrow'] }}</span>
+                            @if($loop->first)
+                                <h1 class="txt-shadow">{{ $slide['title'] }}</h1>
+                            @else
+                                <p class="txt-shadow text-white">{{ $slide['title'] }}</p>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
+            <div class="hero-progress" aria-hidden="true">
+                @foreach($heroSlides as $slide)
+                    <span></span>
+                @endforeach
+            </div>
         </div>
-
-        <img
-            src="{{ $slider->image_url ?? asset('assets/images/sub-hero-bg.jpeg') }}"
-            class="page-header__bg hero__bg"
-            alt="slider"
-        />
     </header>
 
     <main>
@@ -187,8 +259,12 @@
                     <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
                         @foreach ($services as $service)
                             <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
-                                <div class="text-center">
-                                    <img src="{{ $service->icon_url }}" class="mx-auto mb-2 size-10" alt="" />
+                                <div class="doudou-service-card">
+                                    <span class="doudou-service-icon" aria-hidden="true">
+                                        <svg>
+                                            <use href="./assets/images/icons/sprite.svg#{{ $serviceIconIds[$loop->index % count($serviceIconIds)] }}"></use>
+                                        </svg>
+                                    </span>
                                     <h3 class="mb-4 text-2xl font-semibold text-secondary">{{ $service->title }}</h3>
                                 </div>
                                 <p class="line-clamp-3 leading-relaxed">
@@ -953,6 +1029,7 @@
                                         <select
                                             onchange="checkInputs()"
                                             required
+                                            id="phone-country-select"
                                             name="countries"
                                             class="flex-1 text-black outline-none placeholder:text-gray"
                                         >
@@ -1883,28 +1960,28 @@
         // Validate Name
         const nameInput = document.getElementById('name');
         if (nameInput.value.trim() === '') {
-            document.getElementById('name_error').textContent = 'Please enter your name';
+            document.getElementById('name_error').textContent = @json(__('front.site.form.validation_name_required'));
             isValid = false;
         }
 
         // Validate Email
         const emailInput = document.getElementById('email');
         if (emailInput.value.trim() === '') {
-            document.getElementById('email_error').textContent = 'Please enter your email';
+            document.getElementById('email_error').textContent = @json(__('front.site.form.validation_email_required'));
             isValid = false;
         }
 
         // Validate Nationality
         const nationalityInput = document.getElementById('nationality');
         if (nationalityInput.value === '0' || nationalityInput.value.trim() === '') {
-            document.getElementById('nationality_error').textContent = 'Please select your nationality';
+            document.getElementById('nationality_error').textContent = @json(__('front.site.form.validation_nationality_required'));
             isValid = false;
         }
 
         // Validate Phone Number
         const telInput = document.getElementById('tel');
         if (telInput.value.trim() === '') {
-            document.getElementById('tel_error').textContent = @json(__('front.site.form.phone_required'));
+            document.getElementById('tel_error').textContent = @json(__('front.site.form.validation_phone_required'));
             isValid = false;
         }
 
@@ -2028,39 +2105,39 @@
         // Validate Name
         const nameInput = document.getElementById('name');
         if (nameInput.value.trim() === '') {
-            document.getElementById('name_error').textContent = 'Please enter your name';
+            document.getElementById('name_error').textContent = @json(__('front.site.form.validation_name_required'));
             isValid = false;
         }
 
         // Validate Email
         const emailInput = document.getElementById('email');
         if (emailInput.value.trim() === '') {
-            document.getElementById('email_error').textContent = 'Please enter your email';
+            document.getElementById('email_error').textContent = @json(__('front.site.form.validation_email_required'));
             isValid = false;
         }
 
         // Validate Nationality
         const nationalityInput = document.getElementById('nationality');
         if (nationalityInput.value === '0' || nationalityInput.value.trim() === '') {
-            document.getElementById('nationality_error').textContent = 'Please select your nationality';
+            document.getElementById('nationality_error').textContent = @json(__('front.site.form.validation_nationality_required'));
             isValid = false;
         }
 
         // Validate Phone Number
         const telInput = document.getElementById('tel');
         if (telInput.value.trim() === '') {
-            document.getElementById('tel_error').textContent = @json(__('front.site.form.phone_required'));
+            document.getElementById('tel_error').textContent = @json(__('front.site.form.validation_phone_required'));
             isValid = false;
         }
         const departure_date = document.getElementById('departure-date');
         if (departure_date.value.trim() === '') {
-            document.getElementById('departure-date').textContent = 'Please enter your departure date';
+            document.getElementById('departure-date').textContent = @json(__('front.site.form.validation_departure_required'));
             isValid = false;
         }
 
         const arrival_date = document.getElementById('arrival-date');
         if (arrival_date.value.trim() === '') {
-            document.getElementById('arrival-date_error').textContent = 'Please enter your arrival date';
+            document.getElementById('arrival-date_error').textContent = @json(__('front.site.form.validation_arrival_required'));
             isValid = false;
         }
         const city_id = document.getElementById('destination');
@@ -2071,27 +2148,27 @@
         }
         const tour_id = document.getElementById('accommodation');
         if (tour_id.value.trim() === '') {
-            document.getElementById('accommodation_error').textContent = 'Please enter your Accommodation';
+            document.getElementById('accommodation_error').textContent = @json(__('front.site.form.validation_accommodation_required'));
             isValid = false;
         }
         const range_age = document.getElementById('age');
         if (range_age.value.trim() === '') {
-            document.getElementById('age_error').textContent = 'Please enter your Age';
+            document.getElementById('age_error').textContent = @json(__('front.site.form.validation_age_required'));
             isValid = false;
         }
         const notes = document.getElementById('notes');
         if (range_age.value.trim() === '') {
-            document.getElementById('notes_error').textContent = 'Please enter your notes';
+            document.getElementById('notes_error').textContent = @json(__('front.site.form.validation_notes_required'));
             isValid = false;
         }
         const adt = document.getElementById('adults-count');
         if (adt.value === '') {
-            document.getElementById('adults-count_error').textContent = 'Please enter your adults count';
+            document.getElementById('adults-count_error').textContent = @json(__('front.site.form.validation_adults_required'));
             isValid = false;
         }
         const chd = document.getElementById('children-count');
         if (chd.value === '') {
-            document.getElementById('children-count_error').textContent = 'Please enter your children count';
+            document.getElementById('children-count_error').textContent = @json(__('front.site.form.validation_children_required'));
             isValid = false;
         }
         return isValid;
@@ -2178,8 +2255,6 @@
             countElement.textContent = currentCount;
         }
     </script>
-<script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="{{asset('node_modules/select2/dist/js/select2.js')}}"></script>
 
 <script>
@@ -2211,6 +2286,21 @@
            nextButton.disabled =false ;
        }
     }
+
+    // Set default phone country based on locale
+    document.addEventListener('DOMContentLoaded', function () {
+        var phoneSelect = document.getElementById('phone-country-select');
+        if (phoneSelect) {
+            var locale = @json(app()->getLocale());
+            var defaultCode = (locale === 'zh' || locale === 'zh-Hant') ? '86' : '20';
+            for (var i = 0; i < phoneSelect.options.length; i++) {
+                if (phoneSelect.options[i].value === defaultCode) {
+                    phoneSelect.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+    });
 </script>
 <script>
     function openPopup(videoId) {

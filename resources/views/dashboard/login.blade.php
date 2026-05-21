@@ -1,158 +1,140 @@
 <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="rtl">
+<html class="loading" lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-textdirection="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <!-- BEGIN: Head-->
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="PIXINVENT">
-    <title>  لوحة التحكم    </title>
-    <link rel="apple-touch-icon" href="{{asset('dashboard/images/ico/apple-icon-120.png')}}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('dashboard/images/ico/favicon.ico')}}">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
-
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard')}}/vendors/css/vendors-rtl.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500&display=swap" rel="stylesheet">
+    <meta name="description" content="Doudou dashboard login.">
+    <meta name="keywords" content="Doudou, dashboard, admin">
+    <meta name="author" content="Doudou">
+    <title>Doudou Dashboard Login</title>
+    <link rel="apple-touch-icon" href="{{ asset('dashboard/images/ico/apple-icon-120.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('dashboard/images/ico/favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/vendors/css/vendors-rtl.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css-rtl/bootstrap.css')}}">
-
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css-rtl/bootstrap-extended.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css-rtl/colors.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css-rtl/components.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css-rtl/themes/dark-layout.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css-rtl/themes/semi-dark-layout.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css-rtl/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css-rtl/bootstrap-extended.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css-rtl/colors.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css-rtl/components.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css-rtl/themes/dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css-rtl/themes/semi-dark-layout.css') }}">
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard')}}/css-rtl/core/menu/menu-types/vertical-menu.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard')}}/css-rtl/core/colors/palette-gradient.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard')}}/css-rtl/pages/authentication.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/css-rtl/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/css-rtl/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/css-rtl/pages/authentication.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css-rtl/custom-rtl.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css/style-rtl.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css-rtl/custom-rtl.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css/style-rtl.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/css/doudou-dashboard.css') }}">
     <!-- END: Custom CSS-->
-
 </head>
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern semi-dark-layout 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column" data-layout="semi-dark-layout">
+<body class="vertical-layout vertical-menu-modern semi-dark-layout 1-column navbar-floating footer-static bg-full-screen-image blank-page blank-page doudou-login-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column" data-layout="semi-dark-layout">
     <!-- BEGIN: Content-->
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
-            <div class="content-header row">
-            </div>
+            <div class="content-header row"></div>
             <div class="content-body">
                 <section class="row flexbox-container">
                     <div class="col-xl-8 col-11 d-flex justify-content-center">
                         <div class="card bg-authentication rounded-0 mb-0">
-                            <div class="row col-md ">
-
-
-                                <div class="col-lg-86 p-0">
-
-                                    <div class="card rounded-0 mb-0 px-2">
+                            <div class="row no-gutters">
+                                <div class="col-lg-7 p-0">
+                                    <div class="card rounded-0 mb-0 px-2 doudou-login-card">
                                         @include('dashboard.layouts.includes.alerts.success')
-                                        @include('dashboard.layouts.includes.alerts..errors')
-                                        <div class="card-header pb-1">
+                                        @include('dashboard.layouts.includes.alerts.errors')
 
-                                            <div class="card-title">
-                                                <h4 class="mb-0">Login </h4>
+                                        <div class="doudou-login-brand">
+                                            <img class="doudou-login-logo" src="{{ header_logo() }}" alt="Doudou logo">
+                                            <div>
+                                                <span class="doudou-login-kicker">Doudou Dashboard</span>
+                                                <h4 class="mb-0">Welcome back</h4>
                                             </div>
                                         </div>
-                                        <p class="px-2">Welcome, Please Login</p>
+
+                                        <p class="px-2 mb-0 text-muted">Sign in to manage content, bookings, and translations.</p>
+
                                         <div class="card-content">
                                             <div class="card-body pt-1">
                                                 <form action="{{ route('admin.login') }}" method="POST">
                                                     @csrf
                                                     <fieldset class="form-label-group form-group position-relative has-icon-left">
-                                                        <input name="email" type="email" class="form-control" id="user-name" placeholder="اسم المستخدم" required>
+                                                        <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="user-name" placeholder="Email address" value="{{ old('email') }}" autocomplete="email" required>
                                                         <div class="form-control-position">
                                                             <i class="feather icon-user"></i>
                                                         </div>
                                                         <label for="user-name">Email</label>
                                                         @error('email')
-                                                        <span class="invalid-feedback" role="alert">
-                                                     <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
                                                     </fieldset>
 
                                                     <fieldset class="form-label-group position-relative has-icon-left">
-                                                        <input name="password" type="password" class="form-control" id="user-password" placeholder="Password" required>
+                                                        <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="user-password" placeholder="Password" autocomplete="current-password" required>
                                                         <div class="form-control-position">
                                                             <i class="feather icon-lock"></i>
                                                         </div>
                                                         <label for="user-password">Password</label>
                                                         @error('password')
-                                                        <span class="invalid-feedback" role="alert">
-                                                     <strong>{{ $message }}</strong>
-                                                             </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
                                                     </fieldset>
 
-                                                    <button type="submit" class="btn btn-primary float-left btn-inline">Login</button>
+                                                    <button type="submit" class="btn btn-primary btn-block doudou-login-submit">
+                                                        <i class="feather icon-log-in"></i>
+                                                        <span>Login</span>
+                                                    </button>
                                                 </form>
                                             </div>
-
                                         </div>
 
-                                        <div class="login-footer">
-
-                                        </div>
-
+                                        <div class="login-footer"></div>
                                     </div>
-
-
-                                </div>
-                                <div class="col-lg-5  d-lg-block d-none text-center align-self-center px-1 py-0">
-
-                                    <img style="padding: 5px;object-fit: contain;width: 360px"  src="{{header_logo()}}" alt="branding logo">
                                 </div>
 
-
+                                <div class="col-lg-5 d-lg-flex d-none text-center align-self-stretch doudou-login-side">
+                                    <img class="doudou-login-side-logo" src="{{ header_logo() }}" alt="Doudou branding">
+                                </div>
                             </div>
-
-
                         </div>
-
                     </div>
                 </section>
-
             </div>
         </div>
     </div>
     <!-- END: Content-->
 
-
     <!-- BEGIN: Vendor JS-->
-    <script src="{{asset('dashboard/vendors/js/vendors.min.js')}}"></script>
+    <script src="{{ asset('dashboard/vendors/js/vendors.min.js') }}"></script>
     <!-- BEGIN Vendor JS-->
 
-    <!-- BEGIN: Page Vendor JS-->
-    <!-- END: Page Vendor JS-->
-
     <!-- BEGIN: Theme JS-->
-    <script src="{{asset('dashboard/js/core/app-menu.js')}}"></script>
-    <script src="{{asset('dashboard/js/core/app.js')}}"></script>
-    <script src="{{asset('dashboard/js/scripts/components.js')}}"></script>
+    <script src="{{ asset('dashboard/js/core/app-menu.js') }}"></script>
+    <script src="{{ asset('dashboard/js/core/app.js') }}"></script>
+    <script src="{{ asset('dashboard/js/scripts/components.js') }}"></script>
     <!-- END: Theme JS-->
-
-    <!-- BEGIN: Page JS-->
-    <!-- END: Page JS-->
-
 </body>
 <!-- END: Body-->
 

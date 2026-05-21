@@ -1,6 +1,9 @@
 name: Deploy Production
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -17,10 +20,85 @@ env:
   DEFAULT_CPANEL_PUBLIC_PATH: /home/egyptdoudou/public_html
 
 jobs:
+  ci:
+    name: CI checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      APP_ENV: testing
+      APP_DEBUG: false
+      APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/database.sqlite
+      CACHE_STORE: array
+      SESSION_DRIVER: array
+      QUEUE_CONNECTION: sync
+      MAIL_MAILER: array
+      SCOUT_DRIVER: collection
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: bcmath, ctype, curl, dom, fileinfo, json, mbstring, openssl, pdo, pdo_sqlite, sqlite3, tokenizer, xml, zip
+          coverage: none
+          tools: composer:v2
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-dev-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-dev-
+            ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress
+
+      - name: Prepare Laravel runtime
+        run: |
+          set -euo pipefail
+          mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views bootstrap/cache
+          touch database/database.sqlite
+
+      - name: Validate Laravel boot and views
+        run: |
+          set -euo pipefail
+          php artisan config:clear
+          php artisan migrate --force
+          php artisan view:cache
+
+      - name: Run PHP tests
+        run: php artisan test
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
   deploy:
     name: Build and deploy to cPanel
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    needs: ci
+    if: github.event_name != 'pull_request'
 
     steps:
       - name: Checkout repository

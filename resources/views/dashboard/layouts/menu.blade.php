@@ -1,16 +1,18 @@
 <!-- BEGIN: Main Menu-->
-<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow {{\Illuminate\Support\Facades\Session::get('menu')}}" data-scroll-to-active="true" style="overflow-y: scroll">
+<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow {{\Illuminate\Support\Facades\Session::get('menu')}}" data-scroll-to-active="true" style="overflow-y: auto">
     <div class="navbar-header {{\Illuminate\Support\Facades\Session::get('menu')}}" >
         <ul class="nav navbar-nav flex-row">
 
 
-            <li class="nav-item mr-auto"><a class="navbar-brand" href="{{{route('admin_dashboard')}}}">
-                    <img class="brand-logo"
-                         style="object-fit: contain;border-radius: 14px;margin-right: -3px;width: 63%"
-                         src="{{header_logo()}}">
+            <li class="nav-item mr-auto"><a class="navbar-brand" href="{{ route('admin_dashboard') }}">
+                    <img class="brand-logo doudou-dashboard-logo"
+                         src="{{ header_logo() }}"
+                         alt="Doudou logo">
 
-
-                    <h2 class="brand-text mb-0">Dodue {{session("isMenuOpen")}}</h2>
+                    <span class="doudou-brand-copy">
+                        <span class="brand-text mb-0">Doudou</span>
+                        <span class="doudou-brand-subtitle">Dashboard</span>
+                    </span>
 
                 </a></li>
 
@@ -364,7 +366,6 @@
 
 
 <!-- END: Main Menu-->
-
 
 
 

@@ -165,9 +165,9 @@
                                         >
                                         <input
                                             id="email"
-                                            type="text"
+                                            type="email"
                                             class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
-                                            placeholder="{{ __('front.site.form.your_name') }}"
+                                            placeholder="{{ __('front.site.form.your_email') }}"
                                         />
                                     </div>
                                     <div class="relative shrink-0 lg:max-w-[180px]">
@@ -189,6 +189,7 @@
                                 </div>
                                 <div
                                     class="relative flex-1 rounded-xl border border-primary px-4 py-3"
+                                    id="tel-wrapper"
                                 >
                                     <label
                                         for="tel"
@@ -197,18 +198,32 @@
                                     >
                                     <div class="flex items-center gap-3">
                                         <select
-                                            name="countries"
-                                            class="block border-e-2 border-gray bg-transparent pe-2"
+                                            id="phone-code"
+                                            name="phone_code"
+                                            class="block border-e-2 border-gray bg-transparent pe-2 text-sm outline-none"
                                         >
-                                            <option value="NL">ðŸ‡³ðŸ‡±</option>
-                                            <option value="DE">ðŸ‡©ðŸ‡ª</option>
-                                            <option value="FR">ðŸ‡«ðŸ‡·</option>
-                                            <option value="ES">ðŸ‡ªðŸ‡¸</option>
+                                            <option data-countryCode="CN" value="+86">China (+86)</option>
+                                            <option data-countryCode="TW" value="+886">Taiwan (+886)</option>
+                                            <option data-countryCode="HK" value="+852">Hong Kong (+852)</option>
+                                            <option data-countryCode="EG" value="+20" selected>Egypt (+20)</option>
+                                            <option data-countryCode="US" value="+1">United States (+1)</option>
+                                            <option data-countryCode="GB" value="+44">United Kingdom (+44)</option>
+                                            <option data-countryCode="DE" value="+49">Germany (+49)</option>
+                                            <option data-countryCode="FR" value="+33">France (+33)</option>
+                                            <option data-countryCode="IT" value="+39">Italy (+39)</option>
+                                            <option data-countryCode="ES" value="+34">Spain (+34)</option>
+                                            <option data-countryCode="AU" value="+61">Australia (+61)</option>
+                                            <option data-countryCode="JP" value="+81">Japan (+81)</option>
+                                            <option data-countryCode="KR" value="+82">South Korea (+82)</option>
+                                            <option data-countryCode="RU" value="+7">Russia (+7)</option>
+                                            <option data-countryCode="SA" value="+966">Saudi Arabia (+966)</option>
+                                            <option data-countryCode="AE" value="+971">United Arab Emirates (+971)</option>
+                                            <option data-countryCode="NL" value="+31">Netherlands (+31)</option>
                                         </select>
 
                                         <input
                                             id="tel"
-                                            type="text"
+                                            type="tel"
                                             class="flex-1 text-black outline-none placeholder:text-gray"
                                             placeholder="{{ __('front.site.form.enter_phone_number') }}"
                                         />
@@ -428,3 +443,108 @@
         </div>
     </div>
 </div>
+
+<script>
+(function () {
+    var i18n = {
+        name:          @json(__('front.site.form.validation_name_required')),
+        email:         @json(__('front.site.form.validation_email_required')),
+        emailInvalid:  @json(__('front.site.form.validation_email_required')),
+        nationality:   @json(__('front.site.form.validation_nationality_required')),
+        phone:         @json(__('front.site.form.validation_phone_required')),
+        arrival:       @json(__('front.site.form.validation_arrival_required')),
+        departure:     @json(__('front.site.form.validation_departure_required')),
+        destination:   @json(__('front.site.form.validation_destination_required')),
+        accommodation: @json(__('front.site.form.validation_accommodation_required')),
+    };
+
+    function showError(fieldId, msg) {
+        var el = document.getElementById(fieldId) || document.getElementById(fieldId + '-wrapper');
+        if (!el) return;
+        var wrap = el.closest('.relative') || el.parentElement;
+        var existing = wrap.querySelector('.form-error-msg');
+        if (existing) existing.remove();
+        wrap.classList.add('border-red-500');
+        el.classList.add('border-red-500');
+        var err = document.createElement('p');
+        err.className = 'form-error-msg text-xs text-red-500 mt-1';
+        err.textContent = msg;
+        wrap.appendChild(err);
+    }
+
+    function clearErrors(form) {
+        form.querySelectorAll('.form-error-msg').forEach(function (e) { e.remove(); });
+        form.querySelectorAll('.border-red-500').forEach(function (e) { e.classList.remove('border-red-500'); });
+    }
+
+    function isValidEmail(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    function validateStep1() {
+        var form = document.querySelector('[data-hs-stepper-content-item=\'{ "index": 1 }\'] .form');
+        if (!form) return true;
+        clearErrors(form);
+        var ok = true;
+        var name = document.getElementById('name');
+        if (name && !name.value.trim()) { showError('name', i18n.name); ok = false; }
+        var email = document.getElementById('email');
+        if (email) {
+            if (!email.value.trim()) { showError('email', i18n.email); ok = false; }
+            else if (!isValidEmail(email.value.trim())) { showError('email', i18n.emailInvalid); ok = false; }
+        }
+        var nat = document.getElementById('nationality');
+        if (nat && (!nat.value || nat.value === nat.options[0].value)) { showError('nationality', i18n.nationality); ok = false; }
+        var tel = document.getElementById('tel');
+        if (tel && !tel.value.trim()) { showError('tel-wrapper', i18n.phone); ok = false; }
+        return ok;
+    }
+
+    function validateStep2() {
+        var form = document.querySelector('[data-hs-stepper-content-item=\'{ "index": 2 }\'] .form');
+        if (!form) return true;
+        clearErrors(form);
+        var ok = true;
+        var arrival = document.getElementById('arrival-date');
+        if (arrival && !arrival.value) { showError('arrival-date', i18n.arrival); ok = false; }
+        var departure = document.getElementById('departure-date');
+        if (departure && !departure.value) { showError('departure-date', i18n.departure); ok = false; }
+        var dest = document.getElementById('destination');
+        if (dest && (!dest.value || dest.selectedIndex === 0)) { showError('destination', i18n.destination); ok = false; }
+        var acc = document.getElementById('accommodation');
+        if (acc && (!acc.value || acc.selectedIndex === 0)) { showError('accommodation', i18n.accommodation); ok = false; }
+        return ok;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var nextBtn = document.querySelector('[data-hs-stepper-next-btn]');
+        var finishBtn = document.querySelector('[data-hs-stepper-finish-btn]');
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function (e) {
+                var step1Visible = document.querySelector('[data-hs-stepper-content-item=\'{ "index": 1 }\']');
+                if (step1Visible && step1Visible.style.display !== 'none') {
+                    if (!validateStep1()) { e.stopImmediatePropagation(); e.preventDefault(); }
+                }
+            }, true);
+        }
+
+        if (finishBtn) {
+            finishBtn.addEventListener('click', function (e) {
+                if (!validateStep2()) { e.stopImmediatePropagation(); e.preventDefault(); }
+            }, true);
+        }
+
+        var modal = document.getElementById('customize-tour');
+        if (modal) {
+            var observer = new MutationObserver(function () {
+                if (!modal.classList.contains('open') && !modal.classList.contains('hs-overlay-open')) {
+                    document.querySelectorAll('#customize-tour .form-error-msg').forEach(function (e) { e.remove(); });
+                    document.querySelectorAll('#customize-tour .border-red-500').forEach(function (e) { e.classList.remove('border-red-500'); });
+                }
+            });
+            observer.observe(modal, { attributes: true, attributeFilter: ['class'] });
+        }
+    });
+})();
+</script>

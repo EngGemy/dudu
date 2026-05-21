@@ -474,8 +474,8 @@ Route::group([
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('{locale}/{file}', 'edit')->where('file', '.*')->name('edit');
-                Route::post('{locale}/{file}', 'update')->where('file', '.*')->name('update');
                 Route::post('{locale}/{file}/auto-fill', 'autoFill')->where('file', '.*')->name('auto-fill');
+                Route::post('{locale}/{file}', 'update')->where('file', '.*')->name('update');
             });
 
     });

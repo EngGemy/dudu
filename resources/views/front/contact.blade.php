@@ -46,7 +46,7 @@
       href="https://cdn.jsdelivr.net/npm/spotlight.js@0.7.8/dist/css/spotlight.min.css"
     />
     <link rel="stylesheet" href="{{ asset('assets/styles/main.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}?v={{ filemtime(public_path('assets/styles/doudou-design.css')) }}" />
 
     <script
       defer
@@ -87,7 +87,7 @@
       }
     </style>
     <script defer src="{{ asset('assets/scripts/main.js') }}"></script>
-    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}"></script>
+    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}?v={{ filemtime(public_path('assets/scripts/doudou-design.js')) }}"></script>
   </head>
 
   <body>
@@ -461,7 +461,7 @@
                   {{ __('front.site.contact.form_intro') }}
                 </p>
 
-                <form id="contact-form">
+                <form id="contact-form" novalidate>
                   @csrf
                   <div
                     class="flex flex-col gap-8 lg:grid-cols-2 lg:flex-row lg:gap-16"
@@ -2418,13 +2418,13 @@
             throw data;
           }
 
-          document.querySelector('#data-sent .text-primary').textContent = data.res || @json(__('front.site.blog.message_sent_successfully'));
+          document.querySelector('#data-sent .text-primary').textContent = data.res || @json(__('front.site.contact.message_created_successfully'));
           document.querySelector('#data-sent .full-message').textContent = data.full_message || '';
           document.querySelector('#data-sent .message-header').textContent = data.message_header || '';
           window.HSOverlay?.open('#data-sent');
           form.reset();
         } catch (error) {
-          const message = error?.message || Object.values(error?.errors || {})?.[0]?.[0] || 'Please check the form and try again.';
+          const message = Object.values(error?.errors || {})?.[0]?.[0] || error?.message || @json(__('front.site.contact.validation_fallback'));
           alert(message);
         } finally {
           submitButton.disabled = false;

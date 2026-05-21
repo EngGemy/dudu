@@ -1,0 +1,303 @@
+:root {
+    --doudou-primary: #7367f0;
+    --doudou-accent: #28c76f;
+    --doudou-ink: #263238;
+    --doudou-muted: #6e6b7b;
+    --doudou-surface: #ffffff;
+    --doudou-soft: #f7f8fb;
+    --doudou-border: rgba(34, 41, 47, .09);
+    --doudou-shadow: 0 8px 24px rgba(34, 41, 47, .08);
+}
+
+body.vertical-layout {
+    background-color: var(--doudou-soft);
+    color: var(--doudou-ink);
+    font-family: "Tajawal", "Montserrat", sans-serif;
+}
+
+.header-navbar.floating-nav {
+    border: 1px solid var(--doudou-border);
+    border-radius: .5rem;
+    box-shadow: var(--doudou-shadow);
+}
+
+.header-navbar .navbar-container {
+    min-height: 4.35rem;
+}
+
+.doudou-visit-site {
+    align-items: center;
+    border-color: transparent;
+    display: inline-flex;
+    font-weight: 700;
+    gap: .35rem;
+    min-height: 2.2rem;
+}
+
+.doudou-user-link {
+    align-items: center;
+    display: flex;
+}
+
+.doudou-user-avatar {
+    align-items: center;
+    background: var(--doudou-primary);
+    border: 2px solid rgba(115, 103, 240, .18);
+    border-radius: 50%;
+    box-shadow: 0 6px 16px rgba(115, 103, 240, .22);
+    color: #ffffff;
+    display: inline-flex;
+    font-weight: 700;
+    height: 34px;
+    justify-content: center;
+    margin-left: .65rem;
+    width: 34px;
+}
+
+.main-menu.menu-light {
+    border-right: 1px solid var(--doudou-border);
+    box-shadow: 8px 0 24px rgba(34, 41, 47, .05);
+}
+
+.main-menu .navbar-header {
+    border-bottom: 1px solid rgba(34, 41, 47, .06);
+    min-height: 4.7rem;
+    padding: .65rem 1.05rem;
+}
+
+.main-menu .navbar-brand {
+    align-items: center;
+    display: flex;
+    gap: .75rem;
+    min-width: 0;
+}
+
+.main-menu .brand-logo.doudou-dashboard-logo {
+    background: #ffffff;
+    border: 1px solid rgba(34, 41, 47, .08);
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(34, 41, 47, .08);
+    height: 48px;
+    margin: 0 !important;
+    object-fit: contain;
+    padding: 5px;
+    width: 48px !important;
+}
+
+.main-menu .doudou-brand-copy {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    min-width: 0;
+}
+
+.main-menu .brand-text {
+    color: var(--doudou-ink);
+    font-size: 1.08rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    white-space: nowrap;
+}
+
+.main-menu .doudou-brand-subtitle {
+    color: var(--doudou-muted);
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    margin-top: .2rem;
+}
+
+.main-menu .navigation > li > a {
+    border-radius: .45rem;
+    margin: 0 .65rem .18rem;
+    min-height: 42px;
+}
+
+.main-menu .navigation > li.active > a,
+.main-menu .navigation > li.open > a,
+.main-menu .navigation > li.sidebar-group-active > a {
+    box-shadow: 0 8px 20px rgba(115, 103, 240, .16);
+}
+
+.main-menu .navigation .menu-title,
+.main-menu .navigation .menu-item {
+    font-weight: 600;
+}
+
+.content-wrapper {
+    padding-bottom: 2rem;
+}
+
+.content-header-title {
+    color: var(--doudou-ink);
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.breadcrumb .breadcrumb-item,
+.breadcrumb .breadcrumb-item a {
+    color: var(--doudou-muted);
+}
+
+.card {
+    border: 1px solid var(--doudou-border);
+    border-radius: .5rem;
+    box-shadow: var(--doudou-shadow);
+}
+
+.card .card-header {
+    border-bottom: 1px solid rgba(34, 41, 47, .06);
+}
+
+.card .card-title {
+    color: var(--doudou-ink);
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.btn {
+    border-radius: .4rem;
+    font-weight: 700;
+}
+
+.btn-primary {
+    box-shadow: 0 6px 14px rgba(115, 103, 240, .18);
+}
+
+.table thead th {
+    background-color: #fafbfc;
+    border-bottom: 0;
+    color: var(--doudou-muted);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select,
+.form-control {
+    border-color: rgba(34, 41, 47, .14);
+    border-radius: .4rem;
+}
+
+.form-control:focus {
+    border-color: rgba(115, 103, 240, .55);
+    box-shadow: 0 0 0 .16rem rgba(115, 103, 240, .12);
+}
+
+body.doudou-login-page {
+    background-color: #f5f7fb;
+}
+
+.doudou-login-page .content-wrapper,
+.doudou-login-page .content-body,
+.doudou-login-page .flexbox-container {
+    min-height: 100vh;
+}
+
+.doudou-login-page .bg-authentication {
+    border: 0;
+    border-radius: .5rem !important;
+    overflow: hidden;
+}
+
+.doudou-login-card {
+    border: 0;
+    box-shadow: none;
+    min-height: 460px;
+    padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
+}
+
+.doudou-login-brand {
+    align-items: center;
+    display: flex;
+    gap: .85rem;
+    padding: 1rem 1.5rem .4rem;
+}
+
+.doudou-login-logo {
+    background: #ffffff;
+    border: 1px solid var(--doudou-border);
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(34, 41, 47, .1);
+    height: 72px;
+    object-fit: contain;
+    padding: .55rem;
+    width: 72px;
+}
+
+.doudou-login-kicker {
+    color: var(--doudou-primary);
+    display: block;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin-bottom: .25rem;
+    text-transform: uppercase;
+}
+
+.doudou-login-page .card-body {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.doudou-login-page .form-control {
+    min-height: 44px;
+}
+
+.doudou-login-submit {
+    align-items: center;
+    display: flex;
+    gap: .45rem;
+    justify-content: center;
+    min-height: 44px;
+}
+
+.doudou-login-side {
+    align-items: center;
+    background: linear-gradient(135deg, rgba(115, 103, 240, .1), rgba(40, 199, 111, .08));
+    justify-content: center;
+    padding: 2rem;
+}
+
+.doudou-login-side-logo {
+    filter: drop-shadow(0 14px 28px rgba(34, 41, 47, .12));
+    height: auto;
+    max-width: 360px;
+    object-fit: contain;
+    width: 82%;
+}
+
+body.menu-collapsed .main-menu:not(.expanded) .doudou-brand-copy {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (max-width: 991.98px) {
+    .doudou-login-page .bg-authentication {
+        max-width: 460px;
+    }
+
+    .doudou-login-card {
+        border-radius: .5rem !important;
+        min-height: auto;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .doudou-login-brand {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .doudou-login-logo {
+        height: 64px;
+        width: 64px;
+    }
+
+    .doudou-visit-site span {
+        display: none;
+    }
+}

@@ -13,7 +13,7 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
     <link rel="stylesheet" href="{{ asset('assets/styles/main.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/doudou-design.css') }}?v={{ filemtime(public_path('assets/styles/doudou-design.css')) }}" />
 
     <script
       defer
@@ -25,7 +25,7 @@
     ></script>
       <link rel="stylesheet" href="{{asset('node_modules/select2/dist/css/select2.min.css')}}">
     <script defer src="{{ asset('assets/scripts/main.js') }}"></script>
-    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}"></script>
+    <script defer src="{{ asset('assets/scripts/doudou-design.js') }}?v={{ filemtime(public_path('assets/scripts/doudou-design.js')) }}"></script>
   </head>
 
   <body>

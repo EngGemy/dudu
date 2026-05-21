@@ -3,28 +3,24 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{$event->name}}</title>
+    <title>{{ $event->seoTitle($event->name) }}</title>
 
     @include('front.layouts.hreflang')
     <link rel="icon" <?php  $site_name=\App\Models\General_setting::select('site_logo_icon')->first() ?> href="{{$site_name->site_logo_icon}}"  type="image/png">
+    @include('front.layouts.seo', [
+        'seoTitle' => $event->seoTitle($event->name),
+        'seoDescription' => $event->seoDescription($event->description),
+        'seoImage' => $event->seoImage($event->photo),
+        'seoUrl' => route('event_details', $event->slug),
+        'seoType' => 'event',
+        'seoSchema' => array_merge($event->seoJsonLd('Event', route('event_details', $event->slug), $event->photo), [
+            'startDate' => $event->event_overviews ? $event->overview_values('start_date') : null,
+            'endDate' => $event->event_overviews ? $event->overview_values('end_date') : null,
+            'eventStatus' => 'https://schema.org/EventScheduled',
+            'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+        ]),
+    ])
 
-    <meta itemprop="name" content="{{ $event->meta_title }}">
-    <meta itemprop="description" content="{{ $event->meta_description }}">
-    <meta itemprop="image" content="{{ $event->meta_img }}">
-    <!-- Twitter Card data -->
-    <meta name="twitter:card" content="product">
-    <meta name="twitter:site" content="@publisher_handle">
-    <meta name="twitter:title" content="{{ $event->meta_title }}">
-    <meta name="twitter:description" content="{{ $event->meta_description }}">
-    <meta name="twitter:creator" content="@author_handle">
-    <meta name="twitter:image" content="{{ $event->meta_img }}">
-
-    <!-- Open Graph data -->
-    <meta property="og:title" content="{{ $event->meta_title }}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ route('event_details',$event->slug) }}" />
-    <meta property="og:image" content="{{ $event->meta_img }}" />
-    <meta property="og:description" content="{{ $event->meta_description }}" />
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
@@ -388,7 +384,8 @@
                             >
                                 <?php
                                 $currentDate = \Illuminate\Support\Carbon::now();
-                                $nextDate = \Illuminate\Support\Carbon::parse($event->overview_values('start_date'));
+                                $startDate = $event->event_overviews ? $event->overview_values('start_date') : null;
+                                $nextDate = $startDate ? \Illuminate\Support\Carbon::parse($startDate) : $currentDate;
                                 $diff = $currentDate->diff($nextDate);
                                 $day=$diff->d;
                                 if($diff->d <0){
@@ -870,7 +867,7 @@
                                         >
                                             Start Date
                                         </p>
-                                        <p class="font-medium">{{$event->overview_values('start_date')}}</p>
+                                        <p class="font-medium">{{ $event->event_overviews ? $event->overview_values('start_date') : '' }}</p>
                                     </div>
                                     <div class="w-full md:w-1/2 lg:w-1/4">
                                         <div
@@ -887,7 +884,7 @@
                                         >
                                             End Date
                                         </p>
-                                        <p class="font-medium">{{$event->overview_values('end_date')}}</p>
+                                        <p class="font-medium">{{ $event->event_overviews ? $event->overview_values('end_date') : '' }}</p>
                                     </div>
                                     <div class="w-full md:w-1/2 lg:w-1/4">
                                         <div
@@ -2521,7 +2518,10 @@
 <script>
     // Set the date we're counting down to
     <?php
-    $date = \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $event->overview_values('start_date'));
+    $eventStartDate = $event->event_overviews ? $event->overview_values('start_date') : null;
+    $date = $eventStartDate
+        ? \Illuminate\Support\Carbon::createFromFormat('Y-m-d', $eventStartDate)
+        : \Illuminate\Support\Carbon::now();
     $formattedDate = $date->format('M d, Y H:i:s');
     $countDownDate = strtotime($formattedDate) * 1000;
     ?>

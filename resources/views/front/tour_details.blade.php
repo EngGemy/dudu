@@ -3,28 +3,25 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{$tour->name}}</title>
+    <title>{{ $tour->seoTitle($tour->name) }}</title>
 
     @include('front.layouts.hreflang')
     <link rel="icon" <?php  $site_name=\App\Models\General_setting::select('site_logo_icon')->first() ?> href="{{$site_name->site_logo_icon}}"  type="image/png">
-
-    <meta itemprop="name" content="{{ $tour->meta_title }}">
-    <meta itemprop="description" content="{{ $tour->meta_description }}">
-    <meta itemprop="image" content="{{ $tour->meta_img }}">
-    <!-- Twitter Card data -->
-    <meta name="twitter:card" content="product">
-    <meta name="twitter:site" content="@publisher_handle">
-    <meta name="twitter:title" content="{{ $tour->meta_title }}">
-    <meta name="twitter:description" content="{{ $tour->meta_description }}">
-    <meta name="twitter:creator" content="@author_handle">
-    <meta name="twitter:image" content="{{ $tour->meta_img }}">
-
-    <!-- Open Graph data -->
-    <meta property="og:title" content="{{ $tour->meta_title }}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ route('tour_details',$tour->slug) }}" />
-    <meta property="og:image" content="{{ $tour->meta_img }}" />
-    <meta property="og:description" content="{{ $tour->meta_description }}" />
+    @include('front.layouts.seo', [
+        'seoTitle' => $tour->seoTitle($tour->name),
+        'seoDescription' => $tour->seoDescription($tour->description),
+        'seoImage' => $tour->seoImage($tour->photo),
+        'seoUrl' => route('tour_details', $tour->slug),
+        'seoType' => 'product',
+        'seoSchema' => array_merge($tour->seoJsonLd('TouristTrip', route('tour_details', $tour->slug), $tour->photo), [
+            'offers' => [
+                '@type' => 'Offer',
+                'price' => $tour->getPrice(),
+                'priceCurrency' => 'USD',
+                'availability' => 'https://schema.org/InStock',
+            ],
+        ]),
+    ])
 
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link

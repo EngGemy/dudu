@@ -38,7 +38,7 @@
             <span class="search-modal__kbd">ESC</span>
         </div>
         <div class="search-modal__results" id="search-modal-results">
-            <div class="search-modal__empty">{{ __('front.site.search.search') }}…</div>
+            <div class="search-modal__empty" id="search-modal-initial">{{ __('front.site.search.search') }}…</div>
         </div>
         <div class="search-modal__footer">
             <span><span class="search-modal__kbd">↑↓</span> navigate</span>
@@ -54,9 +54,14 @@
     const input = document.getElementById('search-modal-input');
     const results = document.getElementById('search-modal-results');
     const endpoint = @json(route('search.suggest'));
+    var _i18n = {
+        noResults:   @json(__('front.site.search.no_results_for')),
+        unavailable: @json(__('front.site.search.search_unavailable')),
+        typeSearch:  @json(__('front.site.search.search')),
+    };
     let activeIndex = -1, hits = [], reqId = 0, debounceTimer = null;
 
-    function open() { modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false'); setTimeout(() => input.focus(), 30); }
+    function open() { modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false'); setTimeout(() => input.focus(), 30); if (!input.value) renderEmpty(_i18n.typeSearch + '…'); }
     function close() { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true'); }
     function toggle() { modal.classList.contains('is-open') ? close() : open(); }
 
@@ -85,7 +90,7 @@
     function render(data) {
         hits = [];
         if (!data.groups || data.groups.length === 0) {
-            renderEmpty('No results for "' + (data.query || '') + '"');
+            renderEmpty(_i18n.noResults + (data.query ? ' "' + data.query + '"' : ''));
             return;
         }
         let html = '';
@@ -121,7 +126,7 @@
 
     async function doSearch(q) {
         const myReq = ++reqId;
-        if (!q.trim()) { renderEmpty('Type to search…'); return; }
+        if (!q.trim()) { renderEmpty(_i18n.typeSearch + '…'); return; }
         renderSkeleton();
         try {
             const res = await fetch(endpoint + '?q=' + encodeURIComponent(q), { headers: { 'Accept': 'application/json' }});
@@ -130,7 +135,7 @@
             render(data);
         } catch (e) {
             if (myReq !== reqId) return;
-            renderEmpty('Search unavailable');
+            renderEmpty(_i18n.unavailable);
         }
     }
 

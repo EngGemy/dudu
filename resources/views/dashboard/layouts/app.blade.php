@@ -11,7 +11,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>   لوحه التحكم   </title>
+    <title>Doudou Dashboard</title>
     <link href="{{asset('dashboard/font-awesome/css/all.css')}}" rel="stylesheet">
 
     <link rel="apple-touch-icon" href="{{asset('dashboard/images/ico/apple-icon-120.png')}}">
@@ -59,6 +59,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/vendors/css/extensions/timedropper.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/'.getFolder().'/custom-rtl.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css/style-rtl.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/css/doudou-dashboard.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 

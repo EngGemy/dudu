@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Search\SearchableTranslated;
+use App\Support\Seo\HasSeoMetadata;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -10,7 +11,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Event extends Model
 {
-    use HasSlug, SearchableTranslated, Translatable;
+    use HasSeoMetadata, HasSlug, SearchableTranslated, Translatable;
 
     protected function searchIndexBase(): string
     {
@@ -24,7 +25,7 @@ class Event extends Model
 
     protected function searchUrl(): string
     {
-        return url('/event-details/'.$this->slug);
+        return url('/event_details/'.$this->slug);
     }
 
     protected function searchImage(): ?string
@@ -97,15 +98,16 @@ class Event extends Model
 
     public function overview_values($type)
     {
+        $overviewTranslation = $this->event_overviews?->translate(app()->getLocale(), true);
 
-        if ($this->event_overviews->translate(app()->getLocale(), true)->values ?? '') {
-            $values = json_decode($this->event_overviews->translate(app()->getLocale(), true)->values ?? '');
+        if ($overviewTranslation?->values) {
+            $values = json_decode($overviewTranslation->values ?? '');
             $locations = [];
 
             if (isset($values->locations)) {
-                foreach (json_decode($values->locations) as $loc) {
+                foreach (json_decode($values->locations) ?: [] as $loc) {
                     $city = City::find($loc);
-                    array_push($locations, $city->translate(app()->getLocale(), true)->name ?? '');
+                    array_push($locations, $city?->translate(app()->getLocale(), true)?->name ?? '');
                 }
 
             }
@@ -126,7 +128,7 @@ class Event extends Model
             return $data;
         }
 
-        return null;
+        return $type === 'locations' ? [] : null;
     }
 
     public function exclude_values()

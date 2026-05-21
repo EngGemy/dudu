@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\File;
 
 class TranslationController extends Controller
 {
+    private const SOURCE_LOCALE = 'en';
+
+    private const DISPLAY_SEPARATOR = ' > ';
+
     private function langPath(): string
     {
         return resource_path('lang');
@@ -16,8 +20,17 @@ class TranslationController extends Controller
 
     private function getLocales(): array
     {
-        return collect(File::directories($this->langPath()))
-            ->map(fn ($d) => basename($d))
+        $configured = (array) config('translatable.locales', []);
+        $fromDisk = File::isDirectory($this->langPath())
+            ? collect(File::directories($this->langPath()))
+                ->map(fn ($path) => basename($path))
+                ->all()
+            : [];
+
+        return collect($configured)
+            ->merge($fromDisk)
+            ->filter()
+            ->unique()
             ->values()
             ->toArray();
     }
@@ -30,19 +43,33 @@ class TranslationController extends Controller
         }
 
         return collect(File::allFiles($base))
-            ->filter(fn ($f) => $f->getExtension() === 'php')
-            ->map(fn ($f) => str_replace(
+            ->filter(fn ($file) => $file->getExtension() === 'php')
+            ->map(fn ($file) => str_replace(
                 ['\\', '.php'],
-                ['/',  ''],
-                $f->getRelativePathname()
+                ['/', ''],
+                $file->getRelativePathname()
             ))
+            ->values()
+            ->toArray();
+    }
+
+    private function getAllFiles(): array
+    {
+        $files = [];
+
+        foreach ($this->getLocales() as $locale) {
+            $files = array_merge($files, $this->getFilesForLocale($locale));
+        }
+
+        return collect($files)
+            ->unique()
+            ->sort()
             ->values()
             ->toArray();
     }
 
     private function resolveFilePath(string $locale, string $file): string
     {
-        // Prevent path traversal
         $locale = preg_replace('/[^a-zA-Z0-9_\-]/', '', $locale);
         $file = ltrim(str_replace('..', '', $file), '/\\');
 
@@ -52,21 +79,75 @@ class TranslationController extends Controller
             .'.php';
     }
 
+    private function loadTranslationFile(string $locale, string $file): array
+    {
+        $path = $this->resolveFilePath($locale, $file);
+
+        if (! File::exists($path)) {
+            return [];
+        }
+
+        $translations = include $path;
+
+        return is_array($translations) ? $translations : [];
+    }
+
+    private function flattenKeys(array $array, string $base = ''): array
+    {
+        $keys = [];
+
+        foreach ($array as $key => $value) {
+            $path = $base === '' ? (string) $key : $base.'.'.$key;
+
+            if (is_array($value)) {
+                $keys = array_merge($keys, $this->flattenKeys($value, $path));
+            } else {
+                $keys[] = $path;
+            }
+        }
+
+        return $keys;
+    }
+
+    private function mergeWithSourceKeys(array $source, array $target): array
+    {
+        $merged = [];
+
+        foreach ($source as $key => $sourceValue) {
+            if (is_array($sourceValue)) {
+                $targetValue = isset($target[$key]) && is_array($target[$key]) ? $target[$key] : [];
+                $merged[$key] = $this->mergeWithSourceKeys($sourceValue, $targetValue);
+            } else {
+                $merged[$key] = array_key_exists($key, $target) ? $target[$key] : '';
+            }
+        }
+
+        foreach ($target as $key => $targetValue) {
+            if (! array_key_exists($key, $merged)) {
+                $merged[$key] = $targetValue;
+            }
+        }
+
+        return $merged;
+    }
+
     /**
-     * Recursively flatten a translation array into a list of display rows.
+     * Recursively flatten a translation array into display rows.
      * Each row has: html_name, display_path, group, value, is_long.
      */
     private function flattenForDisplay(array $array, string $htmlBase = '', string $displayBase = ''): array
     {
         $rows = [];
+
         foreach ($array as $key => $value) {
             if ($key === '' || $key === null) {
                 continue;
             }
+
             $key = (string) $key;
             $htmlName = $htmlBase.'['.$key.']';
-            $displayPath = $displayBase ? $displayBase.' › '.$key : $key;
-            $group = $displayBase ? explode(' › ', $displayBase)[0] : '— General —';
+            $displayPath = $displayBase ? $displayBase.self::DISPLAY_SEPARATOR.$key : $key;
+            $group = $displayBase ? explode(self::DISPLAY_SEPARATOR, $displayBase)[0] : 'General';
 
             if (is_array($value)) {
                 $rows = array_merge($rows, $this->flattenForDisplay($value, $htmlName, $displayPath));
@@ -84,9 +165,6 @@ class TranslationController extends Controller
         return $rows;
     }
 
-    /**
-     * Pretty-print a PHP translation array as source code.
-     */
     private function exportPhp(array $array, int $depth = 0): string
     {
         $pad = str_repeat('    ', $depth);
@@ -94,97 +172,108 @@ class TranslationController extends Controller
         $lines = [];
 
         foreach ($array as $key => $value) {
-            $k = "'".addslashes((string) $key)."'";
+            $exportedKey = "'".addslashes((string) $key)."'";
+
             if (is_array($value)) {
-                $lines[] = $inner.$k.' => '.$this->exportPhp($value, $depth + 1);
+                $lines[] = $inner.$exportedKey.' => '.$this->exportPhp($value, $depth + 1);
             } else {
-                $v = "'".addslashes((string) $value)."'";
-                $lines[] = $inner.$k.' => '.$v;
+                $lines[] = $inner.$exportedKey.' => '."'".addslashes((string) $value)."'";
             }
         }
 
         return "[\n".implode(",\n", $lines).",\n".$pad.']';
     }
 
-    // ── Index ──────────────────────────────────────────────────────────────────
-
     public function index()
     {
         $locales = $this->getLocales();
+        $allFiles = $this->getAllFiles();
         $files = [];
 
         foreach ($locales as $locale) {
-            foreach ($this->getFilesForLocale($locale) as $file) {
+            foreach ($allFiles as $file) {
                 $path = $this->resolveFilePath($locale, $file);
-                try {
-                    $translations = File::exists($path) ? include $path : [];
-                    $count = count($this->flattenForDisplay((array) $translations));
-                    $files[$locale][] = ['file' => $file, 'count' => $count];
-                } catch (\Throwable) {
-                    $files[$locale][] = ['file' => $file, 'count' => '?'];
-                }
+                $translations = $this->loadTranslationFile($locale, $file);
+                $sourceTranslations = $this->loadTranslationFile(self::SOURCE_LOCALE, $file);
+                $sourceCount = count($this->flattenKeys($sourceTranslations ?: $translations));
+                $count = count($this->flattenKeys($translations));
+
+                $files[$locale][] = [
+                    'file' => $file,
+                    'count' => $count,
+                    'source_count' => $sourceCount,
+                    'missing' => max($sourceCount - $count, 0),
+                    'exists' => File::exists($path),
+                ];
             }
         }
 
         return view('dashboard.translations.index', compact('locales', 'files'));
     }
 
-    // ── Edit ───────────────────────────────────────────────────────────────────
-
     public function edit(string $locale, string $file)
     {
         $path = $this->resolveFilePath($locale, $file);
+        $raw = $this->loadTranslationFile($locale, $file);
+        $source = $this->loadTranslationFile(self::SOURCE_LOCALE, $file);
 
-        if (! File::exists($path)) {
+        if (! File::exists($path) && empty($source)) {
             return redirect()->route('translations.index')
                 ->with('error', 'Translation file not found.');
         }
 
-        $raw = include $path;
-        $rows = $this->flattenForDisplay((array) $raw);
+        if ($locale !== self::SOURCE_LOCALE && ! empty($source)) {
+            $raw = $this->mergeWithSourceKeys($source, $raw);
+        }
 
-        // Group rows for visual separation in the view
+        $rows = $this->flattenForDisplay($raw);
         $grouped = collect($rows)->groupBy('group')->toArray();
-
         $locales = $this->getLocales();
         $currentFile = $file;
+        $separator = self::DISPLAY_SEPARATOR;
 
         return view('dashboard.translations.edit', compact(
-            'locale', 'file', 'grouped', 'locales', 'currentFile'
+            'locale',
+            'file',
+            'grouped',
+            'locales',
+            'currentFile',
+            'separator'
         ));
     }
-
-    // ── Update ─────────────────────────────────────────────────────────────────
 
     public function update(Request $request, string $locale, string $file)
     {
         $path = $this->resolveFilePath($locale, $file);
 
-        if (! File::exists($path)) {
+        if (! File::exists($path) && empty($this->loadTranslationFile(self::SOURCE_LOCALE, $file))) {
             return redirect()->route('translations.index')
                 ->with('error', 'Translation file not found.');
         }
 
-        // PHP parses translations[key1][key2] into a nested array automatically
-        $translations = $request->input('translations', []);
+        $translations = (array) $request->input('translations', []);
+        $directory = dirname($path);
 
-        $content = "<?php\n\nreturn ".$this->exportPhp((array) $translations).";\n";
+        if (! File::isDirectory($directory)) {
+            File::makeDirectory($directory, 0755, true);
+        }
+
+        $content = "<?php\n\nreturn ".$this->exportPhp($translations).";\n";
         File::put($path, $content);
 
-        return redirect()->back()->with('success', 'Translations saved successfully!');
+        return redirect()->back()->with('success', 'Translations saved successfully.');
     }
-
-    // ── Auto-fill via DeepL ────────────────────────────────────────────────────
 
     public function autoFill(Request $request, string $locale, string $file)
     {
-        $sourceLocale = $request->input('source', 'en');
+        $sourceLocale = $request->input('source', self::SOURCE_LOCALE);
 
         $translator = new AutoTranslator();
-        $results = $translator->translateMissing($sourceLocale, $locale);
+        $results = $translator->translateMissing($sourceLocale, $locale, $file);
 
         $message = sprintf(
-            'Auto-fill complete: %d created, %d skipped, %d failed.',
+            'Auto-fill complete for %s: %d created, %d skipped, %d failed.',
+            $file,
             $results['created'],
             $results['skipped'],
             $results['failed']

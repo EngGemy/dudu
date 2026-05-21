@@ -21,10 +21,9 @@ class MessageController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'res' => 'Message Created Successfully',
-            'full_message' => 'Your message has been sent to us successfully, We will contact you
-            soon Have a nice day',
-            'message_header' => ' Your Message Received',
+            'res' => __('front.site.contact.message_created_successfully'),
+            'full_message' => __('front.site.contact.message_sent_full'),
+            'message_header' => __('front.site.contact.message_received_header'),
             'message_icon' => './assets/images/icons/approve.png',
         ]);
     }

@@ -7,6 +7,7 @@ use App\Models\Tag\Tag;
 use App\Models\Tour;
 use App\Models\TravelService\TravelService;
 use App\Search\SearchableTranslated;
+use App\Support\Seo\HasSeoMetadata;
 use Astrotomic\Translatable\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
-    use HasFactory, SearchableTranslated, Translatable;
+    use HasFactory, HasSeoMetadata, SearchableTranslated, Translatable;
 
     protected function searchIndexBase(): string
     {

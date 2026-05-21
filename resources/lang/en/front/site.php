@@ -55,6 +55,19 @@ return [
         'message_placeholder' => 'Write your message here...',
         'contact_issue' => 'Do you face any issue sending a request?',
         'contact_directly_by' => 'Please contact directly by',
+        'message_created_successfully' => 'Message Sent Successfully',
+        'message_sent_full' => 'Your message has been sent to us successfully. We will contact you soon. Have a nice day.',
+        'message_received_header' => 'Your Message Received',
+        'validation_fallback' => 'Please check the form and try again.',
+        'validation' => [
+            'name_required' => 'Please enter your name.',
+            'city_required' => 'Please choose your city.',
+            'city_exists' => 'Please choose a valid city.',
+            'email_required' => 'Please enter your email.',
+            'email_valid' => 'Please enter a valid email address.',
+            'phone_numeric' => 'The phone number must contain numbers only.',
+            'message_required' => 'Please enter your message.',
+        ],
         'cards' => [
             'location' => [
                 'title' => 'Location',

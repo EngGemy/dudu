@@ -5,6 +5,7 @@
     $aboutMetaDescription = $who_we_are?->meta_description ?: strip_tags((string) ($who_we_are?->description ?? __('front.site.about.hero_description')));
     $aboutHeroImage = $header?->image_url ?: ($who_we_are?->image_url ?? asset('assets/images/about-bg.jpeg'));
     $settings = \App\Models\General_setting::first();
+    $serviceIconIds = ['customer-service-2', 'travel-card', 'map-pin', 'clipboard-text'];
 @endphp
 
 @section('title', $aboutMetaTitle)
@@ -33,6 +34,9 @@
         .about-card{border:1px solid rgba(0,113,189,.12);border-radius:8px;background:#fff;padding:24px;box-shadow:0 16px 36px rgba(0,40,70,.08);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
         .about-card:hover{transform:translateY(-7px);box-shadow:0 24px 48px rgba(0,40,70,.14);border-color:rgba(247,147,30,.45)}
         .about-card img,.about-card svg{width:44px;height:44px;object-fit:contain;margin-bottom:18px;color:#f7931e}
+        .about-service-icon{display:inline-flex;width:52px;height:52px;align-items:center;justify-content:center;margin-bottom:20px;border-radius:16px;background:linear-gradient(135deg,#0071bd,#0d2230);color:#fff;box-shadow:0 14px 30px rgba(0,40,70,.16);transition:transform .22s ease,box-shadow .22s ease,background .22s ease}
+        .about-card:hover .about-service-icon{transform:translateY(-3px);background:linear-gradient(135deg,#f7931e,#0071bd);box-shadow:0 18px 36px rgba(0,40,70,.22)}
+        .about-card .about-service-icon svg{width:28px;height:28px;margin:0;fill:currentColor;color:inherit}
         .about-card h3{font-size:20px;font-weight:900;color:#0d2230;margin-bottom:9px}
         .about-card p{font-size:15px;line-height:1.7;color:#667085}
         .about-band{background:#f7931e;color:#fff}
@@ -56,6 +60,10 @@
         .about-form textarea{grid-column:1/-1;min-height:130px;resize:vertical}
         .about-form button{grid-column:1/-1;justify-self:end;border:0;border-radius:8px;background:#0071bd;color:#fff;padding:14px 34px;font-weight:900;transition:transform .2s ease,background .2s ease}
         .about-form button:hover{background:#f7931e;transform:translateY(-2px)}
+        .about-form button:disabled{cursor:not-allowed;opacity:.68;transform:none}
+        .about-form__feedback{display:none;grid-column:1/-1;border-radius:8px;padding:12px 14px;font-weight:800;line-height:1.55}
+        .about-form__feedback.is-success{display:block;background:rgba(40,199,111,.1);color:#1f8f55}
+        .about-form__feedback.is-error{display:block;background:rgba(234,84,85,.1);color:#c33f40}
         .about-reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
         .about-reveal.is-visible{opacity:1;transform:translateY(0)}
         @media (max-width:1000px){
@@ -95,11 +103,11 @@
         <section class="about-section about-cards">
             @foreach($services as $service)
                 <article class="about-card about-reveal">
-                    @if($service->icon_url ?? false)
-                        <img src="{{ $service->icon_url }}" alt="">
-                    @else
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="7"/></svg>
-                    @endif
+                    <span class="about-service-icon" aria-hidden="true">
+                        <svg>
+                            <use href="{{ asset('assets/images/icons/sprite.svg#'.$serviceIconIds[$loop->index % count($serviceIconIds)]) }}"></use>
+                        </svg>
+                    </span>
                     <h3>{{ $service->title }}</h3>
                     <div>{!! $service->description !!}</div>
                 </article>
@@ -193,24 +201,33 @@
             </div>
             <div class="about-contact__panel about-reveal">
                 <p class="about-copy">{{ __('front.site.contact.form_intro') }}</p>
-                <form class="about-form" method="POST" action="#">
+                <form id="about-contact-form" class="about-form" method="POST" action="{{ route('message') }}" novalidate>
                     @csrf
                     <label>{{ __('front.site.contact.title') }}
                         <select name="title">
-                            <option>{{ __('front.site.contact.mr') }}</option>
-                            <option>{{ __('front.site.contact.ms') }}</option>
+                            <option value="0">{{ __('front.site.contact.mr') }}</option>
+                            <option value="1">{{ __('front.site.contact.ms') }}</option>
                         </select>
                     </label>
                     <label>{{ __('front.site.contact.name') }}
-                        <input name="name" placeholder="{{ __('front.site.contact.your_name') }}">
+                        <input name="name" placeholder="{{ __('front.site.contact.your_name') }}" required>
                     </label>
                     <label>{{ __('front.site.contact.email') }}
-                        <input name="email" type="email" placeholder="{{ __('front.site.contact.your_email') }}">
+                        <input name="email" type="email" placeholder="{{ __('front.site.contact.your_email') }}" required>
+                    </label>
+                    <label>{{ __('front.site.contact.city') }}
+                        <select name="city_id" required>
+                            <option value="" hidden>{{ __('front.site.contact.your_city') }}</option>
+                            @foreach($cities as $city)
+                                <option value="{{ $city->id }}">{{ $city->name ?? $city->translate(app()->getLocale())?->name ?? $city->translate('en')?->name }}</option>
+                            @endforeach
+                        </select>
                     </label>
                     <label>{{ __('front.site.contact.phone_number') }}
                         <input name="phone" placeholder="{{ __('front.site.contact.enter_phone_number') }}">
                     </label>
-                    <textarea name="message" placeholder="{{ __('front.site.contact.message_placeholder') }}"></textarea>
+                    <textarea name="message" placeholder="{{ __('front.site.contact.message_placeholder') }}" required></textarea>
+                    <div class="about-form__feedback" role="status" aria-live="polite"></div>
                     <button type="submit">{{ __('front.site.contact.send') }}</button>
                 </form>
             </div>
@@ -234,6 +251,46 @@
             items.forEach((item, index) => {
                 item.style.transitionDelay = `${Math.min(index * 35, 220)}ms`;
                 observer.observe(item);
+            });
+
+            const form = document.getElementById('about-contact-form');
+            form?.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const feedback = form.querySelector('.about-form__feedback');
+                const submitButton = form.querySelector('button[type="submit"]');
+                const originalText = submitButton.textContent;
+
+                feedback.className = 'about-form__feedback';
+                feedback.textContent = '';
+                submitButton.disabled = true;
+                submitButton.textContent = '...';
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
+                        },
+                        body: new FormData(form),
+                    });
+
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw data;
+                    }
+
+                    feedback.textContent = data.full_message || data.res || @json(__('front.site.contact.message_created_successfully'));
+                    feedback.classList.add('is-success');
+                    form.reset();
+                } catch (error) {
+                    feedback.textContent = Object.values(error?.errors || {})?.[0]?.[0] || error?.message || @json(__('front.site.contact.validation_fallback'));
+                    feedback.classList.add('is-error');
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalText;
+                }
             });
         });
     </script>

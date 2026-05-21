@@ -12,7 +12,7 @@
         'en' => 'English',
     ];
 @endphp
-        <div class="navbar">
+        <div class="navbar site-header" data-sticky-header>
            {{--            Yield --}}
           <div class="container">
             <div class="navbar_top">
@@ -275,7 +275,7 @@
           </div>
 
           <div class="navbar_mobile">
-            <div class="flex items-center gap-2">
+            <div class="mobile-header-main flex items-center gap-2">
               <div class="hs-dropdown relative inline-flex">
                 <button type="button">
                   <svg class="size-6 text-white">
@@ -415,9 +415,9 @@
               <img src="{{asset('assets/images/logo-mobile.png')}}" class="h-8" alt="" />
             </div>
 
-            <div class="flex items-center gap-4">
+            <div class="mobile-header-actions flex items-center gap-4">
               <div
-                class="hs-dropdown group relative inline-flex [--auto-close:outside] [--offset:20]"
+                class="mobile-filter-dropdown hs-dropdown group relative inline-flex [--auto-close:outside] [--offset:20]"
               >
                 <button type="button" data-search-open aria-label="Search">
                   <svg class="size-4.5 text-white group-[.open]:hidden">
@@ -618,11 +618,55 @@
           </div>
         </div>
 
-{{-- Sticky nav is handled by headroom.js targeting #headroom in main.js.
-     The navbar_nav already becomes sticky via the .navbar_nav.primary variant.
-     No duplicate headroom element needed here. --}}
-
 <style>
+    .site-header {
+        transition: background .24s ease, box-shadow .24s ease, transform .24s ease, color .24s ease;
+    }
+    .site-header .navbar_desktop,
+    .site-header .navbar_nav,
+    .site-header .navbar_top,
+    .site-header .promo-bar,
+    .site-header .navbar_desktop img {
+        transition: padding .24s ease, background .24s ease, box-shadow .24s ease, opacity .2s ease, transform .24s ease, width .24s ease;
+    }
+    @media (min-width: 1024px) {
+        .site-header.is-sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 160;
+            background: rgba(255,255,255,.94);
+            color: #0d2230;
+            box-shadow: 0 18px 45px rgba(0,40,70,.14);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+        .site-header.is-sticky .navbar_top,
+        .site-header.is-sticky .navbar_nav,
+        .site-header.is-sticky .promo-bar {
+            display: none !important;
+        }
+        .site-header.is-sticky .navbar_desktop {
+            padding-top: .65rem;
+            padding-bottom: .65rem;
+        }
+        .site-header.is-sticky .navbar_desktop > img {
+            width: 9.25rem !important;
+        }
+        .site-header.is-sticky .header-search {
+            box-shadow: 0 10px 26px rgba(0,40,70,.08);
+        }
+        .site-header.is-sticky .bg-gradient {
+            box-shadow: 0 10px 24px rgba(247,147,30,.24);
+        }
+    }
+    @media (max-width: 1023px) {
+        .site-header.is-sticky .navbar_mobile {
+            background: rgba(0,113,189,.96);
+            box-shadow: 0 12px 28px rgba(0,40,70,.22);
+        }
+    }
     .header-search { position: relative; }
     .header-search__results {
         position: absolute; left: 0; right: 0; top: calc(100% + 8px); z-index: 80;
@@ -656,9 +700,52 @@
     .mobile-search-bar__text { flex: 1; font-size: 14px; color: rgba(255,255,255,.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .mobile-search-bar__kbd { font-size: 10px; padding: 2px 6px; border: 1px solid rgba(255,255,255,.3); border-radius: 4px; color: rgba(255,255,255,.45); flex: none; }
     @media (min-width: 1024px) { .mobile-search-bar { display: none; } }
+    @media (max-width: 1023px) {
+        .navbar_mobile {
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 10px;
+            padding: 8px 12px 10px;
+            background: rgba(0,113,189,.92);
+            box-shadow: 0 8px 22px rgba(0,40,70,.16);
+        }
+        .navbar_mobile .mobile-header-main,
+        .navbar_mobile .mobile-header-actions { width: auto; min-width: 0; }
+        .navbar_mobile .mobile-header-main img { max-width: 74px; height: 30px; object-fit: contain; }
+        .navbar_mobile .mobile-header-actions { margin-inline-start: auto; gap: 12px; }
+        .navbar_mobile .mobile-filter-dropdown { display: none; }
+        .mobile-search-bar {
+            order: 3;
+            flex: 0 0 100%;
+            min-height: 42px;
+            margin-top: 0;
+            border-color: rgba(255,255,255,.28);
+            border-radius: 8px;
+            background: rgba(255,255,255,.14);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+        }
+        .mobile-search-bar__text { color: rgba(255,255,255,.82); font-size: 13px; }
+        .mobile-search-bar__kbd { display: none; }
+        .search-modal { padding-top: 96px !important; }
+    }
 </style>
 
 <script>
+(function () {
+    const header = document.querySelector('[data-sticky-header]');
+    if (!header) return;
+
+    const syncHeader = () => {
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        header.classList.toggle('is-sticky', y > 44);
+        header.classList.toggle('is-past-hero', y > Math.max(220, window.innerHeight * 0.38));
+    };
+
+    syncHeader();
+    window.addEventListener('scroll', syncHeader, { passive: true });
+    window.addEventListener('resize', syncHeader);
+})();
+
 (function () {
     const wrap = document.querySelector('.header-search');
     if (!wrap) return;

@@ -6,6 +6,7 @@ use App\Models\Blog\Blog;
 use App\Models\Hotel\Hotel;
 use App\Models\TravelService\TravelService;
 use App\Search\SearchableTranslated;
+use App\Support\Seo\HasSeoMetadata;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -13,7 +14,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Tour extends Model
 {
-    use HasSlug, SearchableTranslated, Translatable;
+    use HasSeoMetadata, HasSlug, SearchableTranslated, Translatable;
 
     protected function searchIndexBase(): string
     {
@@ -27,7 +28,7 @@ class Tour extends Model
 
     protected function searchUrl(): string
     {
-        return url('/tour/'.$this->slug);
+        return url('/tours/details/'.$this->slug);
     }
 
     protected function searchImage(): ?string

@@ -9,6 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', __('front.site.meta.default_title'))</title>
+    @include('front.layouts.seo')
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin>
 
     @include('front.layouts.hreflang')
 
@@ -34,17 +39,13 @@
     ></script>
     <script
         defer
-        src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
+        src="https://cdn.jsdelivr.net/npm/headroom.js@0.12.0/dist/headroom.min.js"
     ></script>
     <script defer src="{{asset('assets/scripts/main.js')}}"></script>
     <script defer src="{{ asset('assets/scripts/doudou-design.js') }}?v={{ filemtime(public_path('assets/scripts/doudou-design.js')) }}"></script>
     <script
         defer
-        src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"
-    ></script>
-    <script
-        defer
-        src="https://cdn.jsdelivr.net/npm/headroom.js@0.12.0/dist/headroom.min.js"
+        src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.js"
     ></script>
     @yield('style')
 </head>
@@ -90,10 +91,12 @@
 
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+    <script
+        src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-@yield('scripts')
+    @yield('scripts')
     <script>
         @if(\Illuminate\Support\Facades\Session::has('success'))
 
@@ -128,13 +131,6 @@
         @endforeach
         @endif
     </script>
-    <script
-        src="https://code.jquery.com/jquery-3.6.1.min.js"
-        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-        crossorigin="anonymous"></script>
-
-
-    @yield('scripts')
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
@@ -385,8 +381,6 @@
         },
     });
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <script>
     function initializeSwipers() {
         const tourCards = document.querySelectorAll(".tour-card");

@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ __('front.site.meta.default_title') }}</title>
+    <title>{{ $blog_preview->seoTitle($blog_preview->title) }}</title>
 
     @include('front.layouts.hreflang')
     <link rel="icon" <?php  $site_name=\App\Models\General_setting::select('site_logo_icon')->first() ?> href="{{$site_name->site_logo_icon}}"  type="image/png">
+    @include('front.layouts.seo', [
+        'seoTitle' => $blog_preview->seoTitle($blog_preview->title),
+        'seoDescription' => $blog_preview->seoDescription($blog_preview->description),
+        'seoImage' => $blog_preview->seoImage($blog_preview->image_url),
+        'seoUrl' => route('blog_preview', $blog_preview->slug),
+        'seoType' => 'article',
+        'seoSchema' => array_merge($blog_preview->seoJsonLd('BlogPosting', route('blog_preview', $blog_preview->slug), $blog_preview->image_url), [
+            'headline' => $blog_preview->seoTitle($blog_preview->title),
+        ]),
+    ])
 
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link
