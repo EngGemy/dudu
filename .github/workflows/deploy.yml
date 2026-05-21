@@ -104,29 +104,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-          extensions: bcmath, ctype, curl, dom, fileinfo, json, mbstring, openssl, pdo, tokenizer, xml, zip
-          coverage: none
-          tools: composer:v2
-
-      - name: Get Composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
-
-      - name: Cache Composer dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-
-      - name: Install Composer dependencies (production)
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-progress
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -201,20 +178,7 @@ jobs:
           APP_PATH="${CPANEL_APP_PATH:-$DEFAULT_CPANEL_APP_PATH}"
           PUBLIC_PATH="${CPANEL_PUBLIC_PATH:-$DEFAULT_CPANEL_PUBLIC_PATH}"
           ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
-            "mkdir -p '${APP_PATH}' '${PUBLIC_PATH}' '${APP_PATH}/storage' '${APP_PATH}/bootstrap/cache' '${APP_PATH}/vendor'"
-
-      - name: Deploy vendor (composer packages)
-        env:
-          CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
-          CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
-          CPANEL_USER: ${{ secrets.CPANEL_USER }}
-          CPANEL_APP_PATH: ${{ secrets.CPANEL_APP_PATH }}
-        run: |
-          set -euo pipefail
-          PORT="${CPANEL_PORT:-6802}"
-          APP_PATH="${CPANEL_APP_PATH:-$DEFAULT_CPANEL_APP_PATH}"
-          tar -czf - vendor/ | ssh -p "${PORT}" "${CPANEL_USER}@${CPANEL_HOST}" \
-            "tar -xzf - -C '${APP_PATH}'"
+            "mkdir -p '${APP_PATH}' '${PUBLIC_PATH}' '${APP_PATH}/storage' '${APP_PATH}/bootstrap/cache'"
 
       - name: Deploy application code (excluding vendor and public)
         env:
