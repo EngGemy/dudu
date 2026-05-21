@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ $tour->seoTitle($tour->name) }}</title>
+    @php
+        $tourTranslation = $tour->translate(app()->getLocale(), true);
+        $tourName = trim((string) ($tourTranslation?->name ?? $tour->name ?? ''));
+        $tourDescription = $tourTranslation?->description ?? $tour->description ?? '';
+        $tourDisplayTitle = $tourName !== '' ? $tourName : __('front.site.sections.egypt_tour');
+        $tourCategory = $tour->category;
+        $tourParentCategory = $tourCategory?->_parent;
+    @endphp
+    <title>{{ $tour->seoTitle($tourDisplayTitle) }}</title>
 
     @include('front.layouts.hreflang')
-    <link rel="icon" <?php  $site_name=\App\Models\General_setting::select('site_logo_icon')->first() ?> href="{{$site_name->site_logo_icon}}"  type="image/png">
+    <link rel="icon" <?php  $site_name=\App\Models\General_setting::select('site_logo_icon')->first() ?> href="{{ $site_name?->site_logo_icon ?? asset('assets/images/logo.png') }}"  type="image/png">
     @include('front.layouts.seo', [
-        'seoTitle' => $tour->seoTitle($tour->name),
-        'seoDescription' => $tour->seoDescription($tour->description),
+        'seoTitle' => $tour->seoTitle($tourDisplayTitle),
+        'seoDescription' => $tour->seoDescription($tourDescription),
         'seoImage' => $tour->seoImage($tour->photo),
         'seoUrl' => route('tour_details', $tour->slug),
         'seoType' => 'product',
@@ -60,6 +68,10 @@
 
 <body>
 <div class="app">
+    @include('front.layouts.header', ['headerVariant' => 'static'])
+
+    <header class="page-header tour-detail-header">
+        <div class="tour-detail-legacy-header" hidden>
     <nav id="headroom" class="navbar_nav primary hidden">
         <div class="container">
             @include('front.layouts.nav-list')
@@ -282,11 +294,12 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <div class="hero lg:justify-center lg:p-0">
             <div class="container">
                 <div class="hero_content">
-                    <h1 class="txt-shadow">  {{ $tour->translate(app()->getLocale(), true)->name ?? '' }} Tour</h1>
+                    <h1 class="txt-shadow">{{ $tourDisplayTitle }}</h1>
 
                 </div>
             </div>
@@ -339,10 +352,10 @@
                             </svg>
                         </a>
                     </li>
-                    @if($tour->category->parent_id !=null)
+                    @if($tourCategory?->parent_id != null && $tourParentCategory)
                         <li>
                             <a href="#">
-                                {{$tour->category->_parent->translate(app()->getLocale(), true)->name ?? ''}}
+                                {{ $tourParentCategory->translate(app()->getLocale(), true)->name ?? '' }}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -363,7 +376,7 @@
 
                     <li>
                         <a href="#">
-                            {{$tour->category->translate(app()->getLocale(), true)->name ?? ''}}
+                            {{ $tourCategory?->translate(app()->getLocale(), true)->name ?? __('front.site.sections.egypt_tours') }}
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -379,7 +392,7 @@
                             </svg>
                         </a>
                     </li>
-                    <li aria-current="page">{{$tour->translate(app()->getLocale(), true)->name ?? ''}} Tour</li>
+                    <li aria-current="page">{{ $tourDisplayTitle }}</li>
                 </ol>
 
 
