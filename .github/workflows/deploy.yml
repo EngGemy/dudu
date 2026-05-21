@@ -62,14 +62,14 @@ jobs:
             ${{ runner.os }}-composer-dev-
             ${{ runner.os }}-composer-
 
-      - name: Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress
-
       - name: Prepare Laravel runtime
         run: |
           set -euo pipefail
           mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views bootstrap/cache
           touch database/database.sqlite
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress
 
       - name: Validate Laravel boot and views
         run: |
@@ -150,7 +150,6 @@ jobs:
           APP_REL="$(python3 -c "import os; print(os.path.relpath('${APP_PATH}', '${PUBLIC_PATH}'))")"
           echo "App relative path from public_html: ${APP_REL}"
           sed "s|__APP_BASE__|${APP_REL}|g" deploy/templates/public-index.php.stub > public/index.php.cpanel
-          # Verify placeholder was replaced
           if grep -q '__APP_BASE__' public/index.php.cpanel; then
             echo "Failed to generate public index.php"
             exit 1
@@ -231,7 +230,6 @@ jobs:
           PORT="${CPANEL_PORT:-22}"
           PUBLIC_PATH="${CPANEL_PUBLIC_PATH:-$DEFAULT_CPANEL_PUBLIC_PATH}"
           RSYNC_SSH="ssh -p ${PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes"
-          # Do not sync repo public/storage; server symlink is created in post-deploy.
           rsync -az --delete --human-readable \
             --exclude 'storage/' \
             -e "${RSYNC_SSH}" \
