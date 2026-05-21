@@ -278,6 +278,39 @@
             </section>
         @endif
 
+        <section class="pt-12 lg:py-16" id="dream-egypt-tour">
+            <div class="container">
+                <header class="section_header" data-aos="fade-up">
+                    <h2 class="section_heading text-primary">
+                        <span>{{ __('front.site.sections.explore') }}</span> {{ __('front.site.sections.dream_egypt_tour') }}
+                    </h2>
+                </header>
+
+                <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    @foreach ($tours as $tour)
+                        <div class="h-full" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 80 }}" data-aos-duration="600">
+                            <a href="{{ route('tour_details', $tour->slug) }}" class="card">
+                                <figure>
+                                    <img src="{{ $tour->photo ?? asset('assets/images/sub-hero-bg.jpeg') }}" alt="{{ $tour->name ?? __('front.site.sections.egypt_tours') }}" />
+                                </figure>
+
+                                <figcaption>
+                                    <h3>{{ $tour->name ?? $tour->translate(app()->getLocale(), true)?->name ?? __('front.site.sections.egypt_tours') }}</h3>
+                                    <span>{{ __('front.site.sections.view_all_tours') }}</span>
+                                </figcaption>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+
+                <img
+                    src="{{ asset('assets/images/section-divider.png') }}"
+                    class="pointer-events-none mx-auto mt-5 lg:mt-10 lg:w-4/5"
+                    alt=""
+                />
+            </div>
+        </section>
+
         <section id="egypt-tour-opp">
             <div class="container">
                 <header

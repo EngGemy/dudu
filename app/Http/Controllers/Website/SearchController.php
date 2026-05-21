@@ -103,6 +103,10 @@ class SearchController extends Controller
             ];
         }
 
+        if (empty($output)) {
+            return response()->json($this->databaseFallbackPayload($query, $locale));
+        }
+
         return response()->json([
             'query' => $query,
             'locale' => $locale,
@@ -112,13 +116,26 @@ class SearchController extends Controller
 
     private function databaseFallback(string $query, string $locale): JsonResponse
     {
+        return response()->json($this->databaseFallbackPayload($query, $locale));
+    }
+
+    private function databaseFallbackPayload(string $query, string $locale): array
+    {
         $like = '%'.$query.'%';
         $output = [];
 
         // Tours
         $tours = Tour::with('translations')
-            ->whereHas('translations', fn ($q) => $q->where('name', 'LIKE', $like))
-            ->where('is_active', true)
+            ->where(function ($q) use ($like) {
+                $q->whereHas('translations', fn ($t) => $t
+                    ->where('name', 'LIKE', $like)
+                    ->orWhere('description', 'LIKE', $like)
+                )
+                    ->orWhere('slug', 'LIKE', $like);
+            })
+            ->where(function ($q) {
+                $q->where('publish', 1)->orWhere('is_active', 1);
+            })
             ->limit(5)->get();
 
         if ($tours->isNotEmpty()) {
@@ -167,7 +184,13 @@ class SearchController extends Controller
 
         // Blogs
         $blogs = Blog::with('translations')
-            ->whereHas('translations', fn ($q) => $q->where('title', 'LIKE', $like))
+            ->where(function ($q) use ($like) {
+                $q->whereHas('translations', fn ($t) => $t
+                    ->where('title', 'LIKE', $like)
+                    ->orWhere('description', 'LIKE', $like)
+                    ->orWhere('slug', 'LIKE', $like)
+                );
+            })
             ->limit(5)->get();
 
         if ($blogs->isNotEmpty()) {
@@ -193,7 +216,11 @@ class SearchController extends Controller
 
         // Cities
         $cities = City::with('translations')
-            ->whereHas('translations', fn ($q) => $q->where('name', 'LIKE', $like))
+            ->where(function ($q) use ($like) {
+                $q->whereHas('translations', fn ($t) => $t
+                    ->where('name', 'LIKE', $like)
+                );
+            })
             ->limit(5)->get();
 
         if ($cities->isNotEmpty()) {
@@ -217,7 +244,13 @@ class SearchController extends Controller
 
         // Travel Services
         $services = TravelService::with('translations')
-            ->whereHas('translations', fn ($q) => $q->where('title', 'LIKE', $like))
+            ->where(function ($q) use ($like) {
+                $q->whereHas('translations', fn ($t) => $t
+                    ->where('title', 'LIKE', $like)
+                    ->orWhere('description', 'LIKE', $like)
+                    ->orWhere('slug', 'LIKE', $like)
+                );
+            })
             ->limit(5)->get();
 
         if ($services->isNotEmpty()) {
@@ -241,7 +274,7 @@ class SearchController extends Controller
             }
         }
 
-        return response()->json(['query' => $query, 'groups' => $output]);
+        return ['query' => $query, 'groups' => $output];
     }
 
     private function resourceFromIndex(string $indexUid): ?string

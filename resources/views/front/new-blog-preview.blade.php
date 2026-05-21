@@ -6,7 +6,8 @@
     <title>{{ $blog_preview->seoTitle($blog_preview->title) }}</title>
 
     @include('front.layouts.hreflang')
-    <link rel="icon" <?php  $site_name=\App\Models\General_setting::select('site_logo_icon')->first() ?> href="{{$site_name->site_logo_icon}}"  type="image/png">
+    @php $pageSettings = \App\Models\General_setting::first(); @endphp
+    <link rel="icon" href="{{ $pageSettings?->site_logo_icon ?? asset('assets/images/logo.png') }}" type="image/png">
     @include('front.layouts.seo', [
         'seoTitle' => $blog_preview->seoTitle($blog_preview->title),
         'seoDescription' => $blog_preview->seoDescription($blog_preview->description),
@@ -50,373 +51,25 @@
     ></script>
     {{--    <script defer src="./assets/scripts/main.js"></script>--}}
     <script defer src="{{asset('assets/scripts/main.js')}}"></script>
+    <style>
+        .blog-feedback-control{transition:border-color .18s ease,box-shadow .18s ease,background .18s ease}
+        .blog-feedback-field.has-error .blog-feedback-control{border-color:#e02424!important;background:rgba(224,36,36,.035);box-shadow:0 0 0 4px rgba(224,36,36,.08);animation:feedbackFieldShake .28s ease}
+        .blog-feedback-error{display:block;min-height:20px;margin-top:6px;font-size:13px;line-height:1.35;color:#e02424;opacity:0;transform:translateY(-4px);transition:opacity .18s ease,transform .18s ease}
+        .blog-feedback-field.has-error .blog-feedback-error{opacity:1;transform:translateY(0)}
+        .blog-feedback-submit{position:relative;overflow:hidden}
+        .blog-feedback-submit.is-loading span{opacity:.55}
+        .blog-feedback-submit.is-loading:after{content:"";position:absolute;top:50%;right:18px;width:16px;height:16px;margin-top:-8px;border:2px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:50%;animation:feedbackSpin .7s linear infinite}
+        @keyframes feedbackFieldShake{0%,100%{transform:translateX(0)}35%{transform:translateX(-4px)}70%{transform:translateX(4px)}}
+        @keyframes feedbackSpin{to{transform:rotate(360deg)}}
+        @media (prefers-reduced-motion:reduce){
+            .blog-feedback-control,.blog-feedback-error,.blog-feedback-submit,.blog-feedback-field.has-error .blog-feedback-control{animation:none;transition:none}
+        }
+    </style>
 </head>
 
 <body>
 <div class="app">
-    <nav id="headroom" class="navbar_nav primary hidden">
-        <div class="container">
-            @include('front.layouts.nav-list')
-        </div>
-    </nav>
-
-    <header class="page-header">
-        <div class="navbar" style="position: static !important">
-            <div class="container">
-                <div class="navbar_top">
-                    <?php  $site_name=\App\Models\General_setting::first() ?>
-
-                    <div class="flex items-center gap-3">
-                        <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there">
-                            <svg class="size-5 text-white">
-                                <use href="{{asset('assets/images/icons/sprite.svg#whatsapp')}}"></use>
-                            </svg>
-                        </a>
-                        <a href="{{route('contact')}}">
-                            <svg class="size-5 text-white">
-                                <use href="{{asset('assets/images/icons/sprite.svg#mail')}}"></use>
-                            </svg>
-                        </a>
-                    </div>
-
-                    <div class="flex items-center gap-4 lg:gap-10">
-                        <div class="flex items-center gap-2">
-                            <svg class="size-5 text-white">
-                                <use href="{{asset('assets/images/icons/sprite.svg#clock')}}"></use>
-                            </svg>
-                            <span class="text-sm text-white"
-                            >{{ __('front.site.nav.cairo') }} : <span id="time">{{time()}}</span></span
-                            >
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <svg class="size-5 text-white">
-                                <use
-                                    href="{{asset('assets/images/icons/sprite.svg#cloud-sun')}}"
-                                ></use>
-                            </svg>
-                            <span class="text-sm text-white">: 15 OC/ 60 OF</span>
-                        </div>
-                    @include('front.layouts.lang-switcher')
-                    </div>
-                </div>
-            </div>
-
-            <nav class="navbar_nav primary">
-                <div class="container">
-                    @include('front.layouts.nav-list')
-                </div>
-            </nav>
-
-            <div class="navbar_desktop">
-                <a href="{{route('home')}}">
-                    <img
-                        src="{{header_logo()}}"  class="logo" alt="" /></a>
-
-                <form action="{{route('tour_search')}}" method="get" class="travel-search-form">
-                    <div class="travel-search-bar">
-                        <div class="search-input-wrap">
-                            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <path d="m21 21-4.3-4.3"></path>
-                            </svg>
-                            <input
-                                type="text"
-                                name="search"
-                                class="search-input"
-                                placeholder="{{ __('front.site.nav.search_placeholder') }}"
-                                value="{{ request('search') }}"
-                            />
-                        </div>
-                        <div class="search-divider"></div>
-                        <div class="search-date-wrap">
-                            <svg class="date-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
-                            <input
-                                id="range"
-                                type="text"
-                                name="checkIn_checkOut"
-                                class="flatpickr flatpickr-input search-date"
-                                placeholder="Dates"
-                            />
-                        </div>
-                        <button type="submit" class="search-btn">
-                            <span class="btn-text">{{ __('front.site.search.search') }}</span>
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </form>
-
-                <style>
-                .travel-search-form { width: 100%; max-width: 720px; }
-                .travel-search-bar {
-                    display: flex;
-                    align-items: center;
-                    background: #fff;
-                    border-radius: 16px;
-                    box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
-                    padding: 6px;
-                    gap: 4px;
-                    transition: box-shadow 0.3s ease, transform 0.3s ease;
-                }
-                .travel-search-bar:hover {
-                    box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.06);
-                    transform: translateY(-1px);
-                }
-                .search-input-wrap {
-                    flex: 1;
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    padding: 0 14px;
-                }
-                .search-icon, .date-icon {
-                    width: 20px;
-                    height: 20px;
-                    color: #f97316;
-                    flex-shrink: 0;
-                    transition: transform 0.3s ease;
-                }
-                .search-input-wrap:focus-within .search-icon {
-                    transform: scale(1.15);
-                }
-                .search-input {
-                    width: 100%;
-                    border: none;
-                    background: transparent;
-                    font-size: 15px;
-                    color: #111;
-                    outline: none;
-                    padding: 10px 0;
-                }
-                .search-input::placeholder { color: #9ca3af; }
-                .search-divider {
-                    width: 1px;
-                    height: 28px;
-                    background: #e5e7eb;
-                    flex-shrink: 0;
-                }
-                .search-date-wrap {
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    padding: 0 14px;
-                    flex-shrink: 0;
-                }
-                .search-date {
-                    width: 130px;
-                    border: none;
-                    background: transparent;
-                    font-size: 14px;
-                    color: #111;
-                    outline: none;
-                    cursor: pointer;
-                }
-                .search-date::placeholder { color: #9ca3af; }
-                .search-btn {
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-                    color: #fff;
-                    border: none;
-                    border-radius: 12px;
-                    padding: 12px 24px;
-                    font-size: 15px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                    position: relative;
-                    overflow: hidden;
-                }
-                .search-btn::before {
-                    content: '';
-                    position: absolute;
-                    inset: 0;
-                    background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
-                    opacity: 0;
-                    transition: opacity 0.3s ease;
-                }
-                .search-btn:hover::before { opacity: 1; }
-                .search-btn:hover {
-                    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
-                    transform: translateX(2px);
-                }
-                .search-btn:hover .btn-icon {
-                    transform: translateX(3px);
-                }
-                .btn-text, .btn-icon { position: relative; z-index: 1; }
-                .btn-icon {
-                    width: 18px;
-                    height: 18px;
-                    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                }
-                @media (max-width: 768px) {
-                    .travel-search-bar { flex-wrap: wrap; padding: 8px; }
-                    .search-input-wrap { width: 100%; }
-                    .search-divider { display: none; }
-                    .search-date-wrap { flex: 1; padding: 0 10px; }
-                    .search-btn { width: 100%; justify-content: center; margin-top: 4px; }
-                }
-                </style>
-
-                <button
-                    type="button"
-                    data-hs-overlay="#customize-tour"
-                    class="flex shrink-0 items-center gap-2 rounded-lg bg-primary px-4 py-4 text-sm text-white transition-colors hover:bg-opacity-75"
-                >
-                    <svg class="size-5 shrink-0 text-white">
-                        <use href="../../assets/images/icons/sprite.svg#settings"></use>
-                    </svg>
-
-                    {{ __('front.site.footer.customize_your_tour') }}
-                </button>
-            </div>
-
-            <div class="navbar_mobile" style="position: static !important">
-                <div class="flex items-center gap-2">
-                    <div class="hs-dropdown relative inline-flex">
-                        <button type="button">
-                            <svg class="size-6 text-white">
-                                <use href="../../assets/images/icons/sprite.svg#menu"></use>
-                            </svg>
-                        </button>
-
-                        <div
-                            class="mobile-sidebar hs-dropdown-menu duration hidden min-w-72 opacity-0 transition-opacity hs-dropdown-open:opacity-100"
-                        >
-                            <div
-                                class="bg-gradient -ms-4 flex h-full flex-col justify-between px-4 pb-14 pt-10"
-                            >
-                                @include('front.layouts.mobile-nav-list')
-                                <ul class="social-list white mt-7 justify-center">
-                                    <li>
-                                        <a href="#">
-                                            <svg>
-                                                <use
-                                                    href="../../assets/images/icons/sprite.svg#facebook"
-                                                ></use>
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg>
-                                                <use
-                                                    href="../../assets/images/icons/sprite.svg#linkedin"
-                                                ></use>
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg>
-                                                <use
-                                                    href="../../assets/images/icons/sprite.svg#youtube"
-                                                ></use>
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <svg>
-                                                <use
-                                                    href="../../assets/images/icons/sprite.svg#instagram"
-                                                ></use>
-                                            </svg>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a href="{{route('home')}}"> <img src="{{footer_logo()}}" class="h-8" alt="" /></a>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    <div
-                        class="hs-dropdown group relative inline-flex [--auto-close:outside] [--offset:20]"
-                    >
-                        <button type="button">
-                            <svg class="size-4.5 text-white group-[.open]:hidden">
-                                <use href="../../assets/images/icons/sprite.svg#search"></use>
-                            </svg>
-                            <svg class="hidden size-6 text-white group-[.open]:block">
-                                <use href="../../assets/images/icons/sprite.svg#close"></use>
-                            </svg>
-                        </button>
-
-                        <div
-                            class="hs-dropdown-menu duration z-50 hidden max-w-80 p-px opacity-0 transition-opacity hs-dropdown-open:opacity-100"
-                        >
-                            <form action="{{route('tour_search')}}" method="get">
-                                <div class="rounded-xl border border-primary bg-white p-3 space-y-3">
-                                    <div class="flex items-center gap-3 rounded-lg bg-gray-50 px-3 py-2.5">
-                                        <svg class="size-5 shrink-0 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="11" cy="11" r="8"></circle>
-                                            <path d="m21 21-4.3-4.3"></path>
-                                        </svg>
-                                        <input
-                                            type="text"
-                                            name="search"
-                                            class="w-full bg-transparent text-sm text-black outline-none placeholder:text-gray"
-                                            placeholder="Search tours, destinations..."
-                                            value="{{ request('search') }}"
-                                        />
-                                    </div>
-                                    <div class="flex items-center gap-3 rounded-lg bg-gray-50 px-3 py-2.5">
-                                        <svg class="size-5 shrink-0 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                                        </svg>
-                                        <input
-                                            id="range-mobile"
-                                            type="text"
-                                            name="checkIn_checkOut"
-                                            class="flatpickr flatpickr-input w-full bg-transparent text-sm text-black outline-none placeholder:text-gray"
-                                            placeholder="Check in - Check out"
-                                        />
-                                    </div>
-                                    <button
-                                        type="submit"
-                                        class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-white font-semibold transition-all hover:bg-secondary"
-                                    >
-                                        Search
-                                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M5 12h14"></path>
-                                            <path d="m12 5 7 7-7 7"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                    <button type="button" data-hs-overlay="#customer-service">
-                        <svg class="size-5.5 text-white">
-                            <use
-                                href="../../assets/images/icons/sprite.svg#customer-service-2"
-                            ></use>
-                        </svg>
-                    </button>
-                    <button type="button" data-hs-overlay="#customize-tour">
-                        <svg class="size-5 text-white">
-                            <use href="../../assets/images/icons/sprite.svg#settings"></use>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+    @include('front.layouts.header', ['headerVariant' => 'static'])
 
     <main class="relative space-y-12 lg:space-y-16">
         <section class="pt-8 lg:pt-16">
@@ -1464,7 +1117,7 @@
                                     class="mb-2 flex flex-col items-start gap-4 rounded-xl border border-gray px-5 py-4 md:flex-row md:items-center md:justify-between lg:mb-6"
                                 >
                                     <p class="text-xl font-semibold text-primary lg:text-2xl">
-                                        Was This Article Helpful?
+                                        {{ __('front.site.blog.article_helpful') }}
                                     </p>
 
                                     <div class="flex items-center gap-4">
@@ -1478,7 +1131,7 @@
                                                     href="../../assets/images/icons/sprite.svg#log-out"
                                                 ></use>
                                             </svg>
-                                            {{ __('front.site.form.inquire_now') }} feedback
+                                            {{ __('front.site.blog.inquire_feedback') }}
                                         </button>
                                         <!-- <button type="button">
                           <img
@@ -2079,12 +1732,12 @@
 
 <div
     id="send-feedback"
-    class="hs-overlay fixed start-0 top-0 z-[100] hidden size-full overflow-y-auto overflow-x-hidden hs-overlay-backdrop-open:bg-black/50"
+    class="hs-overlay blog-feedback-overlay fixed start-0 top-0 z-[100] hidden size-full overflow-y-auto overflow-x-hidden hs-overlay-backdrop-open:bg-black/50"
 >
     <div
-        class="m-3 mt-0 flex min-h-[calc(100%-3.5rem)] items-center opacity-0 transition-all ease-out hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 sm:mx-auto sm:w-full sm:max-w-[550px]"
+        class="blog-feedback-dialog m-3 mt-0 flex min-h-[calc(100%-3.5rem)] items-center opacity-0 transition-all ease-out hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 sm:mx-auto sm:w-full sm:max-w-[550px]"
     >
-        <div class="flex w-full flex-col overflow-hidden rounded-3xl bg-white">
+        <div class="blog-feedback-card flex w-full flex-col overflow-hidden rounded-3xl bg-white">
             <div
                 class="flex items-center justify-between bg-primary px-6 py-5"
                 style="background: linear-gradient(90deg, #005690 0%, #0071bd 100%)"
@@ -2117,11 +1770,11 @@
             </div>
 
             <div class="px-6 py-8">
-                <form id="messageForm" method="POST" action="#" enctype="multipart/form-data">
+                <form id="messageForm" class="blog-feedback-form" method="POST" action="#" enctype="multipart/form-data" novalidate>
                     @csrf
                     <div class="space-y-6">
                         <div class="flex gap-2">
-                            <div class="relative max-w-[80px] shrink-0">
+                            <div class="blog-feedback-field relative max-w-[80px] shrink-0">
                                 <label
                                     for="title"
                                     class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
@@ -2131,7 +1784,7 @@
                                     id="title"
                                     type="text"
                                     name="title"
-                                    class="rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
+                                    class="blog-feedback-control rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
                                     placeholder="{{ __('front.site.form.your_name') }}"
                                 >
                                     <option value="0">{{ __('front.site.form.mr') }}</option>
@@ -2139,7 +1792,7 @@
                                 </select>
                             </div>
 
-                            <div class="relative flex-1">
+                            <div class="blog-feedback-field relative flex-1">
                                 <label
                                     for="name"
                                     class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
@@ -2149,16 +1802,16 @@
                                     id="name"
                                     type="text"
                                     name="name"
-                                    class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
+                                    class="blog-feedback-control w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
                                     placeholder="{{ __('front.site.form.your_name') }}"
                                 />
-                                <span class="invalid text-danger" id="name_error"></span>
+                                <span class="invalid text-danger blog-feedback-error" id="name_error"></span>
 
                             </div>
                         </div>
 
                         <div class="flex flex-col gap-4 lg:flex-row lg:gap-2">
-                            <div class="relative flex-1">
+                            <div class="blog-feedback-field relative flex-1">
                                 <label
                                     for="email"
                                     class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
@@ -2168,23 +1821,23 @@
                                     id="email"
                                     type="email"
                                     name="email"
-                                    class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
+                                    class="blog-feedback-control w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
                                     placeholder="{{ __('front.site.form.your_email') }}"
                                 />
-                                <span class="invalid text-danger" id="email_error"></span>
+                                <span class="invalid text-danger blog-feedback-error" id="email_error"></span>
 
                             </div>
-                            <div class="relative shrink-0 lg:max-w-[180px]">
+                            <div class="blog-feedback-field relative shrink-0 lg:max-w-[180px]">
                                 <label
-                                    for="nationality"
+                                    for="city_id"
                                     class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
                                 >{{ __('front.site.form.nationality') }}</label
                                 >
                                 <select
-                                    id="nationality"
+                                    id="city_id"
                                     type="text"
                                     name ='city_id'
-                                    class="w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
+                                    class="blog-feedback-control w-full rounded-xl border border-primary bg-transparent px-4 py-3 text-black outline-none placeholder:text-gray"
                                     placeholder="{{ __('front.site.form.your_name') }}"
                                 >
                                     <option value="" disabled selected>{{ __('front.site.form.select_destination') }}</option>
@@ -2192,22 +1845,24 @@
                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
                                     @endforeach
                                 </select>
+                                <span class="invalid text-danger blog-feedback-error" id="city_id_error"></span>
                             </div>
                         </div>
 
-                        <div class="relative">
+                        <div class="blog-feedback-field relative">
                             <label
-                                for="email"
+                                for="message"
                                 class="absolute start-4 top-0 -translate-y-1/2 bg-white px-1 text-sm text-primary lg:text-base"
                             >{{ __('front.site.blog.your_feedback') }}</label
                             >
                             <textarea
+                                id="message"
                                 type="text"
                                 name="message"
-                                class="w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
+                                class="blog-feedback-control min-h-[112px] w-full rounded-xl border border-primary px-4 py-3 text-black outline-none placeholder:text-gray"
                                 placeholder="{{ __('front.site.blog.write_your_message') }}"
                             ></textarea>
-                            <span class="invalid text-danger" id="message_error"></span>
+                            <span class="invalid text-danger blog-feedback-error" id="message_error"></span>
 
                         </div>
                     </div>
@@ -2223,10 +1878,10 @@
                         <button
                             type="submit"
                             id="btnSubmit"
-                            class="inline-block min-w-36 rounded-lg bg-primary px-3 py-2 font-medium text-white hover:bg-opacity-75 disabled:pointer-events-none disabled:opacity-50 lg:text-xl"
+                            class="blog-feedback-submit inline-block min-w-36 rounded-lg bg-primary px-3 py-2 font-medium text-white hover:bg-opacity-75 disabled:pointer-events-none disabled:opacity-50 lg:text-xl"
 {{--                            data-hs-overlay="#feedback-sent"--}}
                         >
-                            {{ __('front.site.form.inquire_now') }}
+                            <span>{{ __('front.site.form.inquire_now') }}</span>
                         </button>
                     </div>
                 </form>
@@ -2240,29 +1895,33 @@
                 <div
                     class="mb-6 flex flex-col items-center justify-center gap-x-4 gap-y-2 lg:flex-row"
                 >
-                    <?php  $site_name=\App\Models\General_setting::first() ?>
-                    <a href="https://wa.me/{{$site_name->manager_phone}}?text=Hello%20there" target="_blank"
+                    @php
+                        $site_name=\App\Models\General_setting::first();
+                        $social=\App\Models\Social_setting::first();
+                        $feedbackPhone = preg_replace('/\D+/', '', (string) ($site_name?->manager_phone ?? ''));
+                        $feedbackEmail = trim((string) ($site_name?->email ?? ''));
+                    @endphp
+                    <a href="{{ $feedbackPhone ? 'https://wa.me/'.$feedbackPhone.'?text=Hello%20there' : route('contact') }}" target="_blank"
                        class="flex items-center gap-1 text-sm"
                     >
                         <svg class="size-5 text-primary">
                             <use href="./assets/images/icons/sprite.svg#whatsapp"></use>
                         </svg>
-                        {{$site_name->manager_phone}}
+                        {{ $site_name?->manager_phone ?? __('front.site.footer.contact_us') }}
                     </a>
                     <a
-                        href="{{route('contact')}}"
+                        href="{{ $feedbackEmail ? 'mailto:'.$feedbackEmail : route('contact') }}"
                         class="flex items-center gap-1 text-sm"
                     >
                         <svg class="size-5 text-primary">
                             <use href="./assets/images/icons/sprite.svg#mail"></use>
                         </svg>
-                        {{$site_name->email}}
+                        {{ $feedbackEmail ?: __('front.site.footer.contact_us') }}
                     </a>
                 </div>
-                <?php  $social=\App\Models\Social_setting::first() ?>
                 <ul class="social-list primary justify-center">
                     <li>
-                        <a href="{{$social->facebook}}">
+                        <a href="{{ $social?->facebook ?: route('contact') }}">
                             <svg>
                                 <use
                                     href="./assets/images/icons/sprite.svg#facebook"
@@ -2271,7 +1930,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{$social->twitter}}">
+                        <a href="{{ $social?->twitter ?: route('contact') }}">
                             <svg>
                                 <use
                                     href="./assets/images/icons/sprite.svg#linkedin"
@@ -2280,7 +1939,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{$social->youtube}}">
+                        <a href="{{ $social?->youtube ?: route('contact') }}">
                             <svg>
                                 <use
                                     href="./assets/images/icons/sprite.svg#youtube"
@@ -2289,7 +1948,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{$social->instagram}}">
+                        <a href="{{ $social?->instagram ?: route('contact') }}">
                             <svg>
                                 <use
                                     href="./assets/images/icons/sprite.svg#instagram"
@@ -3270,13 +2929,88 @@
 
 <script>
     $(document).ready(function() {
+        const feedbackMessages = {
+            name: @json(__('front.site.contact.validation.name_required')),
+            city_id: @json(__('front.site.contact.validation.city_required')),
+            email: @json(__('front.site.contact.validation.email_required')),
+            email_valid: @json(__('front.site.contact.validation.email_valid')),
+            message: @json(__('front.site.contact.validation.message_required')),
+            fallback: @json(__('front.site.contact.validation_fallback')),
+        };
+
+        function setFeedbackLoading(isLoading) {
+            $("#btnSubmit")
+                .prop('disabled', isLoading)
+                .toggleClass('is-loading', isLoading);
+        }
+
+        function clearFeedbackErrors() {
+            $("#messageForm .invalid").text("");
+            $("#messageForm .blog-feedback-field").removeClass('has-error');
+            $("#messageForm .blog-feedback-control").removeClass('is-invalid').removeAttr('aria-invalid');
+        }
+
+        function showFeedbackError(key, message) {
+            const input = $("#messageForm [name='" + key + "']");
+            const error = $("#" + key + "_error");
+            input.addClass('is-invalid').attr('aria-invalid', 'true');
+            input.closest('.blog-feedback-field').addClass('has-error');
+            error.text(Array.isArray(message) ? message[0] : message);
+        }
+
+        function validateFeedbackForm() {
+            clearFeedbackErrors();
+            const form = $('#messageForm')[0];
+            const nameInput = form.elements['name'];
+            const emailInput = form.elements['email'];
+            const cityInput = form.elements['city_id'];
+            const messageInput = form.elements['message'];
+            const email = emailInput.value.trim();
+            let isValid = true;
+
+            if (!nameInput.value.trim()) {
+                showFeedbackError('name', feedbackMessages.name);
+                isValid = false;
+            }
+            if (!email) {
+                showFeedbackError('email', feedbackMessages.email);
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showFeedbackError('email', feedbackMessages.email_valid);
+                isValid = false;
+            }
+            if (!cityInput.value) {
+                showFeedbackError('city_id', feedbackMessages.city_id);
+                isValid = false;
+            }
+            if (!messageInput.value.trim()) {
+                showFeedbackError('message', feedbackMessages.message);
+                isValid = false;
+            }
+
+            if (!isValid) {
+                const firstError = $('#messageForm .has-error').first();
+                if (firstError.length) firstError[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            return isValid;
+        }
+
+        $('#messageForm .blog-feedback-control').on('input change', function() {
+            const field = $(this).attr('name');
+            $(this).removeClass('is-invalid').removeAttr('aria-invalid');
+            $(this).closest('.blog-feedback-field').removeClass('has-error');
+            $('#' + field + '_error').text('');
+        });
+
         $('#messageForm').submit(function(e) {
             e.preventDefault(); // Prevent default form submission
+            if (!validateFeedbackForm()) return;
+
             var form = $('#messageForm')[0];
             var formData = new FormData(form);
 
-            // Disable the submit button
-            $("#btnSubmit").prop('disabled', true);
+            setFeedbackLoading(true);
 
             $.ajax({
                 url: "{{ route('send_feedback') }}", // Form action URL
@@ -3284,27 +3018,26 @@
                 data: formData, // Form data
                 processData: false,
                 contentType: false,
+                headers: {
+                    'Accept': 'application/json'
+                },
                 success: function(response) {
+                    setFeedbackLoading(false);
                     if (response.status === "success") {
-                        // const openBtn = document.querySelector('#btnSubmit');
-                        //
-                        // openBtn.addEventListener('click', () => {
-                        //     HSOverlay.open('#feedback-sent');
-                        // });
-                        // Open the feedback-sent modal
-                        HSOverlay.open('#feedback-sent');
+                        clearFeedbackErrors();
+                        form.reset();
+                        if (window.HSOverlay && typeof HSOverlay.close === 'function') {
+                            try { HSOverlay.close('#send-feedback'); } catch (e) {}
+                        }
+                        if (window.HSOverlay && typeof HSOverlay.open === 'function') {
+                            HSOverlay.open('#feedback-sent');
+                        }
 
                     }
                 },
                 error: function(xhr, status, error) {
-                    // Handle error response
-                    console.log(xhr.responseText);
-
-                    // Re-enable the submit button
-                    $("#btnSubmit").prop('disabled', false);
-
-                    // Clear previous error messages
-                    $(".invalid").text("").removeClass('is-invalid');
+                    setFeedbackLoading(false);
+                    clearFeedbackErrors();
 
                     // Check if the response contains validation errors
                     if (xhr.responseJSON && xhr.responseJSON.errors) {
@@ -3312,17 +3045,10 @@
 
                         // Iterate through errors and display them
                         $.each(errors, function(key, value) {
-                            console.log(key, value);
-
-                            // Add 'is-invalid' class and show error messages
-                            $('#' + key).addClass('is-invalid');
-                            $('#' + key + '_error').text(value);
+                            showFeedbackError(key, value);
                         });
-                        // $("button[data-hs-overlay]").removeAttr("data-hs-overlay");
-
                     } else {
-                        // Handle other types of errors if needed
-                        console.log("Unexpected error:", xhr.responseText);
+                        showFeedbackError('message', feedbackMessages.fallback);
                     }
                 }
             });

@@ -104,7 +104,7 @@ class BlogController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'res' => 'Message Created Successfully',
+            'res' => __('front.site.contact.message_created_successfully'),
 
         ]);
 

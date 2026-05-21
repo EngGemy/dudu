@@ -1,5 +1,9 @@
 @php
     $currentLocale = app()->getLocale();
+    $headerVariant = $headerVariant ?? 'overlay';
+    $isStaticHeader = $headerVariant === 'static';
+    $topbarToneClass = $isStaticHeader ? 'text-primary' : 'text-white';
+    $topbarSocialVariant = $isStaticHeader ? 'primary' : 'white';
     $topBarLangLabel = match($currentLocale) {
         'en' => '??????',
         'zh-Hant' => 'English',
@@ -12,29 +16,29 @@
         'en' => 'English',
     ];
 @endphp
-        <div class="navbar site-header" data-sticky-header>
+        <div class="navbar site-header {{ $isStaticHeader ? 'static' : '' }}" data-sticky-header>
            {{--            Yield --}}
           <div class="container">
             <div class="navbar_top">
               {{-- Social icons left side --}}
-              <x-social-links variant="white" class="topbar-socials max-md:hidden" />
+              <x-social-links :variant="$topbarSocialVariant" class="topbar-socials max-md:hidden" />
 
               <div class="flex items-center gap-4 lg:gap-6">
                 <div class="flex items-center gap-2">
-                  <svg class="size-5 text-white">
+                  <svg class="size-5 {{ $topbarToneClass }}">
                     <use href="{{asset('assets/images/icons/sprite.svg#clock')}}"></use>
                   </svg>
-                  <span class="text-sm text-white"
+                  <span class="text-sm {{ $topbarToneClass }}"
                     >{{ __('front.site.nav.cairo') }} : <span id="time">05: 14</span></span
                   >
                 </div>
                 <div class="flex items-center gap-2">
-                  <svg class="size-5 text-white">
+                  <svg class="size-5 {{ $topbarToneClass }}">
                     <use
                       href="{{asset('assets/images/icons/sprite.svg#cloud-sun')}}"
                     ></use>
                   </svg>
-                  <span class="text-sm text-white">: 15 OC/ 60 OF</span>
+                  <span class="text-sm {{ $topbarToneClass }}">: 15 OC/ 60 OF</span>
                 </div>
 
                 {{-- Language switcher — self-contained partial with its own CSS+JS --}}
@@ -622,6 +626,16 @@
     .site-header {
         transition: background .24s ease, box-shadow .24s ease, transform .24s ease, color .24s ease;
     }
+    .site-header.static {
+        position: static;
+    }
+    .site-header.static .ls-btn {
+        border-color: rgba(0,113,189,.35);
+        color: #0071bd;
+    }
+    .site-header.static .ls-btn:hover {
+        background: rgba(0,113,189,.08);
+    }
     .site-header .navbar_desktop,
     .site-header .navbar_nav,
     .site-header .navbar_top,
@@ -782,12 +796,15 @@
 
     function render(data) {
         hits = [];
-        if (!data.groups || data.groups.length === 0) {
+        const groups = Array.isArray(data.groups)
+            ? data.groups.filter(group => Array.isArray(group.hits) && group.hits.length > 0)
+            : [];
+        if (groups.length === 0) {
             renderEmpty(tNoResults + ' "' + (data.query || '') + '"');
             return;
         }
         let html = '';
-        for (const group of data.groups) {
+        for (const group of groups) {
             html += '<div class="header-search__group"><div class="header-search__group-label">' + escapeHtml(group.label) + '</div>';
             for (const hit of group.hits) {
                 const idx = hits.length;

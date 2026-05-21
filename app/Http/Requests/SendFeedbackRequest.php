@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Enum\MessageTitle;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rules\Enum;
 
 class SendFeedbackRequest extends FormRequest
@@ -32,5 +34,29 @@ class SendFeedbackRequest extends FormRequest
         ];
 
         return $rules;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => __('front.site.contact.validation.name_required'),
+            'city_id.required' => __('front.site.contact.validation.city_required'),
+            'city_id.exists' => __('front.site.contact.validation.city_exists'),
+            'email.required' => __('front.site.contact.validation.email_required'),
+            'email.email' => __('front.site.contact.validation.email_valid'),
+            'message.required' => __('front.site.contact.validation.message_required'),
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        if ($this->expectsJson()) {
+            throw new HttpResponseException(response()->json([
+                'message' => $validator->errors()->first() ?: __('front.site.contact.validation_fallback'),
+                'errors' => $validator->errors(),
+            ], 422));
+        }
+
+        parent::failedValidation($validator);
     }
 }

@@ -284,6 +284,7 @@ return array_replace_recursive($base, [
     ],
     'blog' => [
         'by' => '作者：',
+        'article_helpful' => '这篇文章有帮助吗？',
         'comments' => '评论',
         'default_description' => '默认描述',
         'duration_high_to_low' => '时长（高到低）',
@@ -314,6 +315,7 @@ return array_replace_recursive($base, [
         'search_articles' => '搜索文章',
         'search_blogs_placeholder' => '搜索博客',
         'send_feedback' => '发送反馈',
+        'inquire_feedback' => '立即咨询反馈',
         'send_this_article_to_friend' => '发送这篇文章给朋友',
         'send_your_feedback' => '发送您的反馈',
         'sort_by_recommended' => '排序：推荐',

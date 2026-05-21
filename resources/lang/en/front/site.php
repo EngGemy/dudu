@@ -277,6 +277,7 @@ return [
     ],
     'blog' => [
         'by' => 'By:',
+        'article_helpful' => 'Was This Article Helpful?',
         'comments' => 'Comments',
         'default_description' => 'Default Description',
         'duration_high_to_low' => 'Duration (High to Low)',
@@ -307,6 +308,7 @@ return [
         'search_articles' => 'Search Articles',
         'search_blogs_placeholder' => 'Search Blogs',
         'send_feedback' => 'Send feedback',
+        'inquire_feedback' => 'Inquire feedback',
         'send_this_article_to_friend' => 'Send This Article to A Friend',
         'send_your_feedback' => 'Send Your Feedback',
         'sort_by_recommended' => 'Sort by: Recommended',
