@@ -159,12 +159,14 @@ jobs:
       - name: Validate deployment secrets
         env:
           CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
+          CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
           CPANEL_USER: ${{ secrets.CPANEL_USER }}
           CPANEL_SSH_KEY: ${{ secrets.CPANEL_SSH_KEY }}
         run: |
           set -euo pipefail
           missing=()
           [ -z "${CPANEL_HOST:-}" ] && missing+=("CPANEL_HOST")
+          [ -z "${CPANEL_PORT:-}" ] && missing+=("CPANEL_PORT")
           [ -z "${CPANEL_USER:-}" ] && missing+=("CPANEL_USER")
           [ -z "${CPANEL_SSH_KEY:-}" ] && missing+=("CPANEL_SSH_KEY")
           if [ "${#missing[@]}" -gt 0 ]; then
